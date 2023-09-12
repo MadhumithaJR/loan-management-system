@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wellsfargo.training.ims.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Employee;
 import com.wellsfargo.training.lms.service.EmployeeService;
 
@@ -29,6 +30,22 @@ public class EmployeeController {
 	@GetMapping("/employees")
 	public List<Employee> getAllEmployees(){
 		return eservice.listAll();
+	}
+	
+	@PostMapping("/login")
+	public Boolean loginEmployee(@Validated @RequestBody Employee e) throws ResourceNotFoundException {
+		Boolean isLoggedIn = false;
+		Long eid = e.getEid();
+		String password = e.getPassword();
+		
+		Employee employee = eservice.loginEmployee(eid).orElseThrow(() ->
+		 new ResourceNotFoundException("Employee not found for this Employee Id :: "));
+		 
+		 if(eid.equals(employee.getEid())&& password.equals(employee.getPassword())){
+			 isLoggedIn=true;
+			 
+		 }
+		 return isLoggedIn;
 	}
 	
 	
