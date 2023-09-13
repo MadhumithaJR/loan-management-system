@@ -49,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.wellsfargo.training</groupId>
-			<artifactId>inventory-restapi</artifactId>
+			<artifactId>loan-management-restapi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
