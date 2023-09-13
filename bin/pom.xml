@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.wellsfargo.training</groupId>
-	<artifactId>loan-management-system</artifactId>
+	<artifactId>loan-management-restapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>loan-management-system</name>
-	<description>Spring Boot MVC Rest API for Loan Management System</description>
+	<name>loan-management-restapi</name>
+	<description>Spring Boot MVC REST API for Loan Management System</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -47,7 +47,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.wellsfargo.training</groupId>
+			<artifactId>inventory-restapi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
