@@ -98,6 +98,4 @@ public class Employee {
 		this.card = card;
 	}
 
-
-
 }
