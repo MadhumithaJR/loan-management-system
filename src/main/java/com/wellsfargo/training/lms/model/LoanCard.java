@@ -1,5 +1,8 @@
 package com.wellsfargo.training.lms.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,26 +24,18 @@ public class LoanCard {
 	private int duration;
 
 	@OneToMany(mappedBy="loancard", cascade=CascadeType.ALL)
-	private EmployeeCard eCard;
+	private List<EmployeeCard> ecard = new ArrayList<>();
 
 	public LoanCard() {
 		super();
 	}
 
-	public LoanCard(Long lid, String ltype, int duration, EmployeeCard eCard) {
+	public LoanCard(Long lid, String ltype, int duration, List<EmployeeCard> ecard) {
 		super();
 		this.lid = lid;
 		this.ltype = ltype;
 		this.duration = duration;
-		this.eCard = eCard;
-	}
-	
-
-	public LoanCard(Long lid, String ltype, int duration) {
-		super();
-		this.lid = lid;
-		this.ltype = ltype;
-		this.duration = duration;
+		this.ecard = ecard;
 	}
 
 	public Long getLid() {
@@ -67,13 +62,16 @@ public class LoanCard {
 		this.duration = duration;
 	}
 
-	public EmployeeCard geteCard() {
-		return eCard;
+	public List<EmployeeCard> getEcard() {
+		return ecard;
 	}
 
-	public void seteCard(EmployeeCard eCard) {
-		this.eCard = eCard;
+	public void setEcard(List<EmployeeCard> ecard) {
+		this.ecard = ecard;
 	}
+	
+	
+	
 	
 	
 }

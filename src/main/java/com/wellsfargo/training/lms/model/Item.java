@@ -1,5 +1,8 @@
 package com.wellsfargo.training.lms.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,13 +34,13 @@ public class Item {
 	private String cat;
 	
 	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
-	private EmployeeIssue eIssue;
+	private List<EmployeeIssue> eIssue = new ArrayList<>();
 
 	public Item() {
 		super();
 	}
 
-	public Item(Long itid, String desc, String status, int value, String make, String cat, EmployeeIssue eIssue) {
+	public Item(Long itid, String desc, String status, int value, String make, String cat, List<EmployeeIssue> eIssue) {
 		super();
 		this.itid = itid;
 		this.desc = desc;
@@ -96,12 +99,14 @@ public class Item {
 		this.cat = cat;
 	}
 
-	public EmployeeIssue geteIssue() {
+	public List<EmployeeIssue> geteIssue() {
 		return eIssue;
 	}
 
-	public void seteIssue(EmployeeIssue eIssue) {
+	public void seteIssue(List<EmployeeIssue> eIssue) {
 		this.eIssue = eIssue;
 	}
+	
+	
 	
 }
