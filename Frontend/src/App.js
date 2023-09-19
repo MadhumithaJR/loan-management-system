@@ -6,17 +6,19 @@ import Login from './components/Login';
 import Register from './components/Register';
 import ViewLoans from './components/ViewLoans';
 import ViewItems from './components/ViewItems';
-
+import Admin from './components/Admin'
 const App = () => {
   return (
     <div className="App">
+    <header>
       <h1>Loan Management App</h1>
+      </header>
       <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/register" element={<Register/>}/>
-
+        <Route exact path="/admin" element={<Admin/>}/>
         <Route path="/user/:id/viewLoan" element={<ViewLoans/>}/>
         <Route path="/user/:id/viewItems" element={<ViewItems/>}/>
       </Routes>
