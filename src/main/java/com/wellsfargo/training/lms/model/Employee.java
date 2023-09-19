@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Employee {
 
 	@Id
-	@Column(name="employee_id", length=6,nullable = false)
+	@Column(name="employee_id",nullable = false)
 	private String id;
 
 	@Column(name="employee_name", length=20,nullable = false)
