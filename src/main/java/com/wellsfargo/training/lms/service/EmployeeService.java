@@ -22,7 +22,7 @@ public class EmployeeService {
 		return erepo.save(e);
 	}
 	
-	public Optional<Employee> loginEmployee(Long eid) {
+	public Optional<Employee> loginEmployee(String eid) {
 		return erepo.findByEid(eid);
 	}
 	
