@@ -2,6 +2,7 @@ package com.wellsfargo.training.lms.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wellsfargo.training.ims.exception.ResourceNotFoundException;
+import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Employee;
 import com.wellsfargo.training.lms.service.EmployeeService;
 
@@ -35,13 +36,13 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public Boolean loginEmployee(@Validated @RequestBody Employee e) throws ResourceNotFoundException {
 		Boolean isLoggedIn = false;
-		Long eid = e.getEid();
+		String eid = e.getId();
 		String password = e.getPassword();
 		
 		Employee employee = eservice.loginEmployee(eid).orElseThrow(() ->
 		 new ResourceNotFoundException("Employee not found for this Employee Id :: "));
 		 
-		 if(eid.equals(employee.getEid())&& password.equals(employee.getPassword())){
+		 if(eid.equals(employee.getId())&& password.equals(employee.getPassword())){
 			 isLoggedIn=true;
 			 
 		 }
