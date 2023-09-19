@@ -4,7 +4,7 @@ import axios from "axios";
 class AuthenticationService {
     static async loginEmployee(employee){
         try{
-            const response=await axios.post('http://localhost:8070/lms/api/login',employee);
+            const response=await axios.post('http://localhost:8090/lms/api/login',employee);
             console.log(response.data);
             if(response.data===true){
                 return true;
@@ -18,7 +18,7 @@ class AuthenticationService {
     }
     static async registerEmployee(employee){
         try{
-            const response =await axios.post("http://localhost:8070/lms/api/employees",employee);
+            const response =await axios.post("http://localhost:8090/lms/api/employees",employee);
             console.log(response.data);
             return response.data;
         }catch(error){
