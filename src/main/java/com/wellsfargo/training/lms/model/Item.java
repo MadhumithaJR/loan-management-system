@@ -1,70 +1,65 @@
 package com.wellsfargo.training.lms.model;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="items")
+@Table(name="item_master")
+
 public class Item {
 
 	@Id
-	@Column(name="item_name")
-	private Long itid;
-	
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="item_id")
+	private Integer item_id;
+
 	@Column(name="item_description")
-	private String desc;
-	
-	@Column(name="item_status")
+	private String description;
+
+	@Column(name="item_status", length=1)
 	private String status;
-	
-	@Column(name="item_valuation")
-	private int value;
-	
-	@Column(name="item_make")
-	private String make;
-	
+
 	@Column(name="item_category")
-	private String cat;
-	
-	@OneToMany(mappedBy="item", cascade=CascadeType.ALL)
-	private List<EmployeeIssue> eIssue = new ArrayList<>();
+	private String category;
 
-	public Item() {
-		super();
+	@Column(name="item_value")
+	private int value;
+
+	@Column(name="item_make", length=25)
+	private String make;
+
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Issue> issue;
+
+	public Integer getItem_id() {
+		return item_id;
 	}
 
-	public Item(Long itid, String desc, String status, int value, String make, String cat, List<EmployeeIssue> eIssue) {
-		super();
-		this.itid = itid;
-		this.desc = desc;
-		this.status = status;
-		this.value = value;
-		this.make = make;
-		this.cat = cat;
-		this.eIssue = eIssue;
+	public void setItem_id(Integer item_id) {
+		this.item_id = item_id;
 	}
 
-	public Long getItid() {
-		return itid;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setItid(Long itid) {
-		this.itid = itid;
-	}
-
-	public String getDesc() {
-		return desc;
-	}
-
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getStatus() {
@@ -73,6 +68,14 @@ public class Item {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public int getValue() {
@@ -91,22 +94,12 @@ public class Item {
 		this.make = make;
 	}
 
-	public String getCat() {
-		return cat;
+	public List<Issue> getIssue() {
+		return issue;
 	}
 
-	public void setCat(String cat) {
-		this.cat = cat;
+	public void setIssue(List<Issue> issue) {
+		this.issue = issue;
 	}
 
-	public List<EmployeeIssue> geteIssue() {
-		return eIssue;
-	}
-
-	public void seteIssue(List<EmployeeIssue> eIssue) {
-		this.eIssue = eIssue;
-	}
-	
-	
-	
 }
