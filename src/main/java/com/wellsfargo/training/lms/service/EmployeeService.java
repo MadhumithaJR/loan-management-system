@@ -22,8 +22,8 @@ public class EmployeeService {
 		return erepo.save(e);
 	}
 	
-	public Optional<Employee> loginEmployee(String eid) {
-		return erepo.findByEid(eid);
+	public Optional<Employee> loginEmployee(String id) {
+		return erepo.findById(id);
 	}
 	
 	public List<Employee> listAll(){
