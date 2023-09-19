@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AuthenticationService from "../services/AuthenticationService";
 
 const Login = () => {
 
-    const baseURL = "http://localhost:7000/loginUser";
+    const history=useNavigate();
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const idChangeHandler = (event) => {
         setId(event.target.value);
@@ -15,27 +19,35 @@ const Login = () => {
         setPassword(event.target.value);
     }
 
-    const submitActionHandler = (event) => {
-        event.preventDefault();
-        axios
-          .post(baseURL, {
-            id: id,
-            password: password
-          })
-          .then((response) => {
-            console.log(response);
-            if(response.data === "Login Success") {
-                alert("Employee "+ id +" logged in!");
-                sessionStorage.setItem("emp_id", id);
-            }
-            else {
-                alert('Invalid credentials')
-            }
-          }).catch(error => {
-            alert("error==="+error);
-          });
+    const submitActionHandler = async(event) => {
+      event.preventDefault();
+
+      if(!id || !password){
+        setErrorMessage('Please Enter both ID or Password')
+        return;
+     }
+     const employee={eid:id,password}
+     try{
+      const loginSuccess =await AuthenticationService.loginEmployee(employee);
+      console.log(employee)
+      console.log('API responses:',loginSuccess.data);
+      if(loginSuccess){
+        setSuccessMessage('Login Successful Redirecting..');
+        setTimeout(()=>{
+          history('/home'); //on successful login navigate to product componenets
+        },200)
+      }else{
+        setErrorMessage('Invalid Email or Password');
+      }
+  
+    }
+    catch(error){
+      console.log('Login error:', error)
+      setErrorMessage('Error Occured during Login');
+    }
+
     
-      };
+    };
 
     return (
         <>
@@ -49,6 +61,8 @@ const Login = () => {
             </p>
 
             <button type="submit">Login</button>
+            {errorMessage && <p className='error-message'>{errorMessage}</p>}
+            {successMessage && <p className='success-message'>{successMessage}</p>}
         </form>
         </>
     )

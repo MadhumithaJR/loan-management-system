@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AuthenticationService from "../services/AuthenticationService";
 
 const Register = () => {
-    const baseURL = "http://localhost:7000/saveUser";
+    const history=useNavigate();
+
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
     const [fullname, setFullname] = useState("")
@@ -11,6 +14,8 @@ const Register = () => {
     const [dob, setDob] = useState("")
     const [doj, setDoj] = useState("")
     const [gender, setGender] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState();
 
     const idChangeHandler = (event) => {
         setId(event.target.value);
@@ -44,27 +49,30 @@ const Register = () => {
         setGender(event.target.value);
     }
 
-    const submitActionHandler = (event) => {
+    const submitActionHandler = async(event) => {
         event.preventDefault();
-        axios
-          .post(baseURL, {
-            id: id,
+        const employee={
+            eid: id,
             password: password,
-            name: fullname,
+            ename: fullname,
             designation: designation,
-            department:department,
+            dept:department,
             dob: dob,
             doj: doj,
             gender: gender
-          })
-          .then((response) => {
-            // alert(response.data.fullname);
-            alert("Employee "+ fullname +" added!");
-            //navigate("/account");
-          }).catch(error => {
-            alert("error==="+error);
-          });
-    
+        };
+        try {
+            await AuthenticationService.registerEmployee(employee);
+            setSuccessMessage('Registration successful!');
+            alert("Registration Successfull");
+            setTimeout(() => {
+                history('/login'); // navigates to Login Component
+            }, 3000);
+        } 
+        catch (error) {
+            console.error('Registration error', error);
+            setErrorMessage('An error occurred during registration.');
+        }
       };
 
     return (
