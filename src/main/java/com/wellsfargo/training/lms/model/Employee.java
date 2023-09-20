@@ -33,7 +33,7 @@ public class Employee {
 	@Column(name="department", length=25,nullable = false)
 	private String department;
 
-	@Column(name="gender", length=1)
+	@Column(name="gender", length=6)
 	private String gender;
 
 	@Column(name="designation", length=25,nullable = false)
