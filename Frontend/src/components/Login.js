@@ -20,36 +20,35 @@ const Login = () => {
     }
 
     const submitActionHandler = async(event) => {
-      event.preventDefault();
-
-      if(!id || !password){
-        setErrorMessage('Please Enter both ID or Password')
-        return;
-     }
-     const employee={eid:id,password}
-     try{
-      const loginSuccess =await AuthenticationService.loginEmployee(employee);
-      console.log(employee)
-      console.log('API responses:',loginSuccess.data);
-      if(loginSuccess){
-        setSuccessMessage('Login Successful Redirecting..');
-        setTimeout(()=>{
-          history('/home'); //on successful login navigate to product componenets
-        },200)
-      }else{
-        setErrorMessage('Invalid Email or Password');
+        event.preventDefault();
+  
+        if(!id || !password){
+          setErrorMessage('Please Enter both ID or Password')
+          return;
+       }
+       const employee={id,password}
+       try{
+        const loginSuccess =await AuthenticationService.loginEmployee(employee);
+        console.log(employee)
+        console.log('API responses:',loginSuccess.data);
+        if(loginSuccess){
+          setSuccessMessage('Login Successful Redirecting..');
+          setTimeout(()=>{
+            history('/home'); //on successful login navigate to product componenets
+          },200)
+        }else{
+          setErrorMessage('Invalid Email or Password');
+        }
+    
+      }
+      catch(error){
+        console.log('Login error:', error)
+        setErrorMessage('Error Occured during Login');
       }
   
-    }
-    catch(error){
-      console.log('Login error:', error)
-      setErrorMessage('Error Occured during Login');
-    }
-
-    
-    };
-
-    return (
+      
+      };
+      return (
         <>
         <form onSubmit={submitActionHandler}>
             <p>

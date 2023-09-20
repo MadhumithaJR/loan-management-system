@@ -30,7 +30,7 @@ public class AdminController {
 	private ItemService iservice;
 
 
-
+@CrossOrigin(origins="http://localhost:3000")
     @PostMapping("/login")
     public Boolean loginAdmin(@RequestBody @Validated Admin admin) throws ResourceNotFoundException
     {
