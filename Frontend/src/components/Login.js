@@ -26,7 +26,7 @@ const Login = () => {
         setErrorMessage('Please Enter both ID or Password')
         return;
      }
-     const employee={eid:id,password}
+     const employee={id,password}
      try{
       const loginSuccess =await AuthenticationService.loginEmployee(employee);
       console.log(employee)

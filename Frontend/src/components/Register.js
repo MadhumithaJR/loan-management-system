@@ -52,11 +52,11 @@ const Register = () => {
     const submitActionHandler = async(event) => {
         event.preventDefault();
         const employee={
-            eid: id,
+            id: id,
             password: password,
-            ename: fullname,
+            name: fullname,
             designation: designation,
-            dept:department,
+            department:department,
             dob: dob,
             doj: doj,
             gender: gender
