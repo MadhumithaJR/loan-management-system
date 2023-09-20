@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import AuthenticationService from "../services/AuthenticationService";
+import AdminLoginService from "../services/AdminLoginService";
 
 const Login = () => {
 
@@ -20,39 +19,41 @@ const Login = () => {
     }
 
     const submitActionHandler = async(event) => {
-        event.preventDefault();
+      event.preventDefault();
+
+      if(!id || !password){
+        setErrorMessage('Please Enter both ID or Password')
+        return;
+     }
+     const admin={username:id,password}
+     try{
+      const loginSuccess =await AdminLoginService.loginAdmin(admin);
+      console.log(admin)
+      console.log('API responses:',loginSuccess.data);
+      if(loginSuccess){
+        setSuccessMessage('Login Successful Redirecting..');
+        setTimeout(()=>{
+          history('/admin'); //on successful login navigate to product componenets
+        },200)
+      }else{
+        setErrorMessage('Invalid Email or Password');
+      }
   
-        if(!id || !password){
-          setErrorMessage('Please Enter both ID or Password')
-          return;
-       }
-       const employee={id,password}
-       try{
-        const loginSuccess =await AuthenticationService.loginEmployee(employee);
-        console.log(employee)
-        console.log('API responses:',loginSuccess.data);
-        if(loginSuccess){
-          setSuccessMessage('Login Successful Redirecting..');
-          setTimeout(()=>{
-            history('/home'); //on successful login navigate to product componenets
-          },200)
-        }else{
-          setErrorMessage('Invalid Email or Password');
-        }
+    }
+    catch(error){
+      console.log('Login error:', error)
+      setErrorMessage('Error Occured during Login');
+    }
+
     
-      }
-      catch(error){
-        console.log('Login error:', error)
-        setErrorMessage('Error Occured during Login');
-      }
-  
-      
-      };
-      return (
+    };
+
+    return (
         <>
+        <h2>Admin Login</h2>
         <form onSubmit={submitActionHandler}>
             <p>
-            <label>Employee ID: <input type="text" value={id} onChange={idChangeHandler}></input></label>
+            <label>username <input type="text" value={id} onChange={idChangeHandler}></input></label>
             </p>
 
             <p>

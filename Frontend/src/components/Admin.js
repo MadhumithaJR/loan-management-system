@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 const Admin = () => {
 return (
 <div className="container-fluid">
+    <h2>Admin Dashboard</h2>
 <div className="row p-3 pt-5">
     <div className="col-md-12">
     <button type="button" class="btn btn-outline-secondary btn-light">Customer Data Management</button>
@@ -18,7 +19,6 @@ return (
     <button type="button" class="btn btn-outline-secondary btn-light">Items Master Data</button>
     </div>
 </div>
-    
     
 </div>
 );
