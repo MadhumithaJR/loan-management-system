@@ -4,12 +4,16 @@ import com.wellsfargo.training.lms.model.Admin;
 import com.wellsfargo.training.lms.model.Loan;
 import com.wellsfargo.training.lms.repository.AdminRepository;
 import com.wellsfargo.training.lms.repository.LoanRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Service
+@Transactional
 public class AdminService {
 
 
