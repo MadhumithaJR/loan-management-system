@@ -1,172 +1,101 @@
 package com.wellsfargo.training.lms.model;
 
-import java.nio.charset.StandardCharsets;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Base64;
+import jakarta.persistence.Column;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import jakarta.persistence.OneToMany;
+
+import java.time.LocalDate;
 import java.util.List;
+
+import lombok.Getter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
-
+@Getter
 @Entity
-@Table(name="employees")
+@Table(name="employee_master")
 public class Employee {
 
 	@Id
-	private Long eid;
-	
-	private String ename;
-	
-	private String password;
-	
-	private String designation;
-	
-	@Column(name="department")
-	private String dept;
-	
+	@Column(name="employee_id",nullable = false)
+	private String id;
+
+	@Column(name="employee_name", length=20,nullable = false)
+	private String name;
+
+	@Column(name="department", length=25,nullable = false)
+	private String department;
+
+	@Column(name="gender", length=6)
 	private String gender;
-	
-	@Column(name="date_of_birth")
+
+	@Column(name="designation", length=25,nullable = false)
+	private String designation;
+
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date dob;
-	
-	@Column(name="date_of_joining")
+	@Column(name="dob",nullable = false)
+	private LocalDate dob;
+
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date doj;
-	
-	@OneToMany(mappedBy="employee", cascade=CascadeType.ALL)
-	private List<EmployeeIssue> eIssue = new ArrayList<>();
-	
-	@OneToMany(mappedBy="employee", cascade=CascadeType.ALL)
-	private List<EmployeeCard> ecard = new ArrayList<>();
-	
-	public Employee() {
-		super();
+	@Column(name="doj",nullable = false)
+	private LocalDate doj;
+
+	@Column(name="password", length=20,nullable = false)
+	private String password;
+
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy="employee", fetch= FetchType.EAGER)
+	private List<Issue>issue;
+
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy="employee", fetch= FetchType.EAGER)
+	private List<Card>card;
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public Employee(Long eid, String ename, String password, String designation, String dept, String gender, Date dob,
-			Date doj, List<EmployeeIssue> eIssue, List<EmployeeCard> ecard) {
-		super();
-		this.eid = eid;
-		this.ename = ename;
-		this.password = password;
-		this.designation = designation;
-		this.dept = dept;
-		this.gender = gender;
-		this.dob = dob;
-		this.doj = doj;
-		this.eIssue = eIssue;
-		this.ecard = ecard;
-	}
-	
-	
-
-	
-	public Long getEid() {
-		return eid;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setEid(Long eid) {
-		this.eid = eid;
-	}
-
-	public String getEname() {
-		return ename;
-	}
-
-	public void setEname(String ename) {
-		this.ename = ename;
-	}
-
-	public String getDesignation() {
-		return designation;
-	}
-
-	public void setDesignation(String designation) {
-		this.designation = designation;
-	}
-
-	public String getDept() {
-		return dept;
-	}
-
-	public void setDept(String dept) {
-		this.dept = dept;
-	}
-
-	public String getGender() {
-		return gender;
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public Date getDob() {
-		return dob;
+	public void setDesignation(String designation) {
+		this.designation = designation;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 
-	public Date getDoj() {
-		return doj;
-	}
-
-	public void setDoj(Date doj) {
+	public void setDoj(LocalDate doj) {
 		this.doj = doj;
 	}
 
-	public List<EmployeeIssue> geteIssue() {
-		return eIssue;
-	}
-
-	public void seteIssue(List<EmployeeIssue> eIssue) {
-		this.eIssue = eIssue;
-	}
-
-	public List<EmployeeCard> getEcard() {
-		return ecard;
-	}
-
-	public void setEcard(List<EmployeeCard> ecard) {
-		this.ecard = ecard;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
 	public void setPassword(String password) {
-		Base64.Encoder encoder = Base64.getEncoder();  
-        String normalString = password;
-        String encodedString = encoder.encodeToString(   // encrypt password in database field
-        normalString.getBytes(StandardCharsets.UTF_8) );
-        this.password = encodedString;
+		this.password = password;
 	}
 
+	public void setIssue(List<Issue> issue) {
+		this.issue = issue;
+	}
 
+	public void setCard(List<Card> card) {
+		this.card = card;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-	
 }

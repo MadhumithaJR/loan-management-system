@@ -1,20 +1,29 @@
 package com.wellsfargo.training.lms.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Employee;
 import com.wellsfargo.training.lms.service.EmployeeService;
 
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping(value="/api")
 public class EmployeeController {
@@ -36,19 +45,64 @@ public class EmployeeController {
 	@PostMapping("/login")
 	public Boolean loginEmployee(@Validated @RequestBody Employee e) throws ResourceNotFoundException {
 		Boolean isLoggedIn = false;
-		Long eid = e.getEid();
+		String id = e.getId();
 		String password = e.getPassword();
 		
-		Employee employee = eservice.loginEmployee(eid).orElseThrow(() ->
+		Employee employee = eservice.loginEmployee(id).orElseThrow(() ->
 		 new ResourceNotFoundException("Employee not found for this Employee Id :: "));
 		 
-		 if(eid.equals(employee.getEid())&& password.equals(employee.getPassword())){
+		 if(id.equals(employee.getId())&& password.equals(employee.getPassword())){
 			 isLoggedIn=true;
 			 
 		 }
 		 return isLoggedIn;
 	}
 	
+	@GetMapping("/employees/{id}")
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") String eID)
+	throws ResourceNotFoundException{
+		 Employee e=eservice.getSingleEmployee(eID).
+		 orElseThrow(()->new ResourceNotFoundException("Product Not founf for the ID"));
+		 return ResponseEntity.ok().body(e);
+	}
+	
+	
+	@DeleteMapping("/employees/{id}")
+	public ResponseEntity<Map<String,Boolean>> deleteEmployee(@PathVariable(value="id")String eID)
+		throws ResourceNotFoundException{
+		
+		
+		eservice.getSingleEmployee(eID).
+		orElseThrow(()-> new ResourceNotFoundException("Product Not found for this ID:"+eID));
+		
+		eservice.deleteEmployee(eID);
+		
+		Map<String,Boolean> response =new HashMap<String,Boolean>();
+		response.put("Deleted",Boolean.TRUE);
+		return ResponseEntity.ok(response);
+	}
+	
+	@PutMapping("/employees/{id}")
+	public ResponseEntity<Employee> updateProductById(@PathVariable(value="id") String eID,
+			@Validated @RequestBody Employee e)
+			throws ResourceNotFoundException{
+				 Employee employee=eservice.getSingleEmployee(eID).
+				 orElseThrow(()->new ResourceNotFoundException("Employee Not founf for the ID"));
+				 
+				 
+				 //Update Employee with New values
+				 employee.setName(e.getName());
+				 employee.setGender(e.getGender());
+				 employee.setDepartment(e.getDepartment());
+				 employee.setDesignation(e.getDesignation());
+				 employee.setDob(e.getDob());
+				 employee.setDoj(e.getDoj());
+				 
+				 
+				 final Employee updatedEmployee= eservice.registerEmployee(employee);
+				 return ResponseEntity.ok().body(updatedEmployee);
+				 
+			}
 	
 
 }

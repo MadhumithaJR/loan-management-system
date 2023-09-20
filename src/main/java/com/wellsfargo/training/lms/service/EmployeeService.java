@@ -22,11 +22,18 @@ public class EmployeeService {
 		return erepo.save(e);
 	}
 	
-	public Optional<Employee> loginEmployee(Long eid) {
-		return erepo.findByEid(eid);
+	public Optional<Employee> loginEmployee(String id) {
+		return erepo.findById(id);
 	}
 	
 	public List<Employee> listAll(){
 		return erepo.findAll();
+	}
+	public Optional<Employee> getSingleEmployee(String id){
+		return erepo.findById(id);
+		
+	}
+	public void deleteEmployee(String id) {
+		erepo.deleteById(id);
 	}
 }
