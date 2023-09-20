@@ -82,13 +82,19 @@ public class AdminController {
        return ResponseEntity.ok(l);
     }
 
-//    @PutMapping("/loan/{id}")
-//    public ResponseEntity<Loan> updateLoan(@PathVariable(value="id") int id,@Validated @RequestBody Loan loan) throws ResourceNotFoundException{
-//        Loan l = adminService.getLoanById(id).orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+id));
-//
-//        l.setCard();
-//
-//    }
+    @PutMapping("/loan/{id}")
+    public ResponseEntity<Loan> updateLoan(@PathVariable(value="id") int id,@Validated @RequestBody Loan loan) throws ResourceNotFoundException{
+        Loan l = adminService.getLoanById(id).orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+id));
+
+        try{
+             l = adminService.saveLoan(loan);
+            return ResponseEntity.status(HttpStatus.CREATED).body(l);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+    }
     @DeleteMapping("/loan/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteLoan(@PathVariable(value = "id") int id)throws ResourceNotFoundException{
         Loan l = adminService.getLoanById(id).orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+id));
