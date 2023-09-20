@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 const Home = () => {
     const navigate = useNavigate();
     return (
@@ -10,12 +9,12 @@ const Home = () => {
         
         <div>
             <p>Already a user?</p>
-        <   button onClick={() => navigate("/login")}>Login</button>
+            <button class="btn btn-outline-secondary btn-light" onClick={() => navigate("/login")}>Login</button>
         </div>
 
         <div>
             <p>Register to apply for loan..</p>
-            <button onClick={() => navigate("/register")}>Register</button>
+            <button class="btn btn-outline-secondary btn-light" onClick={() => navigate("/register")}>Register</button>
         </div>
         </>
     )
