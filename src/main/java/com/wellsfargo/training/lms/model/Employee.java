@@ -18,7 +18,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Getter
+
 @Entity
 @Table(name="employee_master")
 public class Employee {
@@ -33,7 +33,7 @@ public class Employee {
 	@Column(name="department", length=25,nullable = false)
 	private String department;
 
-	@Column(name="gender", length=1)
+	@Column(name="gender", length=6)
 	private String gender;
 
 	@Column(name="designation", length=25,nullable = false)
@@ -98,4 +98,43 @@ public class Employee {
 		this.card = card;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public LocalDate getDob() {
+		return dob;
+	}
+
+	public LocalDate getDoj() {
+		return doj;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public List<Issue> getIssue() {
+		return issue;
+	}
+
+	public List<Card> getCard() {
+		return card;
+	}
 }

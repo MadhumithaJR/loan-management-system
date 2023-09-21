@@ -29,4 +29,11 @@ public class EmployeeService {
 	public List<Employee> listAll(){
 		return erepo.findAll();
 	}
+	public Optional<Employee> getSingleEmployee(String id){
+		return erepo.findById(id);
+		
+	}
+	public void deleteEmployee(String id) {
+		erepo.deleteById(id);
+	}
 }
