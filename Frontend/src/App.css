@@ -1,6 +1,10 @@
+body{
+  background-color: #fff !important;
+}
+
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #fff;
 }
 
 .App-logo {
@@ -20,12 +24,30 @@ header {
 }
 header h1 {
   color: white;
+  font-family: Lobster;
 }
 
-h1,p,h2{
+h1,p{
   color: white;
 }
+.home {
+  bottom: 0px;
+}
+.home h2 {
+  color: white;
+  font-family: Mondia;
+}
+.home-page-info {
+  background-color: #fff;
+}
+.home-page-info p{
+  font-family: Mondia;
+}
 
+.login-side {
+  font-family: Mondia;
+  padding-top: 13%;
+}
 
 .App-header {
   background-color: #282c34;
