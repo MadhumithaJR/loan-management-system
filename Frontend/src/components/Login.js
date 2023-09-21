@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AuthenticationService from "../services/AuthenticationService";
-
+import AuthenticationService from "../services/EmployeeAuthenticationService";
+import AdminLoginService from "../services/AdminLoginService"
 const Login = () => {
 
     const history=useNavigate();

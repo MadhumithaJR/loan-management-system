@@ -71,7 +71,7 @@ const Login = () => {
 
   const handleAdminLogin = () => {
     console.log("Admin Log In Button");
-    history('/home');
+    history('/admin/login');
   }
   
 
