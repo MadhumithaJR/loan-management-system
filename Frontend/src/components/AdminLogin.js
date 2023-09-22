@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import AuthenticationService from "../services/EmployeeAuthenticationService";
+import AdminLoginService from "../services/AdminLoginService";
 
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { Alert, AlertTitle, Container, Snackbar } from "@mui/material";
+import { Alert, AlertTitle, Container} from "@mui/material";
 
 const Login = () => {
 
@@ -46,15 +42,15 @@ const Login = () => {
       setErrorMessage('Please Enter both ID and Password')
       return;
     }
-    const employee = { id, password }
+    const admin = { "username" : id, "password": password }
     try {
-      const loginSuccess = await AuthenticationService.loginEmployee(employee);
-      console.log(employee)
+      const loginSuccess = await AdminLoginService.loginAdmin(admin);
+      console.log(admin)
       console.log('API responses:', loginSuccess.data);
       if (loginSuccess) {
         setSuccessMessage('Login Successful Redirecting..');
         setTimeout(() => {
-          history('/home'); //on successful login navigate to product componenets
+          history('/home'); 
         }, 200)
       } else {
         setErrorStatus(true)
@@ -68,12 +64,6 @@ const Login = () => {
       setErrorMessage('Error Occured during Login');
     }
   };
-
-  const handleAdminLogin = () => {
-    console.log("Admin Log In Button");
-    history('/admin-login');
-  }
-  
 
   return (
     <>
@@ -92,7 +82,7 @@ const Login = () => {
               sm={4}
               md={7}
               sx={{
-                backgroundImage: "url(https://img.freepik.com/free-vector/bank-credit-finance-management-loan-agreement-signing-mortgage-money-credit_335657-3136.jpg)",
+                backgroundImage: "url(https://appinventiv.com/wp-content/uploads/sites/1/2022/06/How-to-build-a-loan-management-system-scaled.webp)",
                 backgroundRepeat: "no-repeat",
                 backgroundColor: (t) =>
                   t.palette.mode === "light"
@@ -121,7 +111,7 @@ const Login = () => {
                 }}
               >
                 <Typography component="h1" variant="h5" style={{fontFamily:"serif",fontSize:"28px"}}>
-                  Employee Sign In
+                  Admin Sign In
                 </Typography>
                 <Box
                   component="form"
@@ -133,11 +123,11 @@ const Login = () => {
                     margin="normal"
                     required
                     fullWidth
-                    id="eid"
-                    label="Employee Id"
+                    id="username"
+                    label="username"
                     onChange={idChangeHandler}
-                    name="eid"
-                    autoComplete="eid"
+                    name="username"
+                    autoComplete="username"
                     autoFocus
                   />
                   <TextField
@@ -157,7 +147,7 @@ const Login = () => {
                     variant="contained"
                     style={{
                       borderRadius: 10,
-                      backgroundColor: "#494bf5",
+                      backgroundColor: "#4b5ee5",
                       padding: "10px 20px",
                       fontSize: "15px"
                   }}
@@ -170,30 +160,10 @@ const Login = () => {
                     <AlertTitle>Error</AlertTitle>
                     <strong>{errorMessage}</strong></Alert></center>}
 
-
-                  {/* <Alert severity="error" sx={{ width: '300px','& .MuiAlert-message':{textAlign:"center", width:"inherit"} }}>
-                    <AlertTitle>Error</AlertTitle>
-                    <strong>{errorMessage}</strong>
-                  </Alert>
-               */}
-
                   {successMessage && <center><Alert severity="success" sx={{ width: '300px', '& .MuiAlert-message': { textAlign: "center", width: "inherit" } }}>
                     <AlertTitle>Success</AlertTitle>
                     <strong>{successMessage}</strong></Alert></center>}
-                  <Button
-                    onClick={handleAdminLogin}
-                    fullWidth
-                    variant="contained"
-                    style={{
-                      borderRadius: 20,
-                      backgroundColor: "#e86159",
-                      padding: "10px 20px",
-                      fontSize: "15px"
-                  }}
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Admin Sign In
-                  </Button>
+                  
                 </Box>
               </Box>
             </Grid>
