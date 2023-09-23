@@ -70,7 +70,7 @@ public class EmployeeController {
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") String eID)
 	throws ResourceNotFoundException{
 		 Employee e=eservice.getSingleEmployee(eID).
-		 orElseThrow(()->new ResourceNotFoundException("Product Not founf for the ID"));
+		 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
 		 return ResponseEntity.ok().body(e);
 	}
 	
@@ -95,7 +95,7 @@ public class EmployeeController {
 			@Validated @RequestBody Employee e)
 			throws ResourceNotFoundException{
 				 Employee employee=eservice.getSingleEmployee(eID).
-				 orElseThrow(()->new ResourceNotFoundException("Employee Not founf for the ID"));
+				 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
 				 
 				 
 				 //Update Employee with New values

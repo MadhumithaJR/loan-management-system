@@ -9,6 +9,7 @@ import ViewLoans from './components/ViewLoans';
 import ViewItems from './components/ViewItems';
 import Admin from './components/Admin'
 import EmployeeView from './components/EmployeeView';
+import CreateUpdateEmployee from './components/CreateUpdateEmployee';
 const App = () => {
   return (
     <div className="App">
@@ -18,8 +19,15 @@ const App = () => {
       <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
+
         <Route exact path="/admin-login" element={<AdminLogin/>}/>
         <Route exact path="/login" element={<EmployeeLogin/>}/>
+
+        {/* <Route exact path='/addEmployee/_create' element={<CreateUpdateEmployee/>}/>
+        <Route exact path='/addEmployee/:eid' element={<CreateUpdateEmployee/>}/> */}
+        
+        <Route path='/addEmployee/:eid' element={<CreateUpdateEmployee/>}/>
+
         <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
         <Route exact path="/manage-employee" element={<EmployeeView/>}/>
