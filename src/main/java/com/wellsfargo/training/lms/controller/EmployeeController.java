@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import com.wellsfargo.training.lms.model.ApplyLoanModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -81,13 +82,15 @@ public class EmployeeController {
 		response.put("Deleted",Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
+
+
 	
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<Employee> updateProductById(@PathVariable(value="id") String eID,
 			@Validated @RequestBody Employee e)
 			throws ResourceNotFoundException{
 				 Employee employee=eservice.getSingleEmployee(eID).
-				 orElseThrow(()->new ResourceNotFoundException("Employee Not founf for the ID"));
+				 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
 				 
 				 
 				 //Update Employee with New values
@@ -102,7 +105,12 @@ public class EmployeeController {
 				 final Employee updatedEmployee= eservice.registerEmployee(employee);
 				 return ResponseEntity.ok().body(updatedEmployee);
 				 
-			}
-	
+	}
+
+	@PostMapping("/applyLoan")
+	public String applyLoan(@RequestBody ApplyLoanModel applyLoanModel){
+		return eservice.applyLoan(applyLoanModel);
+	}
+
 
 }
