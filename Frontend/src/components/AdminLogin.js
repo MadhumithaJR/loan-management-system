@@ -50,7 +50,7 @@ const Login = () => {
       if (loginSuccess) {
         setSuccessMessage('Login Successful Redirecting..');
         setTimeout(() => {
-          history('/home'); 
+          history('/admin'); 
         }, 200)
       } else {
         setErrorStatus(true)

@@ -152,9 +152,14 @@ function CreateUpdateEmployee() {
                             </div>
                             <br></br>
                             <div className="form-group">
-                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Price: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Gender" name="gender" className="form-control"
-                                    value={gender} onChange={changeGenderHandler} />
+                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Gender: </label>
+                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Gender" name="gender" className="form-control"
+                                value={gender} onChange={changeGenderHandler}>
+                                    <option disabled={true} value=''>--Choose an Option--</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Others">Others</option>
+                                </select>   
                             </div>
                             <br></br>
                             <div className="form-group">
