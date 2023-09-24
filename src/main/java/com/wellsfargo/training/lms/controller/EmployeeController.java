@@ -6,6 +6,7 @@ import java.util.Map;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,8 +39,15 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/employees")
-	public List<Employee> getAllEmployees(){
-		return eservice.listAll();
+	public ResponseEntity<List<Employee>> getAllEmployees(){
+		try{
+			List<Employee> employees = eservice.listAll();
+			return ResponseEntity.ok(employees);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
 	}
 	
 	@PostMapping("/login")
@@ -62,7 +70,7 @@ public class EmployeeController {
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") String eID)
 	throws ResourceNotFoundException{
 		 Employee e=eservice.getSingleEmployee(eID).
-		 orElseThrow(()->new ResourceNotFoundException("Product Not founf for the ID"));
+		 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
 		 return ResponseEntity.ok().body(e);
 	}
 	
@@ -87,7 +95,7 @@ public class EmployeeController {
 			@Validated @RequestBody Employee e)
 			throws ResourceNotFoundException{
 				 Employee employee=eservice.getSingleEmployee(eID).
-				 orElseThrow(()->new ResourceNotFoundException("Employee Not founf for the ID"));
+				 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
 				 
 				 
 				 //Update Employee with New values

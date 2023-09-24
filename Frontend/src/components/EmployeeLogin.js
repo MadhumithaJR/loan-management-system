@@ -43,7 +43,7 @@ const Login = () => {
 
     if (!id || !password) {
       setErrorStatus(true)
-      setErrorMessage('Please Enter both ID or Password')
+      setErrorMessage('Please Enter both ID and Password')
       return;
     }
     const employee = { id, password }
@@ -71,7 +71,7 @@ const Login = () => {
 
   const handleAdminLogin = () => {
     console.log("Admin Log In Button");
-    history('/home');
+    history('/admin-login');
   }
   
 
@@ -187,7 +187,7 @@ const Login = () => {
                     style={{
                       borderRadius: 20,
                       backgroundColor: "#e86159",
-                      padding: "15px 30px",
+                      padding: "10px 20px",
                       fontSize: "15px"
                   }}
                     sx={{ mt: 3, mb: 2 }}
