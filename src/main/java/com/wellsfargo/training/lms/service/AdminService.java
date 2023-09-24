@@ -7,6 +7,10 @@ import com.wellsfargo.training.lms.repository.LoanRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.CrossOrigin;
+>>>>>>> origin/lms_Keerthana
 
 import java.util.List;
 import java.util.Optional;

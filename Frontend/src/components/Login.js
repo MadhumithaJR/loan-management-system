@@ -20,7 +20,29 @@ const Login = () => {
     }
 
     const submitActionHandler = async(event) => {
+<<<<<<< HEAD
         event.preventDefault();
+=======
+      event.preventDefault();
+
+      if(!id || !password){
+        setErrorMessage('Please Enter both ID or Password')
+        return;
+     }
+     const employee={id,password}
+     try{
+      const loginSuccess =await AuthenticationService.loginEmployee(employee);
+      console.log(employee)
+      console.log('API responses:',loginSuccess.data);
+      if(loginSuccess){
+        setSuccessMessage('Login Successful Redirecting..');
+        setTimeout(()=>{
+          history('/home'); //on successful login navigate to product componenets
+        },200)
+      }else{
+        setErrorMessage('Invalid Email or Password');
+      }
+>>>>>>> origin/lms_Keerthana
   
         if(!id || !password){
           setErrorMessage('Please Enter both ID or Password')

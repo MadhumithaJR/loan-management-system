@@ -28,7 +28,23 @@ header h1 {
 }
 
 h1,p{
+<<<<<<< HEAD
   color: white;
+}
+.home {
+  bottom: 0px;
+}
+.home h2 {
+=======
+>>>>>>> origin/lms_Keerthana
+  color: white;
+  font-family: Mondia;
+}
+.home-page-info {
+  background-color: #fff;
+}
+.home-page-info p{
+  font-family: Mondia;
 }
 .home {
   bottom: 0px;

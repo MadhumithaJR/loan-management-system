@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import AuthenticationService from "../services/AuthenticationService";
+import AuthenticationService from "../services/EmployeeAuthenticationService";
 
 const Register = () => {
     const history=useNavigate();
@@ -52,11 +52,11 @@ const Register = () => {
     const submitActionHandler = async(event) => {
         event.preventDefault();
         const employee={
-            eid: id,
+            id: id,
             password: password,
-            ename: fullname,
+            name: fullname,
             designation: designation,
-            dept:department,
+            department:department,
             dob: dob,
             doj: doj,
             gender: gender
