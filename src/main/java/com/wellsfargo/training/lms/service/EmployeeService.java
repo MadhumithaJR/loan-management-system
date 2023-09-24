@@ -83,11 +83,5 @@ public class EmployeeService {
 
 		return "Loan has been applied successfully!";
 
-
-
-
-
-
-
 	}
 }
