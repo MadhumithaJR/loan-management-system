@@ -2,24 +2,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/Home';
-<<<<<<< HEAD
-import Login from './components/AdminLogin';
-=======
+import AdminLogin from './components/AdminLogin';
 import EmployeeLogin from './components/EmployeeLogin';
 >>>>>>> origin/lms_Keerthana
 import Register from './components/Register';
 import ViewLoans from './components/ViewLoans';
 import ViewItems from './components/ViewItems';
 import Admin from './components/Admin'
-import Employee from './components/Employee'
-import AdminLogin from './components/AdminLogin';
-import AdminOne from './components/AdminOne';
-import AdminTwo from './components/AdminTwo';
-import AdminThree from './components/AdminThree';
-import EmployeeOne from './components/EmployeeOne';
-import EmployeeTwo from './components/EmployeeTwo';
-import EmployeeThree from './components/EmployeeThree';
-
+import EmployeeView from './components/EmployeeView';
+import CreateUpdateEmployee from './components/CreateUpdateEmployee';
 const App = () => {
   return (
     <div className="App">
@@ -29,21 +20,18 @@ const App = () => {
       <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
-<<<<<<< HEAD
-        <Route exact path="/admin/login" element={<AdminLogin/>}/>
-        <Route exact path="/login" element={<Login/>}/>
-=======
+
+        <Route exact path="/admin-login" element={<AdminLogin/>}/>
         <Route exact path="/login" element={<EmployeeLogin/>}/>
->>>>>>> origin/lms_Keerthana
+
+        {/* <Route exact path='/addEmployee/_create' element={<CreateUpdateEmployee/>}/>
+        <Route exact path='/addEmployee/:eid' element={<CreateUpdateEmployee/>}/> */}
+        
+        <Route path='/addEmployee/:eid' element={<CreateUpdateEmployee/>}/>
+
         <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
-        <Route exact path="/employee" element={<Employee/>}/>
-        <Route exact path="/admin/one" element={<AdminOne/>}/>
-        <Route exact path="/employee/one" element={<EmployeeOne/>}/>
-        <Route exact path="/admin/two" element={<AdminTwo/>}/>
-        <Route exact path="/employee/two" element={<EmployeeTwo/>}/>
-        <Route exact path="/admin/three" element={<AdminThree/>}/>
-        <Route exact path="/employee/three" element={<EmployeeThree/>}/>
+        <Route exact path="/manage-employee" element={<EmployeeView/>}/>
         <Route path="/user/:id/viewLoan" element={<ViewLoans/>}/>
         <Route path="/user/:id/viewItems" element={<ViewItems/>}/>
       </Routes>
