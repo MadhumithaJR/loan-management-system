@@ -2,6 +2,7 @@ package com.wellsfargo.training.lms.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.wellsfargo.training.lms.model.*;
@@ -84,4 +85,9 @@ public class EmployeeService {
 		return "Loan has been applied successfully!";
 
 	}
+	
+	public List<Map<String, Object>> getItemsByEmpId(String id) {
+		return irepo.getItemsByEmpId(id);
+	}
+	
 }

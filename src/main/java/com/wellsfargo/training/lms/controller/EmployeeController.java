@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.wellsfargo.training.lms.model.ApplyLoanModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -84,7 +85,6 @@ public class EmployeeController {
 	}
 
 
-	
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<Employee> updateProductById(@PathVariable(value="id") String eID,
 			@Validated @RequestBody Employee e)
@@ -111,6 +111,17 @@ public class EmployeeController {
 	public String applyLoan(@RequestBody ApplyLoanModel applyLoanModel){
 		return eservice.applyLoan(applyLoanModel);
 	}
-
+	
+	@GetMapping("/viewItems/{id}")
+	public ResponseEntity<List<Map<String, Object>>> getItemsByEmpId(@PathVariable(value="id") String eid) {
+		try {
+			List<Map<String, Object>> items = eservice.getItemsByEmpId(eid);
+			return ResponseEntity.ok(items);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 
 }
