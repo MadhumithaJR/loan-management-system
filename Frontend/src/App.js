@@ -10,6 +10,11 @@ import ViewItems from './components/ViewItems';
 import Admin from './components/Admin'
 import EmployeeView from './components/EmployeeView';
 import CreateUpdateEmployee from './components/CreateUpdateEmployee';
+import LoanView from './components/LoanView';
+import CreateUpdateLoan from './components/CreateUpdateLoan';
+import ItemView from './components/ItemView';
+import CreateUpdateItem from './components/CreateUpdateItem';
+
 const App = () => {
   return (
     <div className="App">
@@ -23,14 +28,18 @@ const App = () => {
         <Route exact path="/admin-login" element={<AdminLogin/>}/>
         <Route exact path="/login" element={<EmployeeLogin/>}/>
 
-        {/* <Route exact path='/addEmployee/_create' element={<CreateUpdateEmployee/>}/>
-        <Route exact path='/addEmployee/:eid' element={<CreateUpdateEmployee/>}/> */}
-        
         <Route path='/addEmployee/:eid' element={<CreateUpdateEmployee/>}/>
+        <Route exact path="/manage-employee" element={<EmployeeView/>}/>
+
+        <Route path='/addLoan/:lid' element={<CreateUpdateLoan/>}/>
+        <Route exact path="/manage-loan" element={<LoanView/>}/>
+
+        <Route path='/addItem/:Iid' element={<CreateUpdateItem/>}/>
+        <Route exact path="/manage-item" element={<ItemView/>}/>
 
         <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
-        <Route exact path="/manage-employee" element={<EmployeeView/>}/>
+        
         <Route path="/user/:id/viewLoan" element={<ViewLoans/>}/>
         <Route path="/user/:id/viewItems" element={<ViewItems/>}/>
       </Routes>

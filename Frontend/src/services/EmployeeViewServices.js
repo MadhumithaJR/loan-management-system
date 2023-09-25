@@ -15,7 +15,6 @@ class EmployeeViewServices {
     }
 
     static getEmployeeById(employeeId){
-        console.log("EmployeeViewService:",employeeId);
         return axios.get('http://localhost:8090/lms/api/employees'+'/'+employeeId);
     }
 

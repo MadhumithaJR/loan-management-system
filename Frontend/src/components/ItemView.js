@@ -9,12 +9,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import EmployeeViewServices from '../services/EmployeeViewServices';
+import ItemViewServices from '../services/ItemViewServices';
 import { useNavigate } from 'react-router-dom';
 
 
 
-const EmployeeView = () => {
+const ItemView = () => {
 
     const history = useNavigate();
 
@@ -40,17 +40,17 @@ const EmployeeView = () => {
     }));
 
 
-    const [employees, setEmployees] = useState([]);
+    const [items, setItems] = useState([]);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        fetchEmployees();
+        fetchItems();
     }, []);
 
-    const fetchEmployees = async () => {
+    const fetchItems = async () => {
         try {
-            EmployeeViewServices.getAllEmployees().then((response) => {
-                setEmployees(response.data);
+            ItemViewServices.getAllItems().then((response) => {
+                setItems(response.data);
             });
 
         } catch (error) {
@@ -59,29 +59,29 @@ const EmployeeView = () => {
     }
 
 
-    const addEmployee = () => {
-        history('/addEmployee/_create');
+    const addItem = () => {
+        history('/addItem/_create');
     }
 
-    const editEmployee = (eid) => {
-        history(`/addEmployee/${eid}`);
+    const editItem = (Iid) => {
+        history(`/addItem/${Iid}`);
     }
 
-    const deleteEmployee = (eid) => {
-        EmployeeViewServices.deleteEmployee(eid).then(() => {
-            fetchEmployees();
-            setMessage('Employee details deleted successfully');
-            setTimeout(() => { history('/manage-employee') }, 500);
+    const deleteItem = (Iid) => {
+        ItemViewServices.deleteItem(Iid).then(() => {
+            fetchItems();
+            setMessage('Item details deleted successfully');
+            setTimeout(() => { history('/manage-item') }, 500);
 
         });
-        history(`/deleteEmployee/${eid}`);
+        history(`/deleteItem/${Iid}`);
     }
 
 
     return (
         <>
             <br></br>
-            <h1>Employee List</h1>
+            <h1>Item List</h1>
             <br />
             <div className="row justify-content-center">
                 <Button variant="contained" style={{
@@ -92,38 +92,36 @@ const EmployeeView = () => {
                     fontWeight: "bolder",
                     fontSize: "15px",
                     maxWidth: "200px"
-                }} onClick={addEmployee}>
-                    Add Employee
+                }} onClick={addItem}>
+                    Add Item
                 </Button>
             </div>
             <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
-                <Table sx={{ minWidth: 100, maxWidth: 1300, mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
+                <Table sx={{ minWidth: 100, maxWidth: 1200, mt: 10, ml: 20, mr: 10 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell width="10%" >Employee Id</StyledTableCell>
-                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Employee Name</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Designation</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Department</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Gender</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Date_of_Birth</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Date_of_Joining</StyledTableCell>
+                            <StyledTableCell width="10%" >Item Id</StyledTableCell>
+                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Description</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Issue Status</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Item Make</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Item Category</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Item Valuation</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Edit</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Delete</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {employees.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell width="10%" >
-                                    {row.id}
+                        {items.map((row) => (
+                            <StyledTableRow key={row.item_id}>
+                                <StyledTableCell width="9%" >
+                                    {row.item_id}
                                 </StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.name}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.designation}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.department}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.gender}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.dob}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.doj}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">
+                                <StyledTableCell width="14%" align="center">{row.description}</StyledTableCell>
+                                <StyledTableCell width="11%" align="center">{row.status}</StyledTableCell>
+                                <StyledTableCell width="11%" align="center">{row.make}</StyledTableCell>
+                                <StyledTableCell width="11%" align="center">{row.category}</StyledTableCell>
+                                <StyledTableCell width="11%" align="center">{row.value}</StyledTableCell>
+                                <StyledTableCell width="11%" align="center">
                                     <Button variant="contained" style={{
                                         borderRadius: 2,
                                         backgroundColor: "#AFE1AF",
@@ -131,11 +129,11 @@ const EmployeeView = () => {
                                         color: "#000000",
                                         fontWeight: "bold",
                                         fontSize: "13px"
-                                    }} onClick={() => { editEmployee(row.id) }}>
+                                    }} onClick={() => { editItem(row.item_id) }}>
                                         Edit
                                     </Button>
                                 </StyledTableCell>
-                                <StyledTableCell width="10%" align="center">
+                                <StyledTableCell width="11%" align="center">
                                     <Button variant="contained" style={{
                                         borderRadius: 2,
                                         backgroundColor: "#FFCCCB",
@@ -143,7 +141,7 @@ const EmployeeView = () => {
                                         color: "#000000",
                                         fontWeight: "bold",
                                         fontSize: "13px"
-                                    }} onClick={() => { deleteEmployee(row.id) }}>
+                                    }} onClick={() => { deleteItem(row.item_id) }}>
                                         Delete
                                     </Button>
                                 </StyledTableCell>
@@ -157,4 +155,4 @@ const EmployeeView = () => {
     )
 }
 
-export default EmployeeView
+export default ItemView;
