@@ -19,6 +19,7 @@ import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Item;
 import com.wellsfargo.training.lms.service.ItemService;
 
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
@@ -28,8 +29,6 @@ public class AdminController {
 
 	@Autowired
 	private ItemService iservice;
-
-
 
     @PostMapping("/login")
     public Boolean loginAdmin(@RequestBody @Validated Admin admin) throws ResourceNotFoundException
@@ -95,6 +94,7 @@ public class AdminController {
         }
 
     }
+    
     @DeleteMapping("/loan/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteLoan(@PathVariable(value = "id") int id)throws ResourceNotFoundException{
         Loan l = adminService.getLoanById(id).orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+id));
@@ -103,10 +103,7 @@ public class AdminController {
         Map<String,Boolean> response = new HashMap<String, Boolean>();
         response.put("Deleted",Boolean.TRUE);
         return ResponseEntity.ok(response);
-
-
     }
-
 
 
 	@PostMapping("/items")
@@ -148,7 +145,6 @@ public class AdminController {
 		Item item = iservice.getSingleItem(id).
 				orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 
-		// update product with new values
 		item.setDescription(i.getDescription());
 		item.setStatus(i.getStatus());
 		item.setCategory(i.getCategory());
