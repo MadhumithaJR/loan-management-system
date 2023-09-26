@@ -14,6 +14,7 @@ import LoanView from './components/LoanView';
 import CreateUpdateLoan from './components/CreateUpdateLoan';
 import ItemView from './components/ItemView';
 import CreateUpdateItem from './components/CreateUpdateItem';
+import Employee from './components/Employee';
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
 
         <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
+        <Route exact path="/employee" element={<Employee/>}/>
         
         <Route path="/user/:id/viewLoan" element={<ViewLoans/>}/>
         <Route path="/user/:id/viewItems" element={<ViewItems/>}/>

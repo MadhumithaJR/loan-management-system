@@ -12,6 +12,11 @@ import Button from '@mui/material/Button';
 import EmployeeViewServices from '../services/EmployeeViewServices';
 import { useNavigate } from 'react-router-dom';
 
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 
 const EmployeeView = () => {
@@ -58,6 +63,10 @@ const EmployeeView = () => {
         }
     }
 
+    const backToDashboard = () => {
+        console.log("inside")
+        history('/admin');
+    }
 
     const addEmployee = () => {
         history('/addEmployee/_create');
@@ -80,6 +89,12 @@ const EmployeeView = () => {
 
     return (
         <>
+            <Stack direction="row" alignItems="center" spacing={1}>
+                <IconButton aria-label="delete" size="large" onClick={backToDashboard} >
+                    <ArrowBackIosIcon />
+                </IconButton>
+            </Stack>
+
             <br></br>
             <h1>Employee List</h1>
             <br />

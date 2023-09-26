@@ -54,7 +54,7 @@ const Login = () => {
       if (loginSuccess) {
         setSuccessMessage('Login Successful Redirecting..');
         setTimeout(() => {
-          history('/home'); //on successful login navigate to product componenets
+          history('/employee'); //on successful login navigate to product componenets
         }, 200)
       } else {
         setErrorStatus(true)

@@ -13,7 +13,10 @@ import { useNavigate } from 'react-router-dom';
 import LoanViewServices from '../services/LoanViewServices';
 import Box from '@mui/material/Box';
 
-
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const LoanView = () => {
 
@@ -59,6 +62,10 @@ const LoanView = () => {
         }
     }
 
+    const backToDashboard = () => {
+        console.log("inside")
+        history('/admin');
+    }
 
     const addLoan = () => {
         history('/addLoan/_create');
@@ -81,72 +88,77 @@ const LoanView = () => {
 
     return (
         <>
-            
-                <br></br>
-                <h1>Loan List</h1>
-                <br />
-                <div className="row justify-content-center">
-                    <Button variant="contained" style={{
-                        borderRadius: 2,
-                        backgroundColor: "#DCDCDC",
-                        padding: "8px 8px",
-                        color: "#000000",
-                        fontWeight: "bolder",
-                        fontSize: "15px",
-                        maxWidth: "200px"
-                    }} onClick={addLoan}>
-                        Add Loan Card
-                    </Button>
-                </div>
-                <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
-                    <Table sx={{ minWidth: 100, maxWidth: 800, mt: 10, ml: 48, mr: 10 }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell width="10%" >Loan Id</StyledTableCell>
-                                <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Loan Type</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">Duration</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">Edit</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">Delete</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {loans.map((row) => (
-                                <StyledTableRow key={row.loan_id}>
-                                    <StyledTableCell width="10%" >
-                                        {row.loan_id}
-                                    </StyledTableCell>
-                                    <StyledTableCell width="10%" align="center">{row.type}</StyledTableCell>
-                                    <StyledTableCell width="10%" align="center">{row.duration}</StyledTableCell>
-                                    <StyledTableCell width="10%" align="center">
-                                        <Button variant="contained" style={{
-                                            borderRadius: 2,
-                                            backgroundColor: "#AFE1AF",
-                                            padding: "5px 5px",
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: "13px"
-                                        }} onClick={() => { editLoan(row.loan_id) }}>
-                                            Edit
-                                        </Button>
-                                    </StyledTableCell>
-                                    <StyledTableCell width="10%" align="center">
-                                        <Button variant="contained" style={{
-                                            borderRadius: 2,
-                                            backgroundColor: "#FFCCCB",
-                                            padding: "5px 5px",
-                                            color: "#000000",
-                                            fontWeight: "bold",
-                                            fontSize: "13px"
-                                        }} onClick={() => { deleteLoan(row.loan_id) }}>
-                                            Delete
-                                        </Button>
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            
+            <Stack direction="row" alignItems="center" spacing={1}>
+                <IconButton aria-label="delete" size="large" onClick={backToDashboard} >
+                    <ArrowBackIosIcon />
+                </IconButton>
+            </Stack>
+
+            <br></br>
+            <h1>Loan List</h1>
+            <br />
+            <div className="row justify-content-center">
+                <Button variant="contained" style={{
+                    borderRadius: 2,
+                    backgroundColor: "#DCDCDC",
+                    padding: "8px 8px",
+                    color: "#000000",
+                    fontWeight: "bolder",
+                    fontSize: "15px",
+                    maxWidth: "200px"
+                }} onClick={addLoan}>
+                    Add Loan Card
+                </Button>
+            </div>
+            <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
+                <Table sx={{ minWidth: 100, maxWidth: 800, mt: 10, ml: 48, mr: 10 }} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell width="10%" >Loan Id</StyledTableCell>
+                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Loan Type</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Duration</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Edit</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Delete</StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {loans.map((row) => (
+                            <StyledTableRow key={row.loan_id}>
+                                <StyledTableCell width="10%" >
+                                    {row.loan_id}
+                                </StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.type}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.duration}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">
+                                    <Button variant="contained" style={{
+                                        borderRadius: 2,
+                                        backgroundColor: "#AFE1AF",
+                                        padding: "5px 5px",
+                                        color: "#000000",
+                                        fontWeight: "bold",
+                                        fontSize: "13px"
+                                    }} onClick={() => { editLoan(row.loan_id) }}>
+                                        Edit
+                                    </Button>
+                                </StyledTableCell>
+                                <StyledTableCell width="10%" align="center">
+                                    <Button variant="contained" style={{
+                                        borderRadius: 2,
+                                        backgroundColor: "#FFCCCB",
+                                        padding: "5px 5px",
+                                        color: "#000000",
+                                        fontWeight: "bold",
+                                        fontSize: "13px"
+                                    }} onClick={() => { deleteLoan(row.loan_id) }}>
+                                        Delete
+                                    </Button>
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
 
         </>
     )

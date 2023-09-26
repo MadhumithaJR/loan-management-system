@@ -12,6 +12,11 @@ import Button from '@mui/material/Button';
 import ItemViewServices from '../services/ItemViewServices';
 import { useNavigate } from 'react-router-dom';
 
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 
 const ItemView = () => {
@@ -58,6 +63,10 @@ const ItemView = () => {
         }
     }
 
+    const backToDashboard = () => {
+        console.log("inside")
+        history('/admin');
+    }
 
     const addItem = () => {
         history('/addItem/_create');
@@ -80,6 +89,12 @@ const ItemView = () => {
 
     return (
         <>
+            <Stack direction="row" alignItems="center" spacing={1}>
+                <IconButton aria-label="delete" size="large" onClick={backToDashboard} >
+                    <ArrowBackIosIcon />
+                </IconButton>
+            </Stack>
+
             <br></br>
             <h1>Item List</h1>
             <br />
