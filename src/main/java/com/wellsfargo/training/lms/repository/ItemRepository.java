@@ -2,6 +2,7 @@ package com.wellsfargo.training.lms.repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ItemRepository extends JpaRepository<Item, Integer>{
 
+    public Optional<Item> deleteById(int id);
     @Query("SELECT i FROM Item as i WHERE i.category = :category AND i.make = :make AND i.description = :description")
     Item findByMakeAndCategoryAndDescription(String make, String category, String description);
     

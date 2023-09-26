@@ -43,19 +43,19 @@ public class AdminService {
         return itemRepository.findAll();
     }
 
-    public Optional<Item> getSingleItem(Integer id) {
+    public Optional<Item> getItemById(Integer id) {
         return itemRepository.findById(id);
     }
 
-    public void deleteItem(int id) {
-        itemRepository.deleteById(id);
+    public Optional<Item> deleteItem(int id) {
+        return itemRepository.deleteById(id);
     }
 
     public Loan saveLoan(Loan loan){
         return loanRepository.save(loan);
     }
 
-    public List<Loan> listAll(){
+    public List<Loan> listAllLoans(){
         return loanRepository.findAll();
     }
 
@@ -63,8 +63,9 @@ public class AdminService {
         return loanRepository.findById(id);
     }
 
-    public void deleteLoan(int id){
-        loanRepository.deleteById(id);
+    public Optional<Loan> deleteLoan(int id){
+
+        return loanRepository.deleteById(id);
     }
 
 

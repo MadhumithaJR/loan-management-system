@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.wellsfargo.training.lms.exception.AuthenticationFailedException;
 import com.wellsfargo.training.lms.model.*;
 import com.wellsfargo.training.lms.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
 @Transactional
@@ -46,8 +48,19 @@ public class EmployeeService {
 		return erepo.findById(id);
 		
 	}
-	public void deleteEmployee(String id) {
-		erepo.deleteById(id);
+	public Optional<Employee> deleteEmployee(String id) {
+		return erepo.deleteById(id);
+	}
+
+	public String updateEmployee(@Validated Employee e) {
+		Optional<Employee> op = erepo.findById(e.getId());
+
+		if(op.isPresent()) {
+			erepo.save(e);
+			return ("Employee details successfully updated");
+		} else {
+			return ("No such employee is present");
+		}
 	}
 
 	public String applyLoan(ApplyLoanModel applyLoanModel){
@@ -85,7 +98,6 @@ public class EmployeeService {
 		return "Loan has been applied successfully!";
 
 	}
-	
 	public List<Map<String, Object>> viewEmployeeItems(String id) {
 		return irepo.getItemsByEmpId(id);
 	}

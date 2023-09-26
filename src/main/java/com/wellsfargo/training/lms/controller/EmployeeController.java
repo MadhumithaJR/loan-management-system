@@ -94,7 +94,7 @@ public class EmployeeController {
 
 
 	@PutMapping("/employees/{id}")
-	public ResponseEntity<Employee> updateProductById(@PathVariable(value="id") String eID,
+	public ResponseEntity<Employee> updateEmployeeById(@PathVariable(value="id") String eID,
 			@Validated @RequestBody Employee e)
 			throws ResourceNotFoundException{
 				 Employee employee=eservice.getSingleEmployee(eID).

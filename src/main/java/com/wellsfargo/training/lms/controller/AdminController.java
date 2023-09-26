@@ -61,7 +61,7 @@ public class AdminController {
     @GetMapping("/loan")
     public ResponseEntity<List<Loan>> getAllLoan(){
         try{
-            List<Loan> l = adminService.listAll();
+            List<Loan> l = adminService.listAllLoans();
             return ResponseEntity.ok(l);
         }catch (Exception e){
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class AdminController {
 
     }
     
-    @DeleteMapping("/loan/{id}")
+    @DeleteMapping(value = "/loan/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteLoan(@PathVariable(value = "id") int id)throws ResourceNotFoundException{
         Loan l = adminService.getLoanById(id).orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+id));
 
@@ -127,7 +127,7 @@ public class AdminController {
 	@GetMapping("/items/{id}")
 	public ResponseEntity<Item> getItemById(@PathVariable(value="id") Integer id)
 	throws ResourceNotFoundException {
-		Item i = adminService.getSingleItem(id).
+		Item i = adminService.getItemById(id).
 				orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 		return ResponseEntity.ok().body(i);
 	}
@@ -136,7 +136,7 @@ public class AdminController {
 	public ResponseEntity<Item> updateItem(@PathVariable(value="id") Integer id,
 			@Validated @RequestBody Item i)
 	throws ResourceNotFoundException {
-		Item item = adminService.getSingleItem(id).
+		Item item = adminService.getItemById(id).
 				orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 
 		item.setDescription(i.getDescription());
@@ -152,7 +152,7 @@ public class AdminController {
 	@DeleteMapping("/items/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteItem(@PathVariable(value="id") Integer id)
 		throws ResourceNotFoundException {
-		adminService.getSingleItem(id).
+		adminService.getItemById(id).
 		orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 
 		adminService.deleteItem(id);
