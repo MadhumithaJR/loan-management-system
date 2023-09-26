@@ -19,7 +19,6 @@ import com.wellsfargo.training.lms.model.Item;
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins="http://localhost:3000")
 public class AdminController {
 
     @Autowired
