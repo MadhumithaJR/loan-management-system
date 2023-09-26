@@ -93,5 +93,13 @@ public class EmployeeService {
 	public List<LoanView> viewEmployeeLoans(String id){
 		return lrepo.getLoansByEmpId(id);
 	}
+
+	public List<String> getItemDescriptions(String category){
+		return irepo.getItemDescriptionForCategory(category);
+	}
+
+	public List<String> getItemMakes(String category, String description){
+		return irepo.getItemMakeForCategoryDesc(category,description);
+	}
 	
 }

@@ -13,7 +13,7 @@ return (
     <h2>Employee Dashboard</h2>
     <ButtonGroup variant="contained" aria-label="outlined primary button group">
       <Button onClick={() => history('/emploanview')}>View Loans</Button>
-      <Button onClick={() => history('/employee/two')}>Apply for Loan</Button>
+      <Button onClick={() => history('/apply-loan')}>Apply for Loan</Button>
       <Button onClick={() => history('/empitemsview')}>View Items Purchased</Button>
     </ButtonGroup>
 </div>

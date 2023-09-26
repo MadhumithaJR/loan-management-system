@@ -15,4 +15,10 @@ public interface ItemRepository extends JpaRepository<Item, Integer>{
     
     @Query(nativeQuery=true, value="SELECT Issue.issue_id, Item.item_description, Item.item_make, Item.item_category, Item.item_value FROM issue_details Issue INNER JOIN item_master Item ON Issue.item_id = Item.item_id WHERE Issue.employee_id = ?1")
     List<Map<String, Object>> getItemsByEmpId(String id);
+
+    @Query(nativeQuery = true, value="SELECT DISTINCT item_description from item_master WHERE item_category = :category")
+    List<String> getItemDescriptionForCategory(String category);
+
+    @Query(nativeQuery = true, value="SELECT DISTINCT item_make from item_master WHERE item_category = :category AND item_description = :description")
+    List<String> getItemMakeForCategoryDesc(String category, String description);
 }
