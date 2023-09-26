@@ -16,6 +16,7 @@ import ItemView from './components/ItemView';
 import CreateUpdateItem from './components/CreateUpdateItem';
 import Employee from './components/Employee';
 import AboutUs from './components/AboutUs';
+import EmpViewLoans from './components/EmpViewLoans';
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
               <Route exact path="/admin" element={<Admin />} />
               <Route exact path="/employee" element={<Employee />} />
               <Route exact path="/aboutus" element={<AboutUs />} />
+              <Route exact path="/emploanview" element={<EmpViewLoans />} />
 
               <Route path="/user/:id/viewLoan" element={<ViewLoans />} />
               <Route path="/user/:id/viewItems" element={<ViewItems />} />
