@@ -78,12 +78,12 @@ public class AdminControllerTest {
             .findAndRegisterModules()
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        // this is needed for inititalization of mocks, if you use @Mock
-        this.mvc = MockMvcBuilders.standaloneSetup(adminController).build();
-    }
+//    @Before
+//    public void setUp() throws Exception {
+//        MockitoAnnotations.initMocks(this);
+//        // this is needed for inititalization of mocks, if you use @Mock
+//        this.mvc = MockMvcBuilders.standaloneSetup(adminController).build();
+//    }
 
     @Test
     public void testSaveEmployee() throws Exception{
