@@ -23,7 +23,6 @@ import jakarta.persistence.Table;
 public class Item {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="item_id")
 	private Integer item_id;
 
