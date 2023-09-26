@@ -90,4 +90,8 @@ public class EmployeeService {
 		return irepo.getItemsByEmpId(id);
 	}
 	
+	public List<LoanView> viewEmployeeLoans(String id){
+		return lrepo.viewLoans(id);
+	}
+	
 }
