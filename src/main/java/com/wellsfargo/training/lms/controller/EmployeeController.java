@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Employee;
+import com.wellsfargo.training.lms.model.LoanView;
 import com.wellsfargo.training.lms.service.EmployeeService;
 
 @CrossOrigin(origins="http://localhost:3000")
@@ -122,6 +123,11 @@ public class EmployeeController {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
+	}
+	
+	@GetMapping("/viewLoans/{id}")
+	public List<LoanView> viewEmployeelOans(@PathVariable(value="id") String eID){
+		return eservice.viewEmployeeLoans(eID);
 	}
 
 }
