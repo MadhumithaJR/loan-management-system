@@ -100,7 +100,14 @@ function CreateUpdateEmployee() {
     const getTitle = () => {
         console.log(eid)
         if (eid === '_create') {
-            return <><Typography variant="h4" gutterBottom>
+            return <><Typography variant="h4" gutterBottom style={{
+                borderRadius: 2,
+                backgroundColor: "#FFCCCB",
+                padding: "5px 5px",
+                color: "#000000",
+                fontWeight: "bold",
+                fontSize: "30px"
+            }}>
                 Add Employee
             </Typography></>
         } else {

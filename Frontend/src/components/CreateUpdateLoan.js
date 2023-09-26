@@ -66,13 +66,20 @@ function CreateUpdateLoan() {
     const getTitle = () => {
         console.log(lid)
         if (lid === '_create') {
-            return <><Typography variant="h4" gutterBottom>
+            return <><Typography variant="h4" gutterBottom style={{
+                borderRadius: 2,
+                backgroundColor: "#91e5f6",
+                padding: "5px 5px",
+                color: "#000000",
+                fontWeight: "bold",
+                fontSize: "30px"
+            }}>
                 Add Loan Card
             </Typography></>
         } else {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#FFCCCB",
+                backgroundColor: "#91e5f6",// #97dffc #caf0f8
                 padding: "5px 5px",
                 color: "#000000",
                 fontWeight: "bold",
@@ -119,45 +126,6 @@ function CreateUpdateLoan() {
                 </Card>
             </center>
 
-
-            {/* <div>
-                <br></br>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="form-outline col-12 mb-4">
-                            {getTitle()}
-                            <div className="card-body">
-                                <form>
-                                    <div className="form-group">
-                                        <label> Employee Name: </label>
-                                        <input placeholder="Employee Name" name="name" className="form-control"
-                                            value={name} onChange={changeNameHandler} />
-                                    </div>
-                                    <div className="form-group">
-                                        <label> Department: </label>
-                                        <input placeholder="Department" name="department" className="form-control"
-                                            value={department} onChange={changeDepartmentHandler} />
-                                    </div>
-                                    <div className="form-group">
-                                        <label> Designation: </label>
-                                        <input placeholder="Designation" name="designation" className="form-control"
-                                            value={designation} onChange={changeDesignationHandler} />
-                                    </div>
-                                    <div className="form-group">
-                                        <label> Price: </label>
-                                        <input placeholder="Gender" name="gender" className="form-control"
-                                            value={gender} onChange={changeGenderHandler} />
-                                    </div>
-
-                                    <button className="btn btn-success" onClick={createOrUpdateEmployee}>Save</button>
-                                    <button className="btn btn-danger" onClick={cancel.bind(this)} style={{ marginLeft: "10px" }}>Cancel</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div> */}
         </>
 
     );
