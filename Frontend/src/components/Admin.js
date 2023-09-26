@@ -5,15 +5,25 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 const Admin = () => {
-    const history=useNavigate();
 return (
 <div className="container-fluid">
-    <h2>Admin Dashboard</h2>
-    <ButtonGroup variant="contained" aria-label="outlined primary button group">
-      <Button onClick={() => history('/admin/one')}>Customer Data Management</Button>
-      <Button onClick={() => history('/admin/two')}>Loan Card Management</Button>
-      <Button onClick={() => history('/admin/three')}>Items Master Data</Button>
-    </ButtonGroup>
+<div className="row p-3 pt-5">
+    <div className="col-md-12">
+    <button type="button" class="btn btn-outline-secondary btn-light">Customer Data Management</button>
+    </div>
+</div>
+<div className="row p-3 ">
+    <div className="col-md-12">
+    <button type="button" class="btn btn-outline-secondary btn-light">Loan Card Management</button>
+    </div>
+</div>
+<div className="row p-3 pb-5">
+    <div className="col-md-12">
+    <button type="button" class="btn btn-outline-secondary btn-light">Items Master Data</button>
+    </div>
+</div>
+    
+    
 </div>
 );
 }

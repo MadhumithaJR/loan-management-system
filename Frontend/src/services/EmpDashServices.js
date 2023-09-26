@@ -1,9 +1,13 @@
 import axios from "axios";
 
 
-class EmployeeViewServices {
-    static getAllEmployees(){
-        return axios.get('http://localhost:8090/lms/api/employees');
+class EmpDashServices {
+    static getEmpLoans(id){
+        return axios.get('http://localhost:8090/lms/api/viewLoans/' + id);
+    }
+
+    static getEmpItems(id){
+        return axios.get('http://localhost:8090/lms/api/viewItems/' + id);
     }
 
     static createEmployee(employee){
@@ -24,4 +28,4 @@ class EmployeeViewServices {
     
 }
 
-export default EmployeeViewServices;
+export default EmpDashServices;

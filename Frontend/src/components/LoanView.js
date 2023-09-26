@@ -9,17 +9,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import EmployeeViewServices from '../services/EmployeeViewServices';
 import { useNavigate } from 'react-router-dom';
+import LoanViewServices from '../services/LoanViewServices';
+import Box from '@mui/material/Box';
 
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-
-
-const EmployeeView = () => {
+const LoanView = () => {
 
     const history = useNavigate();
 
@@ -45,17 +44,17 @@ const EmployeeView = () => {
     }));
 
 
-    const [employees, setEmployees] = useState([]);
+    const [loans, setLoans] = useState([]);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        fetchEmployees();
+        fetchLoans();
     }, []);
 
-    const fetchEmployees = async () => {
+    const fetchLoans = async () => {
         try {
-            EmployeeViewServices.getAllEmployees().then((response) => {
-                setEmployees(response.data);
+            LoanViewServices.getAllLoans().then((response) => {
+                setLoans(response.data);
             });
 
         } catch (error) {
@@ -68,22 +67,22 @@ const EmployeeView = () => {
         history('/admin');
     }
 
-    const addEmployee = () => {
-        history('/addEmployee/_create');
+    const addLoan = () => {
+        history('/addLoan/_create');
     }
 
-    const editEmployee = (eid) => {
-        history(`/addEmployee/${eid}`);
+    const editLoan = (lid) => {
+        history(`/addLoan/${lid}`);
     }
 
-    const deleteEmployee = (eid) => {
-        EmployeeViewServices.deleteEmployee(eid).then(() => {
-            fetchEmployees();
-            setMessage('Employee details deleted successfully');
-            setTimeout(() => { history('/manage-employee') }, 500);
+    const deleteLoan = (lid) => {
+        LoanViewServices.deleteLoan(lid).then(() => {
+            fetchLoans();
+            setMessage('Loan Card details deleted successfully');
+            setTimeout(() => { history('/manage-loan') }, 500);
 
         });
-        history(`/deleteEmployee/${eid}`);
+        history(`/deleteLoan/${lid}`);
     }
 
 
@@ -96,7 +95,7 @@ const EmployeeView = () => {
             </Stack>
 
             <br></br>
-            <h1>Employee List</h1>
+            <h1>Loan List</h1>
             <br />
             <div className="row justify-content-center">
                 <Button variant="contained" style={{
@@ -107,37 +106,29 @@ const EmployeeView = () => {
                     fontWeight: "bolder",
                     fontSize: "15px",
                     maxWidth: "200px"
-                }} onClick={addEmployee}>
-                    Add Employee
+                }} onClick={addLoan}>
+                    Add Loan Card
                 </Button>
             </div>
             <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
-                <Table sx={{ minWidth: 100, maxWidth: 1300, mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
+                <Table sx={{ minWidth: 100, maxWidth: 800, mt: 10, ml: 48, mr: 10 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell width="10%" >Employee Id</StyledTableCell>
-                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Employee Name</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Designation</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Department</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Gender</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Date_of_Birth</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Date_of_Joining</StyledTableCell>
+                            <StyledTableCell width="10%" >Loan Id</StyledTableCell>
+                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Loan Type</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Duration</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Edit</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Delete</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {employees.map((row) => (
-                            <StyledTableRow key={row.id}>
+                        {loans.map((row) => (
+                            <StyledTableRow key={row.loan_id}>
                                 <StyledTableCell width="10%" >
-                                    {row.id}
+                                    {row.loan_id}
                                 </StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.name}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.designation}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.department}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.gender}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.dob}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.doj}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.type}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.duration}</StyledTableCell>
                                 <StyledTableCell width="10%" align="center">
                                     <Button variant="contained" style={{
                                         borderRadius: 2,
@@ -146,7 +137,7 @@ const EmployeeView = () => {
                                         color: "#000000",
                                         fontWeight: "bold",
                                         fontSize: "13px"
-                                    }} onClick={() => { editEmployee(row.id) }}>
+                                    }} onClick={() => { editLoan(row.loan_id) }}>
                                         Edit
                                     </Button>
                                 </StyledTableCell>
@@ -158,7 +149,7 @@ const EmployeeView = () => {
                                         color: "#000000",
                                         fontWeight: "bold",
                                         fontSize: "13px"
-                                    }} onClick={() => { deleteEmployee(row.id) }}>
+                                    }} onClick={() => { deleteLoan(row.loan_id) }}>
                                         Delete
                                     </Button>
                                 </StyledTableCell>
@@ -168,8 +159,9 @@ const EmployeeView = () => {
                 </Table>
             </TableContainer>
 
+
         </>
     )
 }
 
-export default EmployeeView
+export default LoanView

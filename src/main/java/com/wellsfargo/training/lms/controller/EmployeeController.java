@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import com.wellsfargo.training.lms.model.ApplyLoanModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Employee;
+import com.wellsfargo.training.lms.model.LoanView;
 import com.wellsfargo.training.lms.service.EmployeeService;
 
 @CrossOrigin(origins="http://localhost:3000")
@@ -89,7 +91,8 @@ public class EmployeeController {
 		response.put("Deleted",Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
-	
+
+
 	@PutMapping("/employees/{id}")
 	public ResponseEntity<Employee> updateProductById(@PathVariable(value="id") String eID,
 			@Validated @RequestBody Employee e)
@@ -110,7 +113,36 @@ public class EmployeeController {
 				 final Employee updatedEmployee= eservice.registerEmployee(employee);
 				 return ResponseEntity.ok().body(updatedEmployee);
 				 
-			}
+	}
+
+	@PostMapping("/applyLoan")
+	public String applyLoan(@RequestBody ApplyLoanModel applyLoanModel){
+		return eservice.applyLoan(applyLoanModel);
+	}
 	
+	@GetMapping("/viewItems/{id}")
+	public ResponseEntity<List<Map<String, Object>>> viewEmployeeItems(@PathVariable(value="id") String eid) {
+		try {
+			List<Map<String, Object>> items = eservice.viewEmployeeItems(eid);
+			return ResponseEntity.ok(items);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
+	
+	@GetMapping("/viewLoans/{id}")
+	public ResponseEntity<List<LoanView>> viewEmployeeLoans(@PathVariable(value="id") String eid){
+		try {
+			List<LoanView> loans = eservice.viewEmployeeLoans(eid);
+			return ResponseEntity.ok(loans);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
+	}
 
 }
