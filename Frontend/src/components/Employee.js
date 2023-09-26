@@ -2,10 +2,12 @@ import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useCookies } from 'react-cookie';
 
 
 const Employee = () => {
     const history=useNavigate();
+    const [cookies, setCookie] = useCookies(['user']);
 return (
 <div className="container-fluid">
     <h2>Employee Dashboard</h2>

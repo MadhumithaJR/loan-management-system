@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthenticationService from "../services/AuthenticationService";
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
 
@@ -10,6 +11,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
+    const [cookies, setCookie] = useCookies(['user']);
 
     const idChangeHandler = (event) => {
         setId(event.target.value);
@@ -34,6 +36,7 @@ const Login = () => {
       if(loginSuccess){
         setSuccessMessage('Login Successful Redirecting..');
         setTimeout(()=>{
+          
           history('/home'); //on successful login navigate to product componenets
         },200)
       }else{

@@ -15,6 +15,7 @@ import CreateUpdateLoan from './components/CreateUpdateLoan';
 import ItemView from './components/ItemView';
 import CreateUpdateItem from './components/CreateUpdateItem';
 import Employee from './components/Employee';
+import AboutUs from './components/AboutUs';
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
         <Route exact path="/register" element={<Register/>}/>
         <Route exact path="/admin" element={<Admin/>}/>
         <Route exact path="/employee" element={<Employee/>}/>
+        <Route exact path = "/aboutus" element={<AboutUs/>}/>
         
         <Route path="/user/:id/viewLoan" element={<ViewLoans/>}/>
         <Route path="/user/:id/viewItems" element={<ViewItems/>}/>

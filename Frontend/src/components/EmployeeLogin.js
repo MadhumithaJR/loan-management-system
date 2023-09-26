@@ -14,6 +14,8 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Alert, AlertTitle, Container, Snackbar } from "@mui/material";
+import { useCookies } from 'react-cookie';
+
 
 const Login = () => {
 
@@ -23,6 +25,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false)
+  const [cookies, setCookie] = useCookies(['user']);
 
   useEffect(() => {
     setErrorStatus(false)
@@ -54,6 +57,7 @@ const Login = () => {
       if (loginSuccess) {
         setSuccessMessage('Login Successful Redirecting..');
         setTimeout(() => {
+          setCookie('Name', id, { path: '/' });
           history('/employee'); //on successful login navigate to product componenets
         }, 200)
       } else {
