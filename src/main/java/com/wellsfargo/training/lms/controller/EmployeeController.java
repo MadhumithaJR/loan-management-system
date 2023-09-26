@@ -114,9 +114,9 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/viewItems/{id}")
-	public ResponseEntity<List<Map<String, Object>>> getItemsByEmpId(@PathVariable(value="id") String eid) {
+	public ResponseEntity<List<Map<String, Object>>> viewEmployeeItems(@PathVariable(value="id") String eid) {
 		try {
-			List<Map<String, Object>> items = eservice.getItemsByEmpId(eid);
+			List<Map<String, Object>> items = eservice.viewEmployeeItems(eid);
 			return ResponseEntity.ok(items);
 		}
 		catch(Exception e) {
@@ -126,7 +126,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/viewLoans/{id}")
-	public List<LoanView> viewEmployeelOans(@PathVariable(value="id") String eID){
+	public List<LoanView> viewEmployeeLoans(@PathVariable(value="id") String eID){
 		return eservice.viewEmployeeLoans(eID);
 	}
 

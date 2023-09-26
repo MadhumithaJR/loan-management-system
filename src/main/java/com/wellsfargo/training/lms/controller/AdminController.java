@@ -2,7 +2,6 @@ package com.wellsfargo.training.lms.controller;
 
 import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Admin;
-import com.wellsfargo.training.lms.model.Employee;
 import com.wellsfargo.training.lms.model.Loan;
 import com.wellsfargo.training.lms.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.Item;
-import com.wellsfargo.training.lms.service.ItemService;
 
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
@@ -26,9 +23,6 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
-
-	@Autowired
-	private ItemService iservice;
 
     @PostMapping("/login")
     public Boolean loginAdmin(@RequestBody @Validated Admin admin) throws ResourceNotFoundException
@@ -109,7 +103,7 @@ public class AdminController {
 	@PostMapping("/items")
 	public ResponseEntity<Item> saveItem(@Validated @RequestBody Item item) {
 		try {
-			Item i = iservice.saveItem(item);
+			Item i = adminService.saveItem(item);
 			return ResponseEntity.status(HttpStatus.CREATED).body(i);
 		}
 		catch(Exception e) {
@@ -121,7 +115,7 @@ public class AdminController {
 	@GetMapping("/items")
 	public ResponseEntity<List<Item>> getAllItems() {
 		try {
-			List<Item> items = iservice.listAllItems();
+			List<Item> items = adminService.listAllItems();
 			return ResponseEntity.ok(items);
 		}
 		catch(Exception e) {
@@ -133,7 +127,7 @@ public class AdminController {
 	@GetMapping("/items/{id}")
 	public ResponseEntity<Item> getItemById(@PathVariable(value="id") Integer id)
 	throws ResourceNotFoundException {
-		Item i = iservice.getSingleItem(id).
+		Item i = adminService.getSingleItem(id).
 				orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 		return ResponseEntity.ok().body(i);
 	}
@@ -142,7 +136,7 @@ public class AdminController {
 	public ResponseEntity<Item> updateItem(@PathVariable(value="id") Integer id,
 			@Validated @RequestBody Item i)
 	throws ResourceNotFoundException {
-		Item item = iservice.getSingleItem(id).
+		Item item = adminService.getSingleItem(id).
 				orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 
 		item.setDescription(i.getDescription());
@@ -151,17 +145,17 @@ public class AdminController {
 		item.setValue(i.getValue());
 		item.setMake(i.getMake());
 
-		final Item updatedItem = iservice.saveItem(item);
+		final Item updatedItem = adminService.saveItem(item);
 		return ResponseEntity.ok().body(updatedItem);
 	}
 
 	@DeleteMapping("/items/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteItem(@PathVariable(value="id") Integer id)
 		throws ResourceNotFoundException {
-		iservice.getSingleItem(id).
+		adminService.getSingleItem(id).
 		orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+id));
 
-		iservice.deleteItem(id);
+		adminService.deleteItem(id);
 
 		Map<String, Boolean> response = new HashMap<String, Boolean>();
 		response.put("Deleted", Boolean.TRUE);

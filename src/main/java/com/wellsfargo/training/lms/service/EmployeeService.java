@@ -86,12 +86,12 @@ public class EmployeeService {
 
 	}
 	
-	public List<Map<String, Object>> getItemsByEmpId(String id) {
+	public List<Map<String, Object>> viewEmployeeItems(String id) {
 		return irepo.getItemsByEmpId(id);
 	}
 	
 	public List<LoanView> viewEmployeeLoans(String id){
-		return lrepo.viewLoans(id);
+		return lrepo.getLoansByEmpId(id);
 	}
 	
 }

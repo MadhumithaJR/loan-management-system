@@ -15,5 +15,5 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
     Loan findByType(String itemCategory);
     
     @Query("SELECT new com.wellsfargo.training.lms.model.LoanView (l.loan_id,l.duration,l.type,lc.date) FROM Loan l INNER JOIN Card lc ON l.loan_id=lc.loan.loan_id WHERE lc.employee.id = :employee_id")
- 	public List<LoanView> viewLoans(String employee_id);
+ 	public List<LoanView> getLoansByEmpId(String employee_id);
 }
