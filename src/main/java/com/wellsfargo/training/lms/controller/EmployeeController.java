@@ -126,8 +126,16 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/viewLoans/{id}")
-	public List<LoanView> viewEmployeeLoans(@PathVariable(value="id") String eID){
-		return eservice.viewEmployeeLoans(eID);
+	public ResponseEntity<List<LoanView>> viewEmployeeLoans(@PathVariable(value="id") String eid){
+		try {
+			List<LoanView> loans = eservice.viewEmployeeLoans(eid);
+			return ResponseEntity.ok(loans);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
 	}
 
 }
