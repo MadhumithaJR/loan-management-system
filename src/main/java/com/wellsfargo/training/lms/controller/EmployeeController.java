@@ -41,8 +41,15 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/employees")
-	public List<Employee> getAllEmployees(){
-		return eservice.listAll();
+	public ResponseEntity<List<Employee>> getAllEmployees(){
+		try{
+			List<Employee> employees = eservice.listAll();
+			return ResponseEntity.ok(employees);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
 	}
 	
 	@PostMapping("/login")
@@ -65,7 +72,7 @@ public class EmployeeController {
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable(value="id") String eID)
 	throws ResourceNotFoundException{
 		 Employee e=eservice.getSingleEmployee(eID).
-		 orElseThrow(()->new ResourceNotFoundException("Product Not founf for the ID"));
+		 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
 		 return ResponseEntity.ok().body(e);
 	}
 	

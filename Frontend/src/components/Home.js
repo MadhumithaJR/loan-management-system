@@ -4,7 +4,7 @@ const Home = () => {
     return (
         <div className="home container-fluid">
         <div className="row">
-            <div className="col-md-6 col-sm-12 pt-5 home-page-info">
+            {/* <div className="col-md-6 col-sm-12 pt-5 home-page-info">
                 <div>
                     <h2>This is Home Page</h2>
                     <p>
@@ -25,7 +25,7 @@ const Home = () => {
                     
                     </p>
                 </div>
-            </div>
+            </div> */}
             <div className="col-md-6 col-sm-12  login-side">
                 <div>
                     <p>Already a user?</p>

@@ -1,6 +1,10 @@
+body{
+  background-color: #fff !important;
+}
+
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #fff;
 }
 
 .App-logo {
@@ -34,7 +38,7 @@ h1,p{
   font-family: Mondia;
 }
 .home-page-info {
-  background-color: #323333;
+  background-color: #fff;
 }
 .home-page-info p{
   font-family: Mondia;
