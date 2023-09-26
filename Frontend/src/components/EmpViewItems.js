@@ -52,7 +52,7 @@ const EmpViewItems = () => {
 
     const fetchItems = async () => {
         try {
-            EmpDashServices.getEmpLoans(empId).then((response) => {
+            EmpDashServices.getEmpItems(empId).then((response) => {
                 setItems(response.data);
                 console.log(response.data);
             });
@@ -69,25 +69,27 @@ const EmpViewItems = () => {
     return (
         <>
             <br></br>
-            <h1>Employee Loan List {cookies.id}</h1>
+            <h1>Employee Items List {cookies.id}</h1>
             <br />
             <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
                 <Table sx={{ minWidth: 100, maxWidth: 1300, mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell width="10%" >Loan Id</StyledTableCell>
-                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Loan type</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Duration</StyledTableCell>
-                            <StyledTableCell width="10%" align="center">Card issue date</StyledTableCell>
+                            <StyledTableCell width="10%" >Issue Id</StyledTableCell>
+                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Item Value</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Item category</StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Item make </StyledTableCell>
+                            <StyledTableCell width="10%" align="center">Item description </StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {items.map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell width="10%" >{row.loan_id}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.type}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.duration}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.date}</StyledTableCell>
+                            <StyledTableRow key={row.issue_id}>
+                                <StyledTableCell width="10%" >{row.issue_id}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.item_value}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.item_category}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.item_make}</StyledTableCell>
+                                <StyledTableCell width="10%" align="center">{row.item_description}</StyledTableCell>
                                 
                                 
                             </StyledTableRow>

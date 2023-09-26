@@ -83,7 +83,7 @@ const EmpViewLoans = () => {
                     </TableHead>
                     <TableBody>
                         {loans.map((row) => (
-                            <StyledTableRow key={row.id}>
+                            <StyledTableRow key={row.loan_id}>
                                 <StyledTableCell width="10%" >{row.loan_id}</StyledTableCell>
                                 <StyledTableCell width="10%" align="center">{row.type}</StyledTableCell>
                                 <StyledTableCell width="10%" align="center">{row.duration}</StyledTableCell>

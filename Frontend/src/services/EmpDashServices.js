@@ -6,6 +6,10 @@ class EmpDashServices {
         return axios.get('http://localhost:8090/lms/api/viewLoans/' + id);
     }
 
+    static getEmpItems(id){
+        return axios.get('http://localhost:8090/lms/api/viewItems/' + id);
+    }
+
     static createEmployee(employee){
         return axios.post('http://localhost:8090/lms/api/employees',employee);
     }
