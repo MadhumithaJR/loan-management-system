@@ -18,6 +18,7 @@ import Employee from './components/Employee';
 import AboutUs from './components/AboutUs';
 import EmpViewLoans from './components/EmpViewLoans';
 import EmpViewItems from './components/EmpViewItems';
+import Logout from '@mui/icons-material/Logout';
 
 const App = () => {
   return (
@@ -53,7 +54,7 @@ const App = () => {
               <Route exact path="/aboutus" element={<AboutUs />} />
               <Route exact path="/emploanview" element={<EmpViewLoans />} />
               <Route exact path="/empitemsview" element={<EmpViewItems />} />
-
+              <Route exact path="/logout" element={<Logout />} />
               <Route path="/user/:id/viewLoan" element={<ViewLoans />} />
               <Route path="/user/:id/viewItems" element={<ViewItems />} />
             </Routes>
