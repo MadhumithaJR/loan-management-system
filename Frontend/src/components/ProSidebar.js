@@ -29,7 +29,7 @@ const ProSidebar = ({name,id}) => {
           <MenuItem component={<Link to="/emploanview" />} icon={<AccountBalanceIcon />}>View Loans</MenuItem>
           <MenuItem component={<Link to="/empitemsview" />} icon={<CategoryIcon />}>View Items</MenuItem>
           <MenuItem component={<Link to="/applyloan" />} icon={<AddCardIcon />}>Apply for loan</MenuItem>
-          <MenuItem component={<Link to="/logout" />} icon={<LogoutIcon />}>Log out</MenuItem>
+          {/* <MenuItem component={<Link to="/logout" />} icon={<LogoutIcon />}>Log out</MenuItem> */}
         </Menu>
       </Sidebar>
       </div>

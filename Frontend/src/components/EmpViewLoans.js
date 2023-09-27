@@ -16,6 +16,8 @@ import EmpDashServices from '../services/EmpDashServices';
 
 import ProSidebar from './ProSidebar';
 
+
+
 const EmpViewLoans = () => {
 
     const history = useNavigate();
@@ -68,7 +70,7 @@ const EmpViewLoans = () => {
 
     return (
         <>
-        <ProSidebar/>
+        <ProSidebar/>   
             <br></br>
             <div className='emp-loans'>
             <h1>Employee Loan List {cookies.id}</h1>
