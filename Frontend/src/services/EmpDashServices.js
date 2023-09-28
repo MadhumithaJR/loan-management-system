@@ -37,6 +37,14 @@ class EmpDashServices {
     static getMakes(item_category,item_description){
         return axios.get('http://localhost:8090/lms/api/getMakes'+'/'+item_category+'/'+item_description);
     }
+
+    static getValue(item_category,item_description,item_make){
+        return axios.get('http://localhost:8090/lms/api/getValue'+'/'+item_category+'/'+item_description+'/'+item_make);
+    }
+
+    static getAllLoanTypes(){
+        return axios.get('http://localhost:8090/lms/api/getAllLoanTypes');
+    }
     
 }
 

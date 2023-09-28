@@ -2,20 +2,9 @@ package com.wellsfargo.training.lms.model;
 
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name="item_master")
@@ -23,6 +12,8 @@ import jakarta.persistence.Table;
 public class Item {
 
 	@Id
+	@SequenceGenerator(name="item_seq", initialValue = 100,allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "item_seq")
 	@Column(name="item_id")
 	private Integer item_id;
 

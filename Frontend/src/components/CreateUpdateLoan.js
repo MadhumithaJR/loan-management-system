@@ -13,7 +13,6 @@ function CreateUpdateLoan() {
 
     const { lid } = useParams();
 
-    const [loan_id, setLoan_id] = useState('');
     const [type, setType] = useState('');
     const [duration, setDuration] = useState('');
 
@@ -23,7 +22,6 @@ function CreateUpdateLoan() {
         if (lid !== '_create') {
             LoanViewServices.getLoanById(lid).then((response) => {
                 const loan = response.data;
-                setLoan_id(loan.loan_id);
                 setType(loan.type);
                 setDuration(loan.duration);
             });
@@ -32,23 +30,22 @@ function CreateUpdateLoan() {
 
     const createOrUpdateLoan = (event) => {
         event.preventDefault();
-        const loan = { loan_id, type, duration };
+        const loan = { type, duration };
 
         if (lid === '_create') {
-                LoanViewServices.createLoan(loan).then(() => {
+            const loan = { type, duration };
+            LoanViewServices.createLoan(loan).then(() => {
                 history('/manage-loan');
             });
         }
         else {
-            LoanViewServices.updateLoan(loan,lid).then(() => {
+            const loan_id = parseInt(lid)
+            const loan = { loan_id, type, duration };
+            LoanViewServices.updateLoan(loan, lid).then(() => {
                 history('/manage-loan');
             });
         }
     }
-
-    const changeLoan_idHandler = (event) => {
-        setLoan_id(event.target.value);
-    };
 
     const changeTypeHandler = (event) => {
         setType(event.target.value);
@@ -98,14 +95,14 @@ function CreateUpdateLoan() {
                         {getTitle()}
                         <br></br>
                         <form>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Loan Id: </label>
 
 
                                 <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #ADD8E6', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Loan Card Id" name="loan_id" className="form-control"
                                     value={loan_id} onChange={changeLoan_idHandler} />
                             </div>
-                            <br></br>
+                            <br></br> */}
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Loan Type: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #ADD8E6', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Loan Card Type" name="type" className="form-control"

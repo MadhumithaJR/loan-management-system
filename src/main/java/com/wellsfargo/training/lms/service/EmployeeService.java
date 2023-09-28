@@ -94,12 +94,20 @@ public class EmployeeService {
 		return lrepo.getLoansByEmpId(id);
 	}
 
+	public List<String> getAllLoanTypes(){
+		return lrepo.getAllTypes();
+	}
+
 	public List<String> getItemDescriptions(String category){
 		return irepo.getItemDescriptionForCategory(category);
 	}
 
 	public List<String> getItemMakes(String category, String description){
 		return irepo.getItemMakeForCategoryDesc(category,description);
+	}
+
+	public int getItemValue(String category, String description, String make){
+		return irepo.getItemValue(category,description,make);
 	}
 	
 }

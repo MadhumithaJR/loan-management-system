@@ -170,14 +170,14 @@ function CreateUpdateEmployee() {
                             </div>
                             <br></br>
                             <div className="form-group">
-                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Birth (YYYY-MM-DD): </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Date Of Birth" name="dob" className="form-control"
+                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Birth (DD-MM-YYYY): </label>
+                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} type='date' placeholder="Date Of Birth" name="dob" className="form-control"
                                     value={dob} onChange={changeDobHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
-                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Joining (YYYY-MM-DD): </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Date Of Joining" name="doj" className="form-control"
+                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Joining (DD-MM-YYYY): </label>
+                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} type='date' placeholder="Date Of Joining" name="doj" className="form-control"
                                     value={doj} onChange={changeDojHandler} />
                             </div>
                             <br></br>
@@ -185,7 +185,7 @@ function CreateUpdateEmployee() {
                             {
                                 eid === '_create' && <div className="form-group">
                                     <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Password: </label>
-                                    <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Password" name="password" className="form-control"
+                                    <input  style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} type='password' placeholder="Password" name="password" className="form-control"
                                         value={password} onChange={changePasswordHandler} />
                                 </div>
                             }

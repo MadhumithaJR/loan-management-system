@@ -17,7 +17,7 @@ function CreateUpdateItem() {
 
     const { Iid } = useParams();
 
-    const [item_id, setItem_id] = useState('');
+    //const [item_id, setItem_id] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('');
     const [category, setCategory] = useState('');
@@ -30,7 +30,7 @@ function CreateUpdateItem() {
         if (Iid !== '_create') {
             ItemViewServices.getItemById(Iid).then((response) => {
                 const item = response.data;
-                setItem_id(item.item_id);
+                //setItem_id(item.item_id);
                 setDescription(item.description);
                 setStatus(item.status);
                 setCategory(item.category);
@@ -42,15 +42,16 @@ function CreateUpdateItem() {
 
     const createOrUpdateItem = (event) => {
         event.preventDefault();
-        const item = { item_id, description, status, category, value, make };
-
+        
         if (Iid === '_create') {
-
+            const item = {description, status, category, value, make };
             ItemViewServices.createItem(item).then(() => {
                 history('/manage-item');
             });
         }
         else {
+            const item_id = parseInt(Iid);
+            const item = { item_id, description, status, category, value, make };
             ItemViewServices.updateItem(item, Iid).then(() => {
                 history('/manage-item');
             });
@@ -60,9 +61,9 @@ function CreateUpdateItem() {
     // const furniture = ["Table", "Chair", "Bed", "Tea Table"];
     // const electronics = ["Laptop", "Projector", "Printer", "Refrigerator"];
     // const transport = ["SUV", "Scooty", "Motorcycle"];
-    const furniture = ["Wooden","Plastic"];
-    const electronics = ["Samsung","Realme","Iphone","Philips"];
-    const transport = ["Honda","TVS"];
+    const furniture = ["--Choose an Item Make--", "Wooden","Plastic"];
+    const electronics = ["--Choose an Item Make--", "Samsung","Realme","Iphone","Philips","HP"];
+    const transport = ["--Choose an Item Make--", "Honda","TVS"];
 
     let type = null;
     let options = null;
@@ -79,9 +80,9 @@ function CreateUpdateItem() {
         options = type.map((el) => <option key={el}>{el}</option>);
     }
 
-    const changeItem_idHandler = (event) => {
-        setItem_id(event.target.value);
-    };
+    // const changeItem_idHandler = (event) => {
+    //     setItem_id(event.target.value);
+    // };
 
     const changeDescriptionHandler = (event) => {
         setDescription(event.target.value);
@@ -142,14 +143,14 @@ function CreateUpdateItem() {
                         {getTitle()}
                         <br></br>
                         <form>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Id: </label>
 
 
                                 <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Id" name="item_id" className="form-control"
                                     value={item_id} onChange={changeItem_idHandler} />
                             </div>
-                            <br></br>
+                            <br></br> */}
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Item Description: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="description" className="form-control"

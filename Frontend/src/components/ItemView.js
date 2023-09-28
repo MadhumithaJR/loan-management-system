@@ -80,7 +80,7 @@ const ItemView = () => {
         ItemViewServices.deleteItem(Iid).then(() => {
             fetchItems();
             setMessage('Item details deleted successfully');
-            setTimeout(() => { history('/manage-item') }, 500);
+            setTimeout(() => { history('/manage-item') }, 10);
 
         });
         history(`/deleteItem/${Iid}`);
