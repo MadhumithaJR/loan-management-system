@@ -13,7 +13,7 @@ import EmployeeViewServices from '../services/EmployeeViewServices';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import EmpDashServices from '../services/EmpDashServices';
-
+import ProSidebar from './ProSidebar';
 
 
 const EmpViewItems = () => {
@@ -67,8 +67,10 @@ const EmpViewItems = () => {
 
 
     return (
-        <>
+        <div >
+            <ProSidebar/>
             <br></br>
+            <div className='emp-items'>
             <h1>Employee Items List {cookies.id}</h1>
             <br />
             <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
@@ -97,8 +99,8 @@ const EmpViewItems = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-
-        </>
+            </div>
+        </div>
     )
 }
 
