@@ -46,7 +46,6 @@ function CreateUpdateEmployee() {
     const createOrUpdateEmployee = (event) => {
         event.preventDefault();
         
-
         if (eid === '_create') {
             const employee = { id, name, designation, department, gender, dob, doj, password };
             EmployeeViewServices.createEmployee(employee).then(() => {

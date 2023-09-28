@@ -376,13 +376,13 @@ function ApplyLoan() {
         <>
 
             <center>
-                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#F5F5DC" }}>
+                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
                     <CardContent>
                         <Typography variant="h4" gutterBottom style={{
                             borderRadius: 2,
-                            backgroundColor: "#F8DE7E",
+                            backgroundColor: "#000000",
                             padding: "5px 5px",
-                            color: "#000000",
+                            color: "#FFFFFF",
                             fontWeight: "bold",
                             fontSize: "30px"
                         }}>
@@ -394,13 +394,13 @@ function ApplyLoan() {
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Employee Id: </label>
 
 
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #F8DE7E', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Id" name="employee_id" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Id" name="employee_id" className="form-control"
                                     value={employee_id} defaultValue={employee_id} disabled="disabled" />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Category: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #F8DE7E', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Category" name="item_category" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Category" name="item_category" className="form-control"
                                     value={item_category} onChange={changeItem_categoryHandler}>
                                         {
                                             options_category
@@ -410,7 +410,7 @@ function ApplyLoan() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Item Description: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #F8DE7E', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="item_description" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="item_description" className="form-control"
                                     value={item_description} defaultValue={'--Choose an Item Description--'} onChange={changeItem_descriptionHandler}>
                                     {
                                         options_description
@@ -420,7 +420,7 @@ function ApplyLoan() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Item Make: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #F8DE7E', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Make" name="item_make" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Make" name="item_make" className="form-control"
                                     value={item_make} onChange={changeItem_makeHandler}>
                                     {
                                         options_make
@@ -430,7 +430,7 @@ function ApplyLoan() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Value: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #F8DE7E', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="item_value" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="item_value" className="form-control"
                                     value={item_value} defaultValue={item_value} disabled="disabled" />
                             </div>
                             <br></br>

@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/Home';
@@ -18,9 +19,12 @@ import Employee from './components/Employee';
 import AboutUs from './components/AboutUs';
 import EmpViewLoans from './components/EmpViewLoans';
 import EmpViewItems from './components/EmpViewItems';
+import Logout from '@mui/icons-material/Logout';
 import ApplyLoan from './components/ApplyLoan';
 
 const App = () => {
+  const [loggedIn,setLoggedIn] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
   return (
     <div className="App">
       <header>
@@ -34,30 +38,30 @@ const App = () => {
         }}> */}
           <BrowserRouter>
             <Routes>
+            {/* <Route exact path="/" element={loggedIn ? <Navigate to="/" /> : <EmployeeLogin fxn = {setLoggedIn} />}/> */}
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/admin-login" element={<AdminLogin fxn = {setAdminLoggedIn}/>} />
+              <Route exact path="/login" element={<EmployeeLogin fxn = {setLoggedIn} />} />
 
-              <Route exact path="/admin-login" element={<AdminLogin />} />
-              <Route exact path="/login" element={<EmployeeLogin />} />
+              <Route path='/addEmployee/:eid' element={adminLoggedIn ? <CreateUpdateEmployee />: <AdminLogin fxn = {setAdminLoggedIn} />} />
+              <Route exact path="/manage-employee" element={ adminLoggedIn ? <EmployeeView /> : <AdminLogin fxn = {setAdminLoggedIn} />} />
 
-              <Route path='/addEmployee/:eid' element={<CreateUpdateEmployee />} />
-              <Route exact path="/manage-employee" element={<EmployeeView />} />
+              <Route path='/addLoan/:lid' element={adminLoggedIn ? <CreateUpdateLoan />: <EmployeeLogin fxn = {setAdminLoggedIn} />} />
+              <Route exact path="/manage-loan" element={adminLoggedIn ? <LoanView />: <AdminLogin fxn = {setAdminLoggedIn} />} />
 
-              <Route path='/addLoan/:lid' element={<CreateUpdateLoan />} />
-              <Route exact path="/manage-loan" element={<LoanView />} />
+              <Route path='/addItem/:Iid' element={adminLoggedIn ? <CreateUpdateItem />: <EmployeeLogin fxn = {setAdminLoggedIn} />} />
+              <Route exact path="/manage-item" element={adminLoggedIn ? <ItemView />: <AdminLogin fxn = {setAdminLoggedIn} />} />
 
-              <Route path='/addItem/:Iid' element={<CreateUpdateItem />} />
-              <Route exact path="/manage-item" element={<ItemView />} />
-
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/admin" element={<Admin />} />
-              <Route exact path="/employee" element={<Employee />} />
-              <Route exact path="/aboutus" element={<AboutUs />} />
-              <Route exact path="/emploanview" element={<EmpViewLoans />} />
-              <Route exact path="/empitemsview" element={<EmpViewItems />} />
-              <Route exact path="/apply-loan" element={<ApplyLoan />} />
-
-              <Route path="/user/:id/viewLoan" element={<ViewLoans />} />
-              <Route path="/user/:id/viewItems" element={<ViewItems />} />
+              <Route exact path="/register" element={loggedIn ? <Register />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/admin" element={adminLoggedIn ? <Admin />: <AdminLogin fxn = {setAdminLoggedIn} />} />
+              <Route exact path="/employee" element={loggedIn ? <Employee />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/aboutus" element={loggedIn ? <AboutUs />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/applyloan" element={loggedIn ? <ApplyLoan />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/emploanview" element={loggedIn ? <EmpViewLoans />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/empitemsview" element={loggedIn ? <EmpViewItems />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/logout" element={loggedIn ? <Logout fxn = {setLoggedIn}/>: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route path="/user/:id/viewLoan" element={loggedIn ? <ViewLoans />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route path="/user/:id/viewItems" element={loggedIn ? <ViewItems />: <EmployeeLogin fxn = {setLoggedIn} />} />
             </Routes>
           </BrowserRouter>
         </div>
