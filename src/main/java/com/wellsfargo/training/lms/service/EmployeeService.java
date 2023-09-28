@@ -5,78 +5,51 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.wellsfargo.training.lms.exception.AuthenticationFailedException;
 import com.wellsfargo.training.lms.model.*;
 import com.wellsfargo.training.lms.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @Transactional
 public class EmployeeService {
 	
 	@Autowired
-	private EmployeeRepository erepo;
+	private EmployeeRepository empRepository;
 
 	@Autowired
-	private LoanRepository lrepo;
+	private LoanRepository loanRepository;
 
 	@Autowired
-	private ItemRepository irepo;
+	private ItemRepository itemRepository;
 
 	@Autowired
-	private CardRepository crepo;
+	private CardRepository cardRepository;
 
 	@Autowired
-	private IssueRepository issrepo;
+	private IssueRepository issueRepository;
 	
-	public Employee registerEmployee(Employee e) {
-		return erepo.save(e);
-	}
-	
-	public Optional<Employee> loginEmployee(String id) {
-		return erepo.findById(id);
+	// Employee Login
+	public Optional<Employee> loginEmployee(Long id) {
+		return empRepository.findById(id);
 	}
 	
-	public List<Employee> listAll(){
-		return erepo.findAll();
-	}
-	public Optional<Employee> getSingleEmployee(String id){
-		return erepo.findById(id);
-		
-	}
-	public Optional<Employee> deleteEmployee(String id) {
-		return erepo.deleteById(id);
-	}
-
-	public String updateEmployee(@Validated Employee e) {
-		Optional<Employee> op = erepo.findById(e.getId());
-
-		if(op.isPresent()) {
-			erepo.save(e);
-			return ("Employee details successfully updated");
-		} else {
-			return ("No such employee is present");
-		}
-	}
-
+	// Apply Loan
 	public String applyLoan(ApplyLoanModel applyLoanModel){
-		Card card =new Card();
+		Card card = new Card();
 		Issue issue = new Issue();
 
-		Employee employee = erepo.findById(applyLoanModel.getEmployee_id()).get();
-		Loan loan = lrepo.findByType(applyLoanModel.getItem_category());
-		Item item = irepo.findByMakeAndCategoryAndDescription(applyLoanModel.getItem_make(),applyLoanModel.getItem_category(),applyLoanModel.getItem_description());
-
+		Employee employee = empRepository.findById(applyLoanModel.getEmployee_id()).get();
+		Loan loan = loanRepository.findByType(applyLoanModel.getItem_category());
+		Item item = itemRepository.findByMakeAndCategoryAndDescription(applyLoanModel.getItem_make(),applyLoanModel.getItem_category(),applyLoanModel.getItem_description());
 
 		card.setEmployee(employee);
 		card.setLoan(loan);
 		card.setDate(LocalDate.now());
 
-		Card newCardCreated = crepo.save(card);
+		Card newCardCreated = cardRepository.save(card);
 		if(newCardCreated == null) {
 			return "Loan Application Failed";
 		}
@@ -89,7 +62,7 @@ public class EmployeeService {
 		issue.setIssueDate(newCardCreated.getDate());
 		issue.setReturnDate(returnDate);
 
-		Issue newIssueCreated = issrepo.save(issue);
+		Issue newIssueCreated = issueRepository.save(issue);
 
 		if(newIssueCreated == null) {
 			return "Error in issue generation";
@@ -98,12 +71,15 @@ public class EmployeeService {
 		return "Loan has been applied successfully!";
 
 	}
-	public List<Map<String, Object>> viewEmployeeItems(String id) {
-		return irepo.getItemsByEmpId(id);
+	
+	// View Items By Employee ID
+	public List<ItemView> viewEmployeeItems(Long id) {
+		return itemRepository.getItemsByEmpId(id);
 	}
 	
-	public List<LoanView> viewEmployeeLoans(String id){
-		return lrepo.getLoansByEmpId(id);
+	// View Loans By Employee ID
+	public List<LoanView> viewEmployeeLoans(Long id){
+		return loanRepository.getLoansByEmpId(id);
 	}
 	
 }

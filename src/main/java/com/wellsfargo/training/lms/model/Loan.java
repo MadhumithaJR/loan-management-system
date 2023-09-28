@@ -20,7 +20,9 @@ import jakarta.persistence.Table;
 @Table(name="loan_master")
 
 public class Loan {
+	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="loan_id")
 	private int loan_id;
 

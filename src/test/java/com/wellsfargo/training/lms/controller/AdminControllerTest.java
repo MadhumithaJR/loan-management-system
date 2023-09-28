@@ -1,11 +1,18 @@
 package com.wellsfargo.training.lms.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
 import com.wellsfargo.training.lms.model.*;
 import com.wellsfargo.training.lms.repository.AdminRepository;
 import com.wellsfargo.training.lms.repository.EmployeeRepository;
@@ -20,8 +27,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -81,10 +89,36 @@ public class AdminControllerTest {
 //    @Before
 //    public void setUp() throws Exception {
 //        MockitoAnnotations.initMocks(this);
-//        // this is needed for inititalization of mocks, if you use @Mock
+//        // this is needed for initialization of mocks, if you use @Mock
 //        this.mvc = MockMvcBuilders.standaloneSetup(adminController).build();
 //    }
 
+    /*@Test
+	void testSaveEmployee() throws ResourceNotFoundException {
+		Employee emp = new Employee();
+		
+		emp.setId(1101l);
+		emp.setName("Raj");
+		emp.setPassword("secret");
+		emp.setDepartment("Technology");
+		emp.setDesignation("Director");
+		
+		LocalDate dob = LocalDate.parse("1985-01-01");
+		emp.setDob(dob);
+		
+		LocalDate doj = LocalDate.parse("2001-01-01");
+		emp.setDoj(doj);
+		
+		when(adminService.registerEmployee(any(Employee.class))).thenReturn(emp);
+		
+		ResponseEntity<Employee> re = adminController.saveEmployee(emp);
+		
+		assertEquals(HttpStatus.OK, re.getStatusCode());
+		assertEquals(emp, re.getBody());
+		
+		verify(adminService, times(1)).registerEmployee(any(Employee.class));
+	}*/
+    
     @Test
     public void testSaveEmployee() throws Exception{
 //		System.out.println("hi");
@@ -96,7 +130,7 @@ public class AdminControllerTest {
         issueList.add(issue);
         cardList.add(card);
 
-        emp.setId("123456");
+        emp.setId(123456l);
         emp.setName("ABC");
         emp.setPassword("12345678");
         emp.setDepartment("DepA");
@@ -108,7 +142,7 @@ public class AdminControllerTest {
         emp.setCard(cardList);
 
 
-        Mockito.when(employeeService.registerEmployee(ArgumentMatchers.any())).
+        Mockito.when(adminService.registerEmployee(ArgumentMatchers.any())).
                 thenReturn(emp);
         String json = mapper.writeValueAsString(emp);
 
@@ -129,7 +163,7 @@ public class AdminControllerTest {
         issueList.add(issue);
         cardList.add(card);
 
-        emp.setId("123456");
+        emp.setId(123456l);
         emp.setName("ABC");
         emp.setPassword("12345678");
         emp.setDepartment("DepA");
@@ -140,7 +174,7 @@ public class AdminControllerTest {
         emp.setIssue(issueList);
         emp.setCard(cardList);
         String mes = "Employee details successfully updated";
-        Mockito.when(employeeService.getSingleEmployee(ArgumentMatchers.any())).thenReturn(Optional.of(emp));
+        Mockito.when(adminService.getSingleEmployee(ArgumentMatchers.any())).thenReturn(Optional.of(emp));
         String json = mapper.writeValueAsString(emp);
 
         mvc.perform(put("/api/employees/{employee_id}",emp.getId()).contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8")
@@ -159,7 +193,7 @@ public class AdminControllerTest {
         issueList.add(issue);
         cardList.add(card);
 
-        emp.setId("123456");
+        emp.setId(123456l);
         emp.setName("ABC");
         emp.setPassword("12345678");
         emp.setDepartment("DepA");
@@ -171,7 +205,9 @@ public class AdminControllerTest {
         emp.setCard(cardList);
         employeeRepository.save(emp);
         String mes = "Employee has been successfully deleted";
-        Mockito.when(employeeService.deleteEmployee(ArgumentMatchers.any())).thenReturn(Optional.of(emp));
+        when(adminService.getSingleEmployee(123456l)).thenReturn(Optional.of(emp));
+		doNothing().when(adminService).deleteEmployee(123456l);
+//        Mockito.when(adminService.deleteEmployee(ArgumentMatchers.any())).thenReturn(Optional.of(emp));
 //		String json = mapper.writeValueAsString(emp);
 
         mvc.perform(delete("/api/employees/{employee_id}",emp.getId()).accept(MediaType.APPLICATION_JSON))
@@ -189,7 +225,7 @@ public class AdminControllerTest {
         issueList.add(issue);
         cardList.add(card);
 
-        emp.setId("123456");
+        emp.setId(123456l);
         emp.setName("ABC");
         emp.setPassword("12345678");
         emp.setDepartment("DepA");
@@ -202,7 +238,7 @@ public class AdminControllerTest {
         List<Employee> emp_list = new ArrayList<>();
         emp_list.add(emp);
 
-        Mockito.when(employeeService.listAll()).thenReturn(emp_list);
+        Mockito.when(adminService.listAll()).thenReturn(emp_list);
         mvc.perform(get("/api/employees").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(1)))

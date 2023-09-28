@@ -1,6 +1,5 @@
 package com.wellsfargo.training.lms.repository;
 
-import com.wellsfargo.training.lms.model.Employee;
 import com.wellsfargo.training.lms.model.Loan;
 import com.wellsfargo.training.lms.model.LoanView;
 
@@ -17,5 +16,5 @@ public interface LoanRepository extends JpaRepository<Loan, Integer> {
     Loan findByType(String itemCategory);
     
     @Query("SELECT new com.wellsfargo.training.lms.model.LoanView (l.loan_id,l.duration,l.type,lc.date) FROM Loan l INNER JOIN Card lc ON l.loan_id=lc.loan.loan_id WHERE lc.employee.id = :employee_id")
- 	public List<LoanView> getLoansByEmpId(String employee_id);
+ 	public List<LoanView> getLoansByEmpId(Long employee_id);
 }
