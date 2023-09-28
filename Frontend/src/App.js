@@ -56,6 +56,7 @@ const App = () => {
               <Route exact path="/admin" element={adminLoggedIn ? <Admin />: <AdminLogin fxn = {setAdminLoggedIn} />} />
               <Route exact path="/employee" element={loggedIn ? <Employee />: <EmployeeLogin fxn = {setLoggedIn} />} />
               <Route exact path="/aboutus" element={loggedIn ? <AboutUs />: <EmployeeLogin fxn = {setLoggedIn} />} />
+              <Route exact path="/applyloan" element={loggedIn ? <ApplyLoan />: <EmployeeLogin fxn = {setLoggedIn} />} />
               <Route exact path="/emploanview" element={loggedIn ? <EmpViewLoans />: <EmployeeLogin fxn = {setLoggedIn} />} />
               <Route exact path="/empitemsview" element={loggedIn ? <EmpViewItems />: <EmployeeLogin fxn = {setLoggedIn} />} />
               <Route exact path="/logout" element={loggedIn ? <Logout fxn = {setLoggedIn}/>: <EmployeeLogin fxn = {setLoggedIn} />} />
