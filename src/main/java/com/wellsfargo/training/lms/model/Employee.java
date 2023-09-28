@@ -4,12 +4,17 @@ import jakarta.persistence.Column;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 
 import lombok.Getter;
@@ -23,9 +28,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name="employee_master")
 public class Employee {
 
+	@SequenceGenerator(name="emp_seq", initialValue = 1000, allocationSize = 1)
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator = "emp_seq")
 	@Column(name="employee_id",nullable = false)
-	private String id;
+	private Long id;
 
 	@Column(name="employee_name", length=20,nullable = false)
 	private String name;
@@ -58,7 +65,7 @@ public class Employee {
 	@OneToMany(mappedBy="employee", fetch= FetchType.EAGER)
 	private List<Card>card;
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -87,7 +94,11 @@ public class Employee {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		Base64.Encoder encoder = Base64.getEncoder();  
+        String normalString = password;
+        String encodedString = encoder.encodeToString(   // encrypt password in database field
+        normalString.getBytes(StandardCharsets.UTF_8) );
+		this.password = encodedString;
 	}
 
 	public void setIssue(List<Issue> issue) {
@@ -98,7 +109,7 @@ public class Employee {
 		this.card = card;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
