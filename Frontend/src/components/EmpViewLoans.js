@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import EmpDashServices from '../services/EmpDashServices';
 
+import ProSidebar from './ProSidebar';
+
 
 
 const EmpViewLoans = () => {
@@ -68,7 +70,9 @@ const EmpViewLoans = () => {
 
     return (
         <>
+        <ProSidebar/>   
             <br></br>
+            <div className='emp-loans'>
             <h1>Employee Loan List {cookies.id}</h1>
             <br />
             <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
@@ -95,7 +99,7 @@ const EmpViewLoans = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-
+            </div>
         </>
     )
 }
