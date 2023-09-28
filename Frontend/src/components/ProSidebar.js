@@ -7,23 +7,21 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
-const ProSidebar = ({name,id}) => {
+const ProSidebar = ({ name, id, department, designation }) => {
 
-    const { collapseSidebar } = useProSidebar();
+  const { collapseSidebar } = useProSidebar();
 
-    return (
-        <div style={({ height: "100vh" }, { display: "flex" })}>
-        <Sidebar style={{ height: "100vh" }}>
+  return (
+    <div style={({ height: "100vh" }, { display: "flex", position:'fixed'  })}>
+      <Sidebar style={{ height: "100vh" }}>
         <Menu>
           <MenuItem
-            icon={<MenuOutlinedIcon />}
-            onClick={() => {
-              collapseSidebar();
-            }}
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "left", height:'20vh' }}
           >
             {" "}
-            <h2>Admin</h2>
+            <h6 style={{fontFamily:"monospace", fontSize:'1.15rem'}}>Employee id: {id} </h6>
+            <h5 style={{fontFamily:"monospace", fontSize:'1.15rem'}}>Designation: {designation}</h5>
+            <h5 style={{fontFamily:"monospace", fontSize:'1.15rem'}}>Department: {department}</h5>
           </MenuItem>
           <MenuItem component={<Link to="/employee" />} icon={<HomeOutlinedIcon />}>Home</MenuItem>
           <MenuItem component={<Link to="/emploanview" />} icon={<AccountBalanceIcon />}>View Loans</MenuItem>
@@ -32,8 +30,8 @@ const ProSidebar = ({name,id}) => {
           {/* <MenuItem component={<Link to="/logout" />} icon={<LogoutIcon />}>Log out</MenuItem> */}
         </Menu>
       </Sidebar>
-      </div>
-    );
+    </div>
+  );
 };
 
 

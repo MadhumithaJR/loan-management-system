@@ -14,8 +14,11 @@ const Employee = () => {
 
     
     const history=useNavigate();
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies, setCookies] = useCookies(['id','name','department','designation']);
     const [empName,setEmpName] = useState('');
+    const [empDesignation,setEmpDesignation] = useState('');
+    const [empDepartment,setEmpDepartment] = useState('');
+
     const empId = cookies.id;
     
     useEffect(() => {
@@ -25,7 +28,17 @@ const Employee = () => {
     try {
       EmployeeViewServices.getEmployeeById(empId).then((response) => {
             setEmpName(response.data.name);
-            console.log(response.data);
+            setEmpDepartment(response.data.department);
+            setEmpDesignation(response.data.designation);
+            try {
+              localStorage.setItem('name',response.data.name);
+              localStorage.setItem('department',response.data.department);
+              localStorage.setItem('designation',response.data.designation);
+            }
+            catch{
+              console.log('Error in setting the local storage')
+            }
+            console.log(localStorage);
         });
 
     } catch (error) {
@@ -36,7 +49,7 @@ return (
 <div>
 
   <div className="col-lg-4 p-0" emp-sidebar>
-  <ProSidebar name = {empName} id = {empId}/>
+  <ProSidebar name = {empName} id = {empId} department = {empDepartment} designation = {empDesignation}/>
   </div>
   <div className="emp-heading ">
     <h2> Welcome, {empName} </h2>  

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthenticationService from "../services/EmployeeAuthenticationService";
@@ -15,24 +15,23 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Alert, AlertTitle, Container, Snackbar } from "@mui/material";
 import { useCookies } from 'react-cookie';
+import EmpDashServices from "../services/EmpDashServices";
 
 const Login = (props) => {
 
 
   const history = useNavigate();
-  const [id, setId] = useState("")
-  const [password, setPassword] = useState("")
+ 
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorStatus, setErrorStatus] = useState(false)
-  const [cookies, setCookie] = useCookies(['user']);
-
-  
+  const [cookies, setCookie] = useCookies(['id']);
 
   useEffect(() => {
     setErrorStatus(false)
   }, [id, password])
-  
 
   const idChangeHandler = (event) => {
     setId(event.target.value);
