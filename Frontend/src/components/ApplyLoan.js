@@ -239,6 +239,7 @@ function ApplyLoan() {
     const [item_description, setItem_description] = useState('');
     const [item_value, setItem_value] = useState('');
     const [message, setMessage] = useState('');
+    const [errors, setErrors] = useState('');
 
     const [cookies, setCookie] = useCookies(['id']);
     const employee_id = cookies.id;
@@ -259,10 +260,15 @@ function ApplyLoan() {
     const applyForLoan = (event) => {
         event.preventDefault();
         const applyLoan = { employee_id, item_category, item_make, item_description, item_value };
-        EmpDashServices.applyForLoan(applyLoan).then((response) => {
-            setMessage(response.data);
-            history('/emploanview');
-        });
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length === 0) {
+            EmpDashServices.applyForLoan(applyLoan).then((response) => {
+                setMessage(response.data);
+                history('/emploanview');
+            });
+        }else{
+            setErrors(validationErrors);
+        }
     }
 
     useEffect(() => {
@@ -371,6 +377,20 @@ function ApplyLoan() {
     const cancel = () => {
         history('/employee');
     };
+    const validateForm=()=>{
+        let validateErrors={};
+
+        if(!item_category){
+            validateErrors.item_category="Category is required."
+        }
+        if(!item_make){
+            validateErrors.item_make="This field is required."
+        }
+        if(!item_description){
+            validateErrors.item_description="Description is required."
+        }
+        return validateErrors;
+    }
 
     return (
         <>
@@ -407,6 +427,7 @@ function ApplyLoan() {
                                             options_category
                                         }
                                 </select>
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.item_category}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
@@ -417,6 +438,7 @@ function ApplyLoan() {
                                         options_description
                                     }
                                 </select>
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.item_description}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
@@ -427,12 +449,14 @@ function ApplyLoan() {
                                         options_make
                                     }
                                 </select>
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.item_make}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Value: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="item_value" className="form-control"
                                     value={item_value} defaultValue={item_value} disabled="disabled" />
+                                    
                             </div>
                             <br></br>
 
