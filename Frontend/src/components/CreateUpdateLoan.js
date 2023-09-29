@@ -13,7 +13,6 @@ function CreateUpdateLoan() {
 
     const { lid } = useParams();
 
-    const [loan_id, setLoan_id] = useState('');
     const [type, setType] = useState('');
     const [duration, setDuration] = useState('');
 
@@ -23,7 +22,6 @@ function CreateUpdateLoan() {
         if (lid !== '_create') {
             LoanViewServices.getLoanById(lid).then((response) => {
                 const loan = response.data;
-                setLoan_id(loan.loan_id);
                 setType(loan.type);
                 setDuration(loan.duration);
             });
@@ -32,23 +30,22 @@ function CreateUpdateLoan() {
 
     const createOrUpdateLoan = (event) => {
         event.preventDefault();
-        const loan = { loan_id, type, duration };
+        const loan = { type, duration };
 
         if (lid === '_create') {
-                LoanViewServices.createLoan(loan).then(() => {
+            const loan = { type, duration };
+            LoanViewServices.createLoan(loan).then(() => {
                 history('/manage-loan');
             });
         }
         else {
-            LoanViewServices.updateLoan(loan,lid).then(() => {
+            const loan_id = parseInt(lid)
+            const loan = { loan_id, type, duration };
+            LoanViewServices.updateLoan(loan, lid).then(() => {
                 history('/manage-loan');
             });
         }
     }
-
-    const changeLoan_idHandler = (event) => {
-        setLoan_id(event.target.value);
-    };
 
     const changeTypeHandler = (event) => {
         setType(event.target.value);
@@ -68,9 +65,9 @@ function CreateUpdateLoan() {
         if (lid === '_create') {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#91e5f6",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -79,9 +76,9 @@ function CreateUpdateLoan() {
         } else {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#91e5f6",// #97dffc #caf0f8
+                backgroundColor: "#000000",// #97dffc #caf0f8
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -92,29 +89,31 @@ function CreateUpdateLoan() {
 
     return (
         <>
+        <div>
+            <br></br>
             <center>
-                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#F0FFFF" }}>
+                <Card variant='outlined' sx={{ maxWidth: 600,marginTop:'5vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
                     <CardContent>
                         {getTitle()}
                         <br></br>
                         <form>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Loan Id: </label>
 
 
                                 <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #ADD8E6', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Loan Card Id" name="loan_id" className="form-control"
                                     value={loan_id} onChange={changeLoan_idHandler} />
                             </div>
-                            <br></br>
+                            <br></br> */}
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Loan Type: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #ADD8E6', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Loan Card Type" name="type" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Loan Card Type" name="type" className="form-control"
                                     value={type} onChange={changeTypeHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Duration: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #ADD8E6', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Duration" name="duration" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Duration" name="duration" className="form-control"
                                     value={duration} onChange={changeDurationHandler} />
                             </div>
                             <br></br>
@@ -125,6 +124,7 @@ function CreateUpdateLoan() {
                     </CardContent>
                 </Card>
             </center>
+            </div>
 
         </>
 

@@ -1,5 +1,6 @@
 body{
   background-color: #fff !important;
+  height: 100vh;
 }
 
 .App {
@@ -28,7 +29,7 @@ header h1 {
 }
 
 h1,p{
-  color: white;
+  color: black;
 }
 .home {
   bottom: 0px;
@@ -71,4 +72,27 @@ h1,p{
   to {
     transform: rotate(360deg);
   }
+}
+
+.emp-heading h2{
+  font-family : Lobster;
+  top: 30%;
+  left: 38%;
+  position: fixed;
+}
+
+.emp-sidebar {
+  z-index: -1;
+}
+
+.emp-items {
+  top: 30%;
+  left: 10%;
+  position: fixed;
+}
+
+.emp-loans {
+  top: 30%;
+  left: 10%;
+  position: fixed;
 }

@@ -10,15 +10,18 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Alert, AlertTitle, Container} from "@mui/material";
+import { useCookies } from "react-cookie";
 
-const Login = () => {
+const Login = (props) => {
 
   const history = useNavigate();
   const [id, setId] = useState("")
   const [password, setPassword] = useState("")
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorStatus, setErrorStatus] = useState(false)
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['id'])
+
 
   useEffect(() => {
     setErrorStatus(false)
@@ -50,6 +53,11 @@ const Login = () => {
       if (loginSuccess) {
         setSuccessMessage('Login Successful Redirecting..');
         setTimeout(() => {
+          props.fxn(true);
+          if(cookies.id)
+          {
+            removeCookie('id',{ path: '/' });
+          }
           history('/admin'); 
         }, 200)
       } else {

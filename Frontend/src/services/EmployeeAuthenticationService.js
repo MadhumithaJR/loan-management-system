@@ -18,7 +18,7 @@ class AuthenticationService {
     }
     static async registerEmployee(employee){
         try{
-            const response =await axios.post("http://localhost:8090/lms/api/employees",employee);
+            const response =await axios.post("http://localhost:8090/lms/api/admin/employees",employee);
             console.log(response.data);
             return response.data;
         }catch(error){

@@ -17,7 +17,7 @@ function CreateUpdateItem() {
 
     const { Iid } = useParams();
 
-    const [item_id, setItem_id] = useState('');
+    //const [item_id, setItem_id] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('');
     const [category, setCategory] = useState('');
@@ -30,7 +30,7 @@ function CreateUpdateItem() {
         if (Iid !== '_create') {
             ItemViewServices.getItemById(Iid).then((response) => {
                 const item = response.data;
-                setItem_id(item.item_id);
+                //setItem_id(item.item_id);
                 setDescription(item.description);
                 setStatus(item.status);
                 setCategory(item.category);
@@ -42,15 +42,16 @@ function CreateUpdateItem() {
 
     const createOrUpdateItem = (event) => {
         event.preventDefault();
-        const item = { item_id, description, status, category, value, make };
-
+        
         if (Iid === '_create') {
-
+            const item = {description, status, category, value, make };
             ItemViewServices.createItem(item).then(() => {
                 history('/manage-item');
             });
         }
         else {
+            const item_id = parseInt(Iid);
+            const item = { item_id, description, status, category, value, make };
             ItemViewServices.updateItem(item, Iid).then(() => {
                 history('/manage-item');
             });
@@ -60,9 +61,9 @@ function CreateUpdateItem() {
     // const furniture = ["Table", "Chair", "Bed", "Tea Table"];
     // const electronics = ["Laptop", "Projector", "Printer", "Refrigerator"];
     // const transport = ["SUV", "Scooty", "Motorcycle"];
-    const furniture = ["Wooden","Plastic"];
-    const electronics = ["Samsung","Realme","Iphone","Philips"];
-    const transport = ["Honda","TVS"];
+    const furniture = ["--Choose an Item Make--", "Wooden","Plastic"];
+    const electronics = ["--Choose an Item Make--", "Samsung","Realme","Iphone","Philips","HP"];
+    const transport = ["--Choose an Item Make--", "Honda","TVS"];
 
     let type = null;
     let options = null;
@@ -79,9 +80,9 @@ function CreateUpdateItem() {
         options = type.map((el) => <option key={el}>{el}</option>);
     }
 
-    const changeItem_idHandler = (event) => {
-        setItem_id(event.target.value);
-    };
+    // const changeItem_idHandler = (event) => {
+    //     setItem_id(event.target.value);
+    // };
 
     const changeDescriptionHandler = (event) => {
         setDescription(event.target.value);
@@ -112,9 +113,9 @@ function CreateUpdateItem() {
         if (Iid === '_create') {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#96C291",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -123,9 +124,9 @@ function CreateUpdateItem() {
         } else {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#96C291",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -136,29 +137,31 @@ function CreateUpdateItem() {
 
     return (
         <>
+        <div>
+            <br></br>
             <center>
-                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#e0f0e3" }}>
+                <Card variant='outlined' sx={{ maxWidth: 600,marginTop:'5vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
                     <CardContent>
                         {getTitle()}
                         <br></br>
                         <form>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Id: </label>
 
 
                                 <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Id" name="item_id" className="form-control"
                                     value={item_id} onChange={changeItem_idHandler} />
                             </div>
-                            <br></br>
+                            <br></br> */}
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Item Description: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="description" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="description" className="form-control"
                                     value={description} onChange={changeDescriptionHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Status: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Status" name="status" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Status" name="status" className="form-control"
                                     value={status} onChange={changeStatusHandler}>
                                     <option disabled={true} value=''>--Choose an Option--</option>
                                     <option value="Y">Yes</option>
@@ -168,7 +171,7 @@ function CreateUpdateItem() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Category: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Category" name="category" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Category" name="category" className="form-control"
                                     value={category} onChange={changeCategoryHandler}>
                                     <option disabled={true} value=''>--Choose an Option--</option>
                                     <option value="Furniture">Furniture</option>
@@ -179,13 +182,13 @@ function CreateUpdateItem() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Value: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="value" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="value" className="form-control"
                                     value={value} onChange={changeValueHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Make: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Make" name="make" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Make" name="make" className="form-control"
                                     value={make} onChange={changeMakeHandler}>
                                     {
                                         options
@@ -200,6 +203,7 @@ function CreateUpdateItem() {
                     </CardContent>
                 </Card>
             </center>
+            </div>
         </>
 
     );
