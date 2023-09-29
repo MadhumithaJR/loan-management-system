@@ -21,7 +21,7 @@ const Login = (props) => {
 
 
   const history = useNavigate();
- 
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -79,157 +79,151 @@ const Login = (props) => {
     console.log("Admin Log In Button");
     history('/admin-login');
   }
-  if(cookies.id)
-  {
+  if (cookies.id) {
     props.fxn(true)
     history("/employee")
   }
   else {
     return (
       <>
-  
-        <Container component="main" maxWidth="lg">
-          <Box
-            sx={{
-              marginTop: 8,
+        <div>
+          <br></br>
+          <Button
+            onClick={handleAdminLogin}
+            fullWidth
+            variant="contained"
+            style={{
+              borderRadius: 20,
+              backgroundColor: "#e86159",
+              padding: "10px 20px",
+              fontSize: "15px",
+              maxWidth: '7vw',
+              marginLeft: '89vw',
+              marginTop: '1vh'
+              
             }}
+            sx={{ mt: 3, mb: 2 }}
           >
-            <Grid container>
-              <CssBaseline />
-              <Grid
-                item
-                xs={false}
-                sm={4}
-                md={7}
+            Admin
+          </Button>
+          <div style={{marginTop:'-3vh'}}>
+            <Container component="main" maxWidth="lg">
+              <Box
                 sx={{
-                  backgroundImage: "url(https://img.freepik.com/free-vector/bank-credit-finance-management-loan-agreement-signing-mortgage-money-credit_335657-3136.jpg)",
-                  backgroundRepeat: "no-repeat",
-                  backgroundColor: (t) =>
-                    t.palette.mode === "light"
-                      ? t.palette.grey[50]
-                      : t.palette.grey[900],
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  marginTop: 8,
                 }}
-              />
-              <Grid
-                item
-                xs={12}
-                sm={8}
-                md={5}
-                component={Paper}
-                elevation={6}
-                square
               >
-                <Box
-                  sx={{
-                    my: 8,
-                    mx: 4,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography component="h1" variant="h5" style={{fontFamily:"serif",fontSize:"28px"}}>
-                    Employee Sign In
-                  </Typography>
-                  <Box
-                    component="form"
-                    noValidate
-                    onSubmit={submitActionHandler}
-                    sx={{ mt: 1 }}
-                  >
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="eid"
-                      label="Employee Id"
-                      onChange={idChangeHandler}
-                      name="eid"
-                      autoComplete="eid"
-                      autoFocus
-                    />
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      onChange={passwordChangeHandler}
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                    />
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      style={{
-                        borderRadius: 10,
-                        backgroundColor: "#494bf5",
-                        padding: "10px 20px",
-                        fontSize: "15px"
+                <Grid container>
+                  <CssBaseline />
+                  <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={7}
+                    sx={{
+                      backgroundImage: "url(https://img.freepik.com/free-vector/bank-credit-finance-management-loan-agreement-signing-mortgage-money-credit_335657-3136.jpg)",
+                      //backgroundImage: "url(https://blog.etraining.id/wp-content/uploads/2022/08/Belum-juga-keterima-kerja-Sudah-coba-5-cara-berikut.jpg)",
+                      backgroundRepeat: "no-repeat",
+                      backgroundColor: (t) =>
+                        t.palette.mode === "light"
+                          ? t.palette.grey[50]
+                          : t.palette.grey[900],
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
                     }}
-                      sx={{ mt: 3, mb: 2 }}
+                  />
+                  <Grid
+                    item
+                    xs={12}
+                    sm={8}
+                    md={5}
+                    component={Paper}
+                    elevation={6}
+                    square
+                  >
+                    <Box
+                      sx={{
+                        my: 8,
+                        mx: 4,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
                     >
-                      Sign In
-                    </Button>
-  
-                    {errorStatus && <center> <Alert severity="error" sx={{ width: '300px', '& .MuiAlert-message': { textAlign: "center", width: "inherit" } }}>
-                      <AlertTitle>Error</AlertTitle>
-                      <strong>{errorMessage}</strong></Alert></center>}
-  
-  
-                    {/* <Alert severity="error" sx={{ width: '300px','& .MuiAlert-message':{textAlign:"center", width:"inherit"} }}>
+                      <Typography component="h1" variant="h5" style={{ fontFamily: "serif", fontSize: "28px" }}>
+                        Employee Sign In
+                      </Typography>
+                      <Box
+                        component="form"
+                        noValidate
+                        onSubmit={submitActionHandler}
+                        sx={{ mt: 1 }}
+                      >
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="eid"
+                          label="Employee Id"
+                          onChange={idChangeHandler}
+                          name="eid"
+                          autoComplete="eid"
+                          autoFocus
+                        />
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          name="password"
+                          onChange={passwordChangeHandler}
+                          label="Password"
+                          type="password"
+                          id="password"
+                          autoComplete="current-password"
+                        />
+                        <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          style={{
+                            borderRadius: 10,
+                            backgroundColor: "#494bf5",
+                            padding: "10px 20px",
+                            fontSize: "15px"
+                          }}
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          Sign In
+                        </Button>
+
+                        {errorStatus && <center> <Alert severity="error" sx={{ width: '300px', '& .MuiAlert-message': { textAlign: "center", width: "inherit" } }}>
+                          <AlertTitle>Error</AlertTitle>
+                          <strong>{errorMessage}</strong></Alert></center>}
+
+
+                        {/* <Alert severity="error" sx={{ width: '300px','& .MuiAlert-message':{textAlign:"center", width:"inherit"} }}>
                       <AlertTitle>Error</AlertTitle>
                       <strong>{errorMessage}</strong>
                     </Alert>
                  */}
-  
-                    {successMessage && <center><Alert severity="success" sx={{ width: '300px', '& .MuiAlert-message': { textAlign: "center", width: "inherit" } }}>
-                      <AlertTitle>Success</AlertTitle>
-                      <strong>{successMessage}</strong></Alert></center>}
-                    <Button
-                      onClick={handleAdminLogin}
-                      fullWidth
-                      variant="contained"
-                      style={{
-                        borderRadius: 20,
-                        backgroundColor: "#e86159",
-                        padding: "10px 20px",
-                        fontSize: "15px"
-                    }}
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Admin Sign In
-                    </Button>
-                  </Box>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-  
-  
-        {/* <form onSubmit={submitActionHandler}>
-                <p>
-                <label>Employee ID: <input type="text" value={id} onChange={idChangeHandler}></input></label>
-                </p>
-  
-                <p>
-                <label>Password: <input type="password" value={password} onChange={passwordChangeHandler}></input></label>
-                </p>
-  
-                <button type="submit">Login</button>
-                {errorMessage && <p className='error-message'>{errorMessage}</p>}
-                {successMessage && <p className='success-message'>{successMessage}</p>}
-            </form> */}
+
+                        {successMessage && <center><Alert severity="success" sx={{ width: '300px', '& .MuiAlert-message': { textAlign: "center", width: "inherit" } }}>
+                          <AlertTitle>Success</AlertTitle>
+                          <strong>{successMessage}</strong></Alert></center>}
+
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Container>
+          </div>
+        </div>
       </>
     )
   }
 
-  
+
 };
 
 
