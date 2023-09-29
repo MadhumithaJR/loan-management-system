@@ -240,7 +240,7 @@ function ApplyLoan() {
     const [item_value, setItem_value] = useState('');
     const [message, setMessage] = useState('');
 
-    const [cookies, setCookie] = useCookies(['user']);
+    const [cookies, setCookie] = useCookies(['id']);
     const employee_id = cookies.id;
 
     const [type_categories, setTypeCategories] = useState([]);
@@ -374,9 +374,10 @@ function ApplyLoan() {
 
     return (
         <>
-
+        <div>
+            <br></br>
             <center>
-                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
+                <Card variant='outlined' sx={{ maxWidth: 600,marginTop:'5vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
                     <CardContent>
                         <Typography variant="h4" gutterBottom style={{
                             borderRadius: 2,
@@ -442,6 +443,7 @@ function ApplyLoan() {
                     </CardContent>
                 </Card>
             </center>
+            </div>
         </>
 
     );

@@ -16,6 +16,7 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ProSidebar_Admin from './ProSidebar_Admin';
 
 
 
@@ -89,21 +90,16 @@ const ItemView = () => {
 
     return (
         <>
-            <Stack direction="row" alignItems="center" spacing={1}>
-                <IconButton aria-label="delete" size="large" onClick={backToDashboard} >
-                    <ArrowBackIosIcon />
-                </IconButton>
-            </Stack>
-
+            <ProSidebar_Admin name="Admin" />
             <br></br>
-            <h1>Item List</h1>
+            <h1 style={{marginTop:'1vh'}}>Item List</h1>
             <br />
             <div className="row justify-content-center">
                 <Button variant="contained" style={{
                     borderRadius: 2,
-                    backgroundColor: "#DCDCDC",
+                    backgroundColor: "#000000",
                     padding: "8px 8px",
-                    color: "#000000",
+                    color: "#FFFFFF",
                     fontWeight: "bolder",
                     fontSize: "15px",
                     maxWidth: "200px"
@@ -111,11 +107,12 @@ const ItemView = () => {
                     Add Item
                 </Button>
             </div>
-            <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
-                <Table sx={{ minWidth: 100, maxWidth: 1200, mt: 10, ml: 20, mr: 10 }} aria-label="customized table">
+            <div style={{ marginLeft:'-1%' }}>
+            <TableContainer style={{ alignContent: 'center', justifyContent: "center" }}>
+                <Table style={{backgroundColor: "#FFFFFF" }} sx={{ minWidth: 100, maxWidth: 1050, mt: 10, ml: 48, mr: 10 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell width="10%" >Item Id</StyledTableCell>
+                            <StyledTableCell width="10%" align="center" >Item Id</StyledTableCell>
                             <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Description</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Issue Status</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Item Make</StyledTableCell>
@@ -128,7 +125,7 @@ const ItemView = () => {
                     <TableBody>
                         {items.map((row) => (
                             <StyledTableRow key={row.item_id}>
-                                <StyledTableCell width="9%" >
+                                <StyledTableCell width="9%" align="center">
                                     {row.item_id}
                                 </StyledTableCell>
                                 <StyledTableCell width="14%" align="center">{row.description}</StyledTableCell>
@@ -165,6 +162,7 @@ const ItemView = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            </div>
 
         </>
     )

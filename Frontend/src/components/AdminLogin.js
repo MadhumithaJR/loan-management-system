@@ -19,8 +19,8 @@ const Login = (props) => {
   const [password, setPassword] = useState("")
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [errorStatus, setErrorStatus] = useState(false)
-  const [cookies, setCookie, removeCookie] = useCookies(['user'])
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['id'])
 
 
   useEffect(() => {
