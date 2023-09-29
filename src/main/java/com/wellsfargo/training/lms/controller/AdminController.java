@@ -103,7 +103,7 @@ public class AdminController {
 		throws ResourceNotFoundException{
 			try {
 				adminService.getSingleEmployee(eID).
-					orElseThrow(()-> new ResourceNotFoundException("Product Not found for this ID:"+eID));
+					orElseThrow(()-> new ResourceNotFoundException("Employee Not found for this ID:"+eID));
 				adminService.deleteEmployee(eID);
 		
 				Map<String,Boolean> response =new HashMap<String,Boolean>();
@@ -201,7 +201,7 @@ public class AdminController {
     
     // Delete a Loan
     
-    @DeleteMapping(value = "/loan/{id}")
+    @DeleteMapping("/loan/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteLoan(@PathVariable(value = "id") int id)
     		throws ResourceNotFoundException{
         try {
