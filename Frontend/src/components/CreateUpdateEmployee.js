@@ -17,7 +17,7 @@ function CreateUpdateEmployee() {
 
     const { eid } = useParams();
 
-    const [id, setId] = useState('');
+    //const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [designation, setDesignation] = useState('');
     const [department, setDepartment] = useState('');
@@ -32,7 +32,7 @@ function CreateUpdateEmployee() {
         if (eid !== '_create') {
             EmployeeViewServices.getEmployeeById(eid).then((response) => {
                 const employee = response.data;
-                setId(employee.id);
+                //setId(employee.id);
                 setName(employee.name);
                 setDesignation(employee.designation);
                 setDepartment(employee.department);
@@ -47,22 +47,22 @@ function CreateUpdateEmployee() {
         event.preventDefault();
         
         if (eid === '_create') {
-            const employee = { id, name, designation, department, gender, dob, doj, password };
+            const employee = { name, designation, department, gender, dob, doj, password };
             EmployeeViewServices.createEmployee(employee).then(() => {
                 history('/manage-employee');
             });
         }
         else {
-            const employee = { id, name, designation, department, gender, dob, doj};
+            const employee = { name, designation, department, gender, dob, doj};
             EmployeeViewServices.updateEmployee(employee, eid).then(() => {
                 history('/manage-employee');
             });
         }
     }
 
-    const changeIdHandler = (event) => {
-        setId(event.target.value);
-    };
+    // const changeIdHandler = (event) => {
+    //     setId(event.target.value);
+    // };
 
     const changeNameHandler = (event) => {
         setName(event.target.value);
@@ -133,14 +133,14 @@ function CreateUpdateEmployee() {
                         {getTitle()}
                         <br></br>
                         <form>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Employee Id: </label>
 
 
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Id" name="id" className="form-control"
                                     value={id} onChange={changeIdHandler} />
                             </div>
-                            <br></br>
+                            <br></br> */}
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Employee Name: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Name" name="name" className="form-control"

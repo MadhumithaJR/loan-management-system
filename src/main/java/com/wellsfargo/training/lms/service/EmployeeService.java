@@ -83,19 +83,19 @@ public class EmployeeService {
 	}
 
 	public List<String> getAllLoanTypes(){
-		return lrepo.getAllTypes();
+		return loanRepository.getAllTypes();
 	}
 
 	public List<String> getItemDescriptions(String category){
-		return irepo.getItemDescriptionForCategory(category);
+		return itemRepository.getItemDescriptionForCategory(category);
 	}
 
 	public List<String> getItemMakes(String category, String description){
-		return irepo.getItemMakeForCategoryDesc(category,description);
+		return itemRepository.getItemMakeForCategoryDesc(category,description);
 	}
 
 	public int getItemValue(String category, String description, String make){
-		return irepo.getItemValue(category,description,make);
+		return itemRepository.getItemValue(category,description,make);
 	}
 	
 }

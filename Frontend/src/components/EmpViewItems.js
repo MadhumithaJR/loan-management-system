@@ -90,10 +90,10 @@ const EmpViewItems = () => {
                                 {items.map((row) => (
                                     <StyledTableRow key={row.issue_id}>
                                         <StyledTableCell width="1.2%" >{row.issue_id}</StyledTableCell>
-                                        <StyledTableCell width="5%" align="center">{row.item_value}</StyledTableCell>
-                                        <StyledTableCell width="5%" align="center">{row.item_category}</StyledTableCell>
-                                        <StyledTableCell width="5%" align="center">{row.item_make}</StyledTableCell>
-                                        <StyledTableCell width="5%" align="center">{row.item_description}</StyledTableCell>
+                                        <StyledTableCell width="5%" align="center">{row.value}</StyledTableCell>
+                                        <StyledTableCell width="5%" align="center">{row.category}</StyledTableCell>
+                                        <StyledTableCell width="5%" align="center">{row.make}</StyledTableCell>
+                                        <StyledTableCell width="5%" align="center">{row.description}</StyledTableCell>
 
 
                                     </StyledTableRow>
