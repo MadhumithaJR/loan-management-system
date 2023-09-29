@@ -15,6 +15,7 @@ function CreateUpdateLoan() {
 
     const [type, setType] = useState('');
     const [duration, setDuration] = useState('');
+    const [errors, setErrors] = useState('');
 
     console.log(lid)
 
@@ -31,22 +32,36 @@ function CreateUpdateLoan() {
     const createOrUpdateLoan = (event) => {
         event.preventDefault();
         const loan = { type, duration };
-
-        if (lid === '_create') {
-            const loan = { type, duration };
-            LoanViewServices.createLoan(loan).then(() => {
-                history('/manage-loan');
-            });
-        }
-        else {
-            const loan_id = parseInt(lid)
-            const loan = { loan_id, type, duration };
-            LoanViewServices.updateLoan(loan, lid).then(() => {
-                history('/manage-loan');
-            });
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length === 0) {
+    
+            if (lid === '_create') {
+                const loan = { type, duration };
+                LoanViewServices.createLoan(loan).then(() => {
+                    history('/manage-loan');
+                });
+            }
+            else {
+                const loan_id = parseInt(lid)
+                const loan = { loan_id, type, duration };
+                LoanViewServices.updateLoan(loan, lid).then(() => {
+                    history('/manage-loan');
+                });
+            }
+        }else{
+            setErrors(validationErrors);
         }
     }
-
+    const validateForm = () =>{
+        let validateErrors={}
+        if(!type){
+            validateErrors.type="Type is required."
+        }
+        if(!duration){
+            validateErrors.duration="Duration is required."
+        }
+        return validateErrors;
+    };
     const changeTypeHandler = (event) => {
         setType(event.target.value);
     };
@@ -109,12 +124,14 @@ function CreateUpdateLoan() {
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Loan Type: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Loan Card Type" name="type" className="form-control"
                                     value={type} onChange={changeTypeHandler} />
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.type}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Duration: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Duration" name="duration" className="form-control"
                                     value={duration} onChange={changeDurationHandler} />
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.duration}</p>
                             </div>
                             <br></br>
 

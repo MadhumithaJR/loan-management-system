@@ -25,6 +25,7 @@ function CreateUpdateEmployee() {
     const [dob, setDob] = useState('');
     const [doj, setDoj] = useState('');
     const [password, setPassword] = useState('');
+    const [errors,setErrors]=useState('');
 
     console.log(eid)
 
@@ -45,18 +46,22 @@ function CreateUpdateEmployee() {
 
     const createOrUpdateEmployee = (event) => {
         event.preventDefault();
-        
-        if (eid === '_create') {
-            const employee = { name, designation, department, gender, dob, doj, password };
-            EmployeeViewServices.createEmployee(employee).then(() => {
-                history('/manage-employee');
-            });
-        }
-        else {
-            const employee = { name, designation, department, gender, dob, doj};
-            EmployeeViewServices.updateEmployee(employee, eid).then(() => {
-                history('/manage-employee');
-            });
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length === 0) {
+            if (eid === '_create') {
+                const employee = { name, designation, department, gender, dob, doj, password };
+                EmployeeViewServices.createEmployee(employee).then(() => {
+                    history('/manage-employee');
+                });
+            }
+            else {
+                const employee = { name, designation, department, gender, dob, doj};
+                EmployeeViewServices.updateEmployee(employee, eid).then(() => {
+                    history('/manage-employee');
+                });
+            }
+        }else {
+        setErrors(validationErrors);
         }
     }
 
@@ -123,6 +128,42 @@ function CreateUpdateEmployee() {
         }
     };
 
+    const validateForm = () => {
+        let validationErrors = {};
+      
+        
+        if (!name) {
+          validationErrors.name = 'Name is required.';
+        }
+          else if (!/^[a-zA-Z]*$/.test(name)) {
+            validationErrors.fullname = 'Enter Alphabets Only';
+          }
+        if (!password) {
+          validationErrors.password = 'Password is required.';
+        } else if ( password.length < 6) {
+          validationErrors.password = 'Password must be at least 6 characters.';
+        }
+        
+        if(!gender){
+            validationErrors.gender="Gender is required."
+        }
+         if (!dob) {
+          validationErrors.dob = 'Date of Birth is required.';
+        }
+        if (!doj) {
+            validationErrors.doj = 'Date of Joining is required.';
+          }  
+        
+        if (!designation) {
+        validationErrors.designation = 'Designation is required.';
+        }
+    
+        if (!department) {
+        validationErrors.department = 'Department is required.';
+        }
+        return validationErrors;
+      };
+
     return (
         <>
         <div>
@@ -145,18 +186,21 @@ function CreateUpdateEmployee() {
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Employee Name: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Name" name="name" className="form-control"
                                     value={name} onChange={changeNameHandler} />
+                                 <p style={{color:'red',marginTop: "10px"}}>{errors.name}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Department: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Department" name="department" className="form-control"
                                     value={department} onChange={changeDepartmentHandler} />
+                                    <p style={{color:'red',marginTop: "10px"}}>{errors.department}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Designation: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Designation" name="designation" className="form-control"
                                     value={designation} onChange={changeDesignationHandler} />
+                                    <p style={{color:'red',marginTop: "10px"}}>{errors.designation}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
@@ -168,18 +212,21 @@ function CreateUpdateEmployee() {
                                     <option value="Female">Female</option>
                                     <option value="Others">Others</option>
                                 </select>   
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.gender}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Birth (DD-MM-YYYY): </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} type='date' placeholder="Date Of Birth" name="dob" className="form-control"
                                     value={dob} onChange={changeDobHandler} />
+                                    <p style={{color:'red',marginTop: "10px"}}>{errors.dob}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Joining (DD-MM-YYYY): </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} type='date' placeholder="Date Of Joining" name="doj" className="form-control"
                                     value={doj} onChange={changeDojHandler} />
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.doj}</p>
                             </div>
                             <br></br>
 
@@ -188,6 +235,7 @@ function CreateUpdateEmployee() {
                                     <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Password: </label>
                                     <input  style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} type='password' placeholder="Password" name="password" className="form-control"
                                         value={password} onChange={changePasswordHandler} />
+                                        <p style={{color:'red',marginTop: "10px"}}>{errors.password}</p>
                                 </div>
                             }
                             <br></br>

@@ -23,6 +23,7 @@ function CreateUpdateItem() {
     const [category, setCategory] = useState('');
     const [value, setValue] = useState('');
     const [make, setMake] = useState('');
+    const [errors, setErrors] = useState('');
 
     console.log(Iid)
 
@@ -42,19 +43,24 @@ function CreateUpdateItem() {
 
     const createOrUpdateItem = (event) => {
         event.preventDefault();
-        
-        if (Iid === '_create') {
-            const item = {description, status, category, value, make };
-            ItemViewServices.createItem(item).then(() => {
-                history('/manage-item');
-            });
-        }
-        else {
-            const item_id = parseInt(Iid);
-            const item = { item_id, description, status, category, value, make };
-            ItemViewServices.updateItem(item, Iid).then(() => {
-                history('/manage-item');
-            });
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length === 0) {
+            console.log("No errors")
+            if (Iid === '_create') {
+                const item = {description, status, category, value, make };
+                ItemViewServices.createItem(item).then(() => {
+                    history('/manage-item');
+                });
+            }
+            else {
+                const item_id = parseInt(Iid);
+                const item = { item_id, description, status, category, value, make };
+                ItemViewServices.updateItem(item, Iid).then(() => {
+                    history('/manage-item');
+                });
+            }
+        }else{
+            setErrors(validationErrors);
         }
     }
 
@@ -134,7 +140,27 @@ function CreateUpdateItem() {
             </Typography></>
         }
     };
+    const validateForm = () => {
+        console.log("Function Runnign")
+        let validationErrors = {};
+        if(!description){
+            validationErrors.description="Description is required."
+        }
+        if(!category){
+            validationErrors.category="Category is required."
+        }
+        if(!status){
+            validationErrors.status="Status is required."
+        }
+        if(!value){
+            validationErrors.value="Value is required."
+        }
+        if(!make){
+            validationErrors.make="This is a a required field."
+        }
+        return validationErrors;
 
+    };
     return (
         <>
         <div>
@@ -157,6 +183,7 @@ function CreateUpdateItem() {
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Item Description: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="description" className="form-control"
                                     value={description} onChange={changeDescriptionHandler} />
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.description}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
@@ -167,6 +194,7 @@ function CreateUpdateItem() {
                                     <option value="Y">Yes</option>
                                     <option value="N">No</option>
                                 </select>
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.status}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
@@ -178,12 +206,14 @@ function CreateUpdateItem() {
                                     <option value="Electronics">Electronics</option>
                                     <option value="Transport">Transport</option>
                                 </select>
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.category}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Value: </label>
                                 <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="value" className="form-control"
                                     value={value} onChange={changeValueHandler} />
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.value}</p>
                             </div>
                             <br></br>
                             <div className="form-group">
@@ -194,6 +224,7 @@ function CreateUpdateItem() {
                                         options
                                     }
                                 </select>
+                                <p style={{color:'red',marginTop: "10px"}}>{errors.make}</p>
                             </div>
                             <br></br>
 
