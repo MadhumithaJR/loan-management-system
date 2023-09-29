@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/Home';
@@ -15,46 +16,57 @@ import CreateUpdateLoan from './components/CreateUpdateLoan';
 import ItemView from './components/ItemView';
 import CreateUpdateItem from './components/CreateUpdateItem';
 import Employee from './components/Employee';
+import AboutUs from './components/AboutUs';
+import EmpViewLoans from './components/EmpViewLoans';
+import EmpViewItems from './components/EmpViewItems';
+import Logout from '@mui/icons-material/Logout';
+import ApplyLoan from './components/ApplyLoan';
 
 const App = () => {
+  const [loggedIn,setLoggedIn] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
   return (
     <div className="App">
       <header>
         <h1>Loan Management App</h1>
       </header>
-      {/* <section>
+      <section>
         <div style={{
-          backgroundImage: "url(https://res.cloudinary.com/practicaldev/image/fetch/s--ddOXg3rr--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ko3w8f3icy7va6mmhx75.jpg)", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '86vh', minWidth: '90vw'
+          backgroundImage: "url(https://img.freepik.com/premium-vector/vector-abstract-background-social-media-story-template_921039-1678.jpg)", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '86.6vh', minWidth: '90vw'
           //backgroundImage: "url(https://media.licdn.com/dms/image/D5612AQFAMCWk7Dkvvw/article-cover_image-shrink_600_2000/0/1672904516095?e=2147483647&v=beta&t=XXctsPTRnJ5CrCa9YGPHMpkQH5hjYpaXmQf97cMZLeM)", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '86vh', minWidth: '90vw'
-          
-        }}> */}
+
+        }}>
           <BrowserRouter>
             <Routes>
+              {/* <Route exact path="/" element={loggedIn ? <Navigate to="/" /> : <EmployeeLogin fxn = {setLoggedIn} />}/> */}
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/admin-login" element={<AdminLogin fxn={setAdminLoggedIn} />} />
+              <Route exact path="/login" element={<EmployeeLogin fxn={setLoggedIn} />} />
 
-              <Route exact path="/admin-login" element={<AdminLogin />} />
-              <Route exact path="/login" element={<EmployeeLogin />} />
+              <Route path='/addEmployee/:eid' element={adminLoggedIn ? <CreateUpdateEmployee /> : <AdminLogin fxn={setAdminLoggedIn} />} />
+              <Route exact path="/manage-employee" element={adminLoggedIn ? <EmployeeView /> : <AdminLogin fxn={setAdminLoggedIn} />} />
 
-              <Route path='/addEmployee/:eid' element={<CreateUpdateEmployee />} />
-              <Route exact path="/manage-employee" element={<EmployeeView />} />
+              <Route path='/addLoan/:lid' element={adminLoggedIn ? <CreateUpdateLoan /> : <EmployeeLogin fxn={setAdminLoggedIn} />} />
+              <Route exact path="/manage-loan" element={adminLoggedIn ? <LoanView /> : <AdminLogin fxn={setAdminLoggedIn} />} />
 
-              <Route path='/addLoan/:lid' element={<CreateUpdateLoan />} />
-              <Route exact path="/manage-loan" element={<LoanView />} />
+              <Route path='/addItem/:Iid' element={adminLoggedIn ? <CreateUpdateItem /> : <EmployeeLogin fxn={setAdminLoggedIn} />} />
+              <Route exact path="/manage-item" element={adminLoggedIn ? <ItemView /> : <AdminLogin fxn={setAdminLoggedIn} />} />
 
-              <Route path='/addItem/:Iid' element={<CreateUpdateItem />} />
-              <Route exact path="/manage-item" element={<ItemView />} />
-
-              <Route exact path="/register" element={<Register />} />
-              <Route exact path="/admin" element={<Admin />} />
-              <Route exact path="/employee" element={<Employee />} />
-
-              <Route path="/user/:id/viewLoan" element={<ViewLoans />} />
-              <Route path="/user/:id/viewItems" element={<ViewItems />} />
+              <Route exact path="/register" element={loggedIn ? <Register /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/admin" element={adminLoggedIn ? <Admin /> : <AdminLogin fxn={setAdminLoggedIn} />} />
+              <Route exact path="/employee" element={loggedIn ? <Employee /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/aboutus" element={loggedIn ? <AboutUs /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/applyloan" element={loggedIn ? <ApplyLoan /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/emploanview" element={loggedIn ? <EmpViewLoans /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/empitemsview" element={loggedIn ? <EmpViewItems /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/logout" element={loggedIn ? <Logout fxn={setLoggedIn} /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route path="/user/:id/viewLoan" element={loggedIn ? <ViewLoans /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route path="/user/:id/viewItems" element={loggedIn ? <ViewItems /> : <EmployeeLogin fxn={setLoggedIn} />} />
             </Routes>
           </BrowserRouter>
         </div>
-    //   </section>
-    // </div>
+      </section>
+    </div>
 
   );
 }

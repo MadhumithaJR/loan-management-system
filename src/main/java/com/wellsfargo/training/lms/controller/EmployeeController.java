@@ -97,4 +97,56 @@ public class EmployeeController {
 		}
 	}
 
+	@GetMapping("/getDescriptions/{item_category}")
+	public ResponseEntity<List<String>> getItemDescriptionsFromCategory(@PathVariable(value="item_category") String item_category){
+		try {
+			List<String> descriptions = eservice.getItemDescriptions(item_category);
+			return ResponseEntity.ok(descriptions);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
+	}
+
+	@GetMapping("/getMakes/{item_category}/{item_description}")
+	public ResponseEntity<List<String>> getItemMakesFromCategoryDesc(@PathVariable(value="item_category") String item_category,@PathVariable(value="item_description") String item_description){
+		try {
+			List<String> makes = eservice.getItemMakes(item_category,item_description);
+			return ResponseEntity.ok(makes);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
+	}
+
+	@GetMapping("/getValue/{item_category}/{item_description}/{item_make}")
+	public ResponseEntity<Integer> getItemMakesFromCategoryDesc(@PathVariable(value="item_category") String item_category, @PathVariable(value="item_description") String item_description, @PathVariable(value="item_make") String item_make){
+		try {
+			int value = eservice.getItemValue(item_category,item_description,item_make);
+			return ResponseEntity.ok(value);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
+	}
+
+	@GetMapping("/getAllLoanTypes")
+	public ResponseEntity<List<String>> getAllLoanTypes(){
+		try {
+			List<String> types = eservice.getAllLoanTypes();
+			return ResponseEntity.ok(types);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
+	}
+
 }

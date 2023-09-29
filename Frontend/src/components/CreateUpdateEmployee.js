@@ -46,7 +46,6 @@ function CreateUpdateEmployee() {
     const createOrUpdateEmployee = (event) => {
         event.preventDefault();
         
-
         if (eid === '_create') {
             const employee = { id, name, designation, department, gender, dob, doj, password };
             EmployeeViewServices.createEmployee(employee).then(() => {
@@ -102,9 +101,9 @@ function CreateUpdateEmployee() {
         if (eid === '_create') {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#FFCCCB",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -113,9 +112,9 @@ function CreateUpdateEmployee() {
         } else {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#FFCCCB",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -126,8 +125,10 @@ function CreateUpdateEmployee() {
 
     return (
         <>
+        <div>
+            <br></br>
             <center>
-                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#fff6f6" }}>
+                <Card variant='outlined' sx={{ maxWidth: 600,marginTop:'5vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
                     <CardContent>
                         {getTitle()}
                         <br></br>
@@ -136,31 +137,31 @@ function CreateUpdateEmployee() {
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Employee Id: </label>
 
 
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Id" name="id" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Id" name="id" className="form-control"
                                     value={id} onChange={changeIdHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Employee Name: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Name" name="name" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Employee Name" name="name" className="form-control"
                                     value={name} onChange={changeNameHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Department: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Department" name="department" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Department" name="department" className="form-control"
                                     value={department} onChange={changeDepartmentHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Designation: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Designation" name="designation" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Designation" name="designation" className="form-control"
                                     value={designation} onChange={changeDesignationHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Gender: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Gender" name="gender" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Gender" name="gender" className="form-control"
                                 value={gender} onChange={changeGenderHandler}>
                                     <option disabled={true} value=''>--Choose an Option--</option>
                                     <option value="Male">Male</option>
@@ -170,14 +171,14 @@ function CreateUpdateEmployee() {
                             </div>
                             <br></br>
                             <div className="form-group">
-                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Birth (YYYY-MM-DD): </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Date Of Birth" name="dob" className="form-control"
+                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Birth (DD-MM-YYYY): </label>
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} type='date' placeholder="Date Of Birth" name="dob" className="form-control"
                                     value={dob} onChange={changeDobHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
-                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Joining (YYYY-MM-DD): </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Date Of Joining" name="doj" className="form-control"
+                                <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Date Of Joining (DD-MM-YYYY): </label>
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} type='date' placeholder="Date Of Joining" name="doj" className="form-control"
                                     value={doj} onChange={changeDojHandler} />
                             </div>
                             <br></br>
@@ -185,7 +186,7 @@ function CreateUpdateEmployee() {
                             {
                                 eid === '_create' && <div className="form-group">
                                     <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Password: </label>
-                                    <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #f0bebd', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Password" name="password" className="form-control"
+                                    <input  style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} type='password' placeholder="Password" name="password" className="form-control"
                                         value={password} onChange={changePasswordHandler} />
                                 </div>
                             }
@@ -237,6 +238,7 @@ function CreateUpdateEmployee() {
 
                 </div>
             </div> */}
+            </div>
         </>
 
     );

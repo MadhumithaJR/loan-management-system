@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import LoanViewServices from '../services/LoanViewServices';
+import ProSidebar_Admin from './ProSidebar_Admin';
 import Box from '@mui/material/Box';
 
 import Stack from '@mui/material/Stack';
@@ -88,21 +89,16 @@ const LoanView = () => {
 
     return (
         <>
-            <Stack direction="row" alignItems="center" spacing={1}>
-                <IconButton aria-label="delete" size="large" onClick={backToDashboard} >
-                    <ArrowBackIosIcon />
-                </IconButton>
-            </Stack>
-
+            <ProSidebar_Admin name="Admin" />
             <br></br>
-            <h1>Loan List</h1>
+            <h1 style={{marginTop:'1vh'}}>Loan List</h1>
             <br />
             <div className="row justify-content-center">
                 <Button variant="contained" style={{
                     borderRadius: 2,
-                    backgroundColor: "#DCDCDC",
+                    backgroundColor: "#000000",
                     padding: "8px 8px",
-                    color: "#000000",
+                    color: "#FFFFFF",
                     fontWeight: "bolder",
                     fontSize: "15px",
                     maxWidth: "200px"
@@ -110,8 +106,9 @@ const LoanView = () => {
                     Add Loan Card
                 </Button>
             </div>
-            <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
-                <Table sx={{ minWidth: 100, maxWidth: 800, mt: 10, ml: 48, mr: 10 }} aria-label="customized table">
+            <div style={{ marginLeft: '2%' }}>
+            <TableContainer style={{ alignContent: 'center', justifyContent: "center" }}>
+                <Table style={{backgroundColor: "#FFFFFF" }} sx={{ minWidth: 100, maxWidth: 850, mt: 10, ml: 48, mr: 10 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
                             <StyledTableCell width="10%" >Loan Id</StyledTableCell>
@@ -158,6 +155,7 @@ const LoanView = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            </div>
 
 
         </>
