@@ -69,12 +69,17 @@ public class AdminControllerTest {
 
 
     Employee emp;
+    Admin adm;
     Loan loan;
     Item item;
 
     @BeforeEach
     void setUp() throws Exception {
-        emp = new Employee();
+        adm=new Admin();
+        adm.setUsername("admin");
+        adm.setPassword("password");
+    	
+    	emp = new Employee();
 
         emp.setId(1101l);
         emp.setName("Raj");
@@ -106,11 +111,46 @@ public class AdminControllerTest {
 
     @AfterEach
     void tearDown() throws Exception {
-        emp = null;
+        adm=null;
+    	emp = null;
         loan =null;
         item =null;
     }
+    
+    @Test
+    public void testLoginAdmin() throws ResourceNotFoundException{
+    	when(adminService.loginAdmin(adm.getUsername())).thenReturn(Optional.of(adm));
+    	
+    	Admin a =adminService.loginAdmin(adm.getUsername()).get();
+    	
+    	assertEquals(a.getUsername(),adm.getUsername());
+    	assertEquals(a.getPassword(),adm.getPassword());
+    	
+    	ResponseEntity<Boolean> result=adminController.loginAdmin(adm);
+    	assertEquals(HttpStatus.OK,result.getStatusCode());
+    	assertTrue(result.getBody());
+    	
+    	verify(adminService,times(2)).loginAdmin(adm.getUsername());
+    }
+    
+    @Test
+    public void testRegisterAdmin() throws ResourceNotFoundException{
 
+        when(adminService.registerAdmin(adm)).thenReturn(adm);
+
+        Admin a = adminService.registerAdmin(adm);
+
+        assertEquals(a.getUsername(), adm.getUsername());
+        assertEquals(a.getPassword(), adm.getPassword());
+
+        Admin result = adminController.registerAdmin(adm);
+        
+        assertEquals(adm, result);
+        
+        verify(adminService, times(2)).registerAdmin(adm);
+
+    }
+    
     @Test
     public void testSaveEmployee() throws ResourceNotFoundException{
 
@@ -153,10 +193,25 @@ public class AdminControllerTest {
 
         verify(adminService, times(2)).getSingleEmployee(1101l);
 
+    }
+    
+    @Test
+    public void testGetEmployeeById() throws ResourceNotFoundException{
 
 
+        when(adminService.getSingleEmployee(1101l)).thenReturn(Optional.of(emp));
+
+        Employee x = adminService.getSingleEmployee(1101l).get();
 
 
+        assertEquals(x.getId(), emp.getId());
+        assertEquals(x.getPassword(), emp.getPassword());
+
+        ResponseEntity<Employee> result = adminController.getEmployeeById(1101l);
+
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        verify(adminService, times(2)).getSingleEmployee(1101l);
 
     }
 
@@ -241,9 +296,6 @@ public class AdminControllerTest {
     @Test
     public void testRemoveLoan() throws Exception{
 
-
-
-
         when(adminService.getLoanById(1)).thenReturn(Optional.of(loan));
         when(adminService.deleteLoan(1)).thenReturn(Optional.of(loan));
 
@@ -272,6 +324,27 @@ public class AdminControllerTest {
         assertEquals(1, re.getBody().get(0).getLoan_id());
 
         verify(adminService, times(1)).listAllLoans();
+
+    }
+    
+    @Test
+    public void testUpdateLoan() throws ResourceNotFoundException{
+
+
+        when(adminService.getLoanById(1)).thenReturn(Optional.of(loan));
+
+        Loan l = adminService.getLoanById(1).get();
+
+        assertEquals(l.getLoan_id(), loan.getLoan_id());
+        assertEquals(l.getType(), loan.getType());
+
+        ResponseEntity<Loan> result = adminController.updateLoan(1,loan);
+
+
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+
+
+        verify(adminService, times(2)).getLoanById(1);
 
     }
 
@@ -314,7 +387,7 @@ public class AdminControllerTest {
 
 
     @Test
-    public void testRemoveItem() throws Exception{
+    public void testRemoveItem() throws ResourceNotFoundException{
 
         when(adminService.getItemById(1)).thenReturn(Optional.of(item));
         when(adminService.deleteItem(1)).thenReturn(Optional.of(item));
@@ -332,7 +405,7 @@ public class AdminControllerTest {
 
 
     @Test
-    public void testGetAllItems() throws Exception{
+    public void testGetAllItems() throws ResourceNotFoundException{
         List<Item> mockItems = new ArrayList<Item>();
         mockItems.add(item);
         when(adminService.listAllItems()).thenReturn(mockItems);
@@ -344,6 +417,29 @@ public class AdminControllerTest {
         assertEquals(1, re.getBody().get(0).getItem_id());
 
         verify(adminService, times(1)).listAllItems();
+
+    }
+    
+    @Test
+    public void testUpdateItem() throws ResourceNotFoundException{
+
+
+        when(adminService.getItemById(1)).thenReturn(Optional.of(item));
+
+        Item i = adminService.getItemById(1).get();
+
+        assertEquals(i.getItem_id(), item.getItem_id());
+        assertEquals(i.getCategory(), item.getCategory());
+
+        ResponseEntity<Item> result = adminController.updateItem(1,item);
+
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+
+
+        verify(adminService, times(2)).getItemById(1);
+        
+        
 
     }
 

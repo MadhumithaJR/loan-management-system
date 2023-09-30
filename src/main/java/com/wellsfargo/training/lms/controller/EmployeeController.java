@@ -124,7 +124,7 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/getValue/{item_category}/{item_description}/{item_make}")
-	public ResponseEntity<Integer> getItemMakesFromCategoryDesc(@PathVariable(value="item_category") String item_category, @PathVariable(value="item_description") String item_description, @PathVariable(value="item_make") String item_make){
+	public ResponseEntity<Integer> getItemValueFromCategoryDescMake(@PathVariable(value="item_category") String item_category, @PathVariable(value="item_description") String item_description, @PathVariable(value="item_make") String item_make){
 		try {
 			int value = eservice.getItemValue(item_category,item_description,item_make);
 			return ResponseEntity.ok(value);

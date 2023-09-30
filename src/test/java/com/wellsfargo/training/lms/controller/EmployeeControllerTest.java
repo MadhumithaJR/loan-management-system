@@ -142,4 +142,70 @@ class EmployeeControllerTest {
 		
 		verify(employeeService, times(1)).viewEmployeeLoans(1101l);
 	}
+	
+	@Test
+	void testGetItemDescriptions() throws ResourceNotFoundException{
+		
+		List<String> mockDescription=new ArrayList<String>();
+		mockDescription.add("Chair");
+		
+		when(employeeService.getItemDescriptions("Furniture")).thenReturn(mockDescription);
+		
+		ResponseEntity<List<String>> re= employeeController.getItemDescriptionsFromCategory("Furniture");
+		
+		assertEquals(1, re.getBody().size());
+		assertEquals(HttpStatus.OK, re.getStatusCode());
+		assertEquals("Chair", re.getBody().get(0));
+		
+		verify(employeeService, times(1)).getItemDescriptions("Furniture");	
+	}
+	
+	@Test
+	void testGetItemMake() throws ResourceNotFoundException{
+		
+		List<String> mockMake=new ArrayList<String>();
+		mockMake.add("Wooden");
+		
+		when(employeeService.getItemMakes("Furniture","Chair")).thenReturn(mockMake);
+		
+		ResponseEntity<List<String>> re= employeeController.getItemMakesFromCategoryDesc("Furniture","Chair");
+		
+		assertEquals(1, re.getBody().size());
+		assertEquals(HttpStatus.OK, re.getStatusCode());
+		assertEquals("Wooden", re.getBody().get(0));
+		
+		verify(employeeService, times(1)).getItemMakes("Furniture","Chair");	
+	}
+	
+	@Test
+	void testGetItemValue() throws ResourceNotFoundException{
+		
+		int mockValue=100;
+		
+		when(employeeService.getItemValue("Furniture","Chair","Wooden")).thenReturn(mockValue);
+		
+		ResponseEntity<Integer> re= employeeController.getItemValueFromCategoryDescMake("Furniture","Chair","Wooden");
+		
+		assertEquals(HttpStatus.OK, re.getStatusCode());
+		assertEquals(100, re.getBody());
+		
+		verify(employeeService, times(1)).getItemValue("Furniture","Chair", "Wooden");	
+	}
+	
+	@Test
+	void testGetAllLoanTypes() throws ResourceNotFoundException{
+		
+		List<String> mockType=new ArrayList<String>();
+		mockType.add("Furniture");
+		
+		when(employeeService.getAllLoanTypes()).thenReturn(mockType);
+		
+		ResponseEntity<List<String>> re= employeeController.getAllLoanTypes();
+		
+		assertEquals(1, re.getBody().size());
+		assertEquals(HttpStatus.OK, re.getStatusCode());
+		assertEquals("Furniture", re.getBody().get(0));
+		
+		verify(employeeService, times(1)).getAllLoanTypes();	
+	}
 }

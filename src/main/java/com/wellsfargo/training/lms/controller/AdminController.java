@@ -29,20 +29,27 @@ public class AdminController {
     // Admin Login
 
     @PostMapping("/login")
-    public Boolean loginAdmin(@RequestBody @Validated Admin admin) throws ResourceNotFoundException
-    {
-        Boolean isLoggedIn = false;
-        String username = admin.getUsername();
-        String password = admin.getPassword();
+    public ResponseEntity<Boolean> loginAdmin(@RequestBody @Validated Admin admin) throws ResourceNotFoundException
+    {  
+        try {
+			Boolean isLoggedIn = false;
+			String username = admin.getUsername();
+	        String password = admin.getPassword();
 
-        Admin a = adminService.loginAdmin(username).orElseThrow(() ->
-                new ResourceNotFoundException("Admin not found for this admin username :: "));
+	        Admin a = adminService.loginAdmin(username).orElseThrow(() ->
+	                new ResourceNotFoundException("Admin not found for this admin username :: "));
 
-        if(username.equals(a.getUsername())&& password.equals(a.getPassword())){
-            isLoggedIn=true;
+	        if(username.equals(a.getUsername())&& password.equals(a.getPassword())){
+	            isLoggedIn=true;
 
-        }
-        return isLoggedIn;
+	        }
+			return ResponseEntity.ok(isLoggedIn);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(null);
+		}
     }
 
     // Admin Registration
