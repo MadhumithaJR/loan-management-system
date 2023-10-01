@@ -1,45 +1,99 @@
 import { useNavigate } from "react-router-dom";
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CategoryIcon from '@mui/icons-material/Category';
+import { Icon } from "@mui/material";
 const Home = () => {
     const navigate = useNavigate();
     return (
-        <div className="home container-fluid">
-        <div className="row">
-            {/* <div className="col-md-6 col-sm-12 pt-5 home-page-info">
-                <div>
-                    <h2>This is Home Page</h2>
-                    <p>
-                    <br></br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ultricies 
-                    convallis est, sed porttitor mi dignissim at. Nunc elit lorem, tincidunt non mauris 
-                    quis, tincidunt pharetra purus. Proin quis porttitor mi. Vivamus sit amet lacus nibh. 
-                    Aliquam vel est dui. Nullam eget dui lectus. Etiam non est est.<br></br>
-                    <br></br><br></br>
-
-                    Aliquam accumsan nisl sed purus mattis auctor. Praesent diam odio, maximus at arcu at, 
-                    Nunc ut tristique tortor. Pellentesque habitant morbi tristique senectus et netus et 
-                    malesuada fames ac turpis egestas. Pellentesque tortor purus, malesuada quis orci id, 
-                    lacinia lobortis dolor. Vivamus tempus dui et nisl<br></br><br></br> consequat, scelerisque lobortis dui 
-                    elementum. Phasellus sodales metus at posuere sagittis. Phasellus at fermentum lacus. 
-                    Donec quis risus eu dolor feugiat feugiat. Phasellus cursus erat vitae mi consequat, 
-                    eu dapibus erat varius. Integer sed est non mi faucibus efficitur nec ut justo. Nam 
-                    
-                    </p>
+        <div className="home">
+            <div className = "container-fluid p-5 color-2">
+                <div className = "row ">
+                    <div className = "col intro-head">
+                        <h1>
+                            Transforming<br /> Banking for <br />success
+                        </h1>
+                    </div>
                 </div>
-            </div> */}
-            <div className="col-md-6 col-sm-12  login-side">
-                <div>
-                    <p>Already a user?</p>
-                    <button class="btn btn-outline-secondary btn-light" onClick={() => navigate("/login")}>Login</button>
-                </div>
-
-                <div>
-                    <p>Register to apply for loan..</p>
-                    <button class="btn btn-outline-secondary btn-light" onClick={() => navigate("/register")}>Register</button>
+                <div class = "row intro-text">
+                    <div class = "col">
+                        <p>
+                            Discover the innovative solutions that drive growth and efficiency in <br />the manufacturing industry.
+                        </p>
+                        <div className="pt-3">
+                        <button type="button" class="btn btn-outline-dark" onClick={() => navigate("/aboutus")}>Learn more</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div className="backg-img">
+            </div>
         
-        
+            <div class="container-fluid color-1 p-5">
+	            <div class="row">
+	                <div class="col-md-12 text-left  about-2" data-aos = "fade-right" data-aos-duration = "1000">
+	                    <h2>
+	                        About Us
+	                    </h2> 
+	                    <p>
+                            At Loan management, we understand the importance of financial stability and the 
+                            role it plays in achieving your dreams and aspirations. That's why we're dedicated 
+                            to providing you with a seamless and secure platform to manage your loans and make 
+                            informed financial decisions. <br/>
+
+                	    </p>
+	                </div>
+	    
+	            </div>
+	        </div>
+
+            <div className="container-fluid color-2 p-5">
+                <div className="row">
+                    <h1>Our Services</h1>
+                </div>
+                <div className="row">
+                    <div className="col-md-4 p-5">
+                        <CreditScoreIcon/>
+                        <p className="p-3">Our bank provides the customers with easy-lending process</p>
+                    </div>
+                    <div className="col-md-4 p-5">
+                        <AttachMoneyIcon/>
+                        <p className="p-3">Our bank provides the customers with easy-lending process</p>
+                    </div>
+                    <div className="col-md-4 p-5">
+                        <CategoryIcon/>
+                        <p className="p-3">Our bank provides the customers with easy-lending process</p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container-fluid color-1 p-5">
+                <div className="row">
+                    <h2>Our customers feedback</h2>
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <p> This bank has an awesome team and a dedicated staff. I am very impressed by their vision, hard work, outstanding performance, and wonferful team-mates. Their reputation is well-earned. </p>
+                            </div>
+                            <div class="carousel-item">
+                                <p> Have always had nothing but excellent service in a comfortable and pleasant atmosphere in the six years I have been using this branch!</p>
+                            </div>
+                            <div class="carousel-item">
+                                <p> This organization will deliver nothing less than the best from expertise and professionalism to top-notch communication. You’re sure to be impressed! </p>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         
         </div>
     )

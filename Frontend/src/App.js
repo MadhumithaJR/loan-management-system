@@ -22,20 +22,22 @@ import EmpViewItems from './components/EmpViewItems';
 import Logout from '@mui/icons-material/Logout';
 import ApplyLoan from './components/ApplyLoan';
 
+import { Link } from 'react-router-dom';
 const App = () => {
   const [loggedIn,setLoggedIn] = useState(false);
   const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+
   return (
     <div className="App">
-      <header>
-        <h1>Loan Management App</h1>
+      <div className='sticky'>
+      <header className='color-1'>
+        <h1>Loan Management App<button class="btn btn-outline-secondary btn-light" onClick={() => <Link to="/login" />}>Login</button></h1>
+        
       </header>
+      </div>
+      
       <section>
-        <div style={{
-          backgroundImage: "url(https://img.freepik.com/premium-vector/vector-abstract-background-social-media-story-template_921039-1678.jpg)", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '86.6vh', minWidth: '90vw'
-          //backgroundImage: "url(https://media.licdn.com/dms/image/D5612AQFAMCWk7Dkvvw/article-cover_image-shrink_600_2000/0/1672904516095?e=2147483647&v=beta&t=XXctsPTRnJ5CrCa9YGPHMpkQH5hjYpaXmQf97cMZLeM)", backgroundSize: 'cover', backgroundRepeat: 'no-repeat', minHeight: '86vh', minWidth: '90vw'
-
-        }}>
+        <div>
           <BrowserRouter>
             <Routes>
               {/* <Route exact path="/" element={loggedIn ? <Navigate to="/" /> : <EmployeeLogin fxn = {setLoggedIn} />}/> */}

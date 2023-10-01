@@ -19,7 +19,6 @@ body{
   }
 }
 header {
-  background-color: black;
   padding-top: 25px;
   padding-bottom: 25px;
 }
@@ -95,4 +94,86 @@ h1,p{
   top: 30%;
   left: 10%;
   position: fixed;
+}
+
+div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.intro-head{
+  text-align: left;
+}
+.intro-head h1{
+  font-size: 68px;
+  color: black;
+}
+
+
+.intro-text{
+
+  padding-bottom: 115px;
+  padding-top : 2 5px;
+}
+.intro-text p{
+  text-align: left;
+  font-weight: 1rem;
+  font-size: 18px;
+  color : black;
+}
+
+.intro-text button{
+  float: left;
+
+}
+
+.backg-img {
+  background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+
+background-attachment: fixed;
+
+height: 75vh;
+background-image: url(https://media.istockphoto.com/id/1413761479/photo/mature-couple-meeting-financial-advisor-for-investment.jpg?s=1024x1024&w=is&k=20&c=XRRW-UzVDCLQvh4zkiGZwS7__0bxYrzF2EL-VEeQOyA=);
+}
+
+.color-1 {
+  background-color: black;
+  }
+
+.color-1 button {
+  float: right;
+  margin-top: 10px;
+}
+
+.color-2 {
+  background-color: white;
+}
+
+.color-2 p,h1,h2,h3,h4,h5,h6 {
+  color: black;
+}
+
+.color-1 p,h1,h2,h3,h4,h5,h6 {
+  color: white;
+}
+
+
+.about-2{
+  color: white;
+  padding : 100px;
+  text-align: left;
+}
+
+.about-2 h2{
+  font-size: 30px;
+}
+
+.about-2 p{
+  padding-top: 50px; 
+  padding-bottom: 50px;
+  font-size: 20px;
 }
