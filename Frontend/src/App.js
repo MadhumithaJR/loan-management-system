@@ -31,7 +31,7 @@ const App = () => {
     <div className="App">
       <div className='sticky'>
       <header className='color-1'>
-        <h1>Loan Management App<button class="btn btn-outline-secondary btn-light" onClick={() => <Link to="/login" />}>Login</button></h1>
+        <h1>Loan Management App {!loggedIn && <button class="btn btn-outline-secondary btn-light" onClick={() => <Link to="/login" />}>Login</button>}</h1>
         
       </header>
       </div>
