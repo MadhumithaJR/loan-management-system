@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name="loan_master")
 
 public class Loan {
+	
 	@Id
 	@SequenceGenerator(name="loan_seq", initialValue = 1,allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "loan_seq")

@@ -77,11 +77,10 @@ const EmpViewLoans = () => {
                 <ProSidebar name={name} id={id.id} department={dept} designation={designation}/>
                 <br></br>
                 <div>
-                    <h1 className='lob'>Employee Loan List</h1>
-                    <br />
-                    <div style={{ marginLeft: '20%' }}>
+                    <h1 style={{marginTop:'1vh'}}>Employee Loan List</h1>
+                    <div style={{ marginLeft: '15%' }}>
                         <TableContainer style={{ alignContent: 'center', justifyContent: "center" , maxWidth: "100%"}}>
-                            <Table sx={{ minWidth: 100, maxWidth: "75%", mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
+                            <Table style={{backgroundColor: "#FFFFFF" }} sx={{ minWidth: 100, maxWidth: "75%", mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
                                         <StyledTableCell width="10%" >Loan Id</StyledTableCell>

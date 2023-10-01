@@ -2,16 +2,16 @@ package com.wellsfargo.training.lms.model;
 
 public class ApplyLoanModel {
 
-    private String employee_id;
+    private Long employee_id;
     private String item_category;
     private String item_make;
     private String item_description;
     private int item_value;
 
-    public String getEmployee_id() {
+    public Long getEmployee_id() {
         return employee_id;
     }
-    public void setEmployee_id(String employee_id) {
+    public void setEmployee_id(Long employee_id) {
         this.employee_id = employee_id;
     }
     public String getItem_category() {

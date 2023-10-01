@@ -39,6 +39,7 @@ public class Card {
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
+	
 	public int getCard_id() {
 		return card_id;
 	}
@@ -70,6 +71,5 @@ public class Card {
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
 
 }

@@ -17,53 +17,39 @@ import jakarta.transaction.Transactional;
 public class EmployeeService {
 	
 	@Autowired
-	private EmployeeRepository erepo;
+	private EmployeeRepository empRepository;
 
 	@Autowired
-	private LoanRepository lrepo;
+	private LoanRepository loanRepository;
 
 	@Autowired
-	private ItemRepository irepo;
+	private ItemRepository itemRepository;
 
 	@Autowired
-	private CardRepository crepo;
+	private CardRepository cardRepository;
 
 	@Autowired
-	private IssueRepository issrepo;
+	private IssueRepository issueRepository;
 	
-	public Employee registerEmployee(Employee e) {
-		return erepo.save(e);
-	}
-	
-	public Optional<Employee> loginEmployee(String id) {
-		return erepo.findById(id);
+	// Employee Login
+	public Optional<Employee> loginEmployee(Long id) {
+		return empRepository.findById(id);
 	}
 	
-	public List<Employee> listAll(){
-		return erepo.findAll();
-	}
-	public Optional<Employee> getSingleEmployee(String id){
-		return erepo.findById(id);
-		
-	}
-	public void deleteEmployee(String id) {
-		erepo.deleteById(id);
-	}
-
+	// Apply Loan
 	public String applyLoan(ApplyLoanModel applyLoanModel){
-		Card card =new Card();
+		Card card = new Card();
 		Issue issue = new Issue();
 
-		Employee employee = erepo.findById(applyLoanModel.getEmployee_id()).get();
-		Loan loan = lrepo.findByType(applyLoanModel.getItem_category());
-		Item item = irepo.findByMakeAndCategoryAndDescription(applyLoanModel.getItem_make(),applyLoanModel.getItem_category(),applyLoanModel.getItem_description());
-
+		Employee employee = empRepository.findById(applyLoanModel.getEmployee_id()).get();
+		Loan loan = loanRepository.findByType(applyLoanModel.getItem_category());
+		Item item = itemRepository.findByMakeAndCategoryAndDescription(applyLoanModel.getItem_make(),applyLoanModel.getItem_category(),applyLoanModel.getItem_description());
 
 		card.setEmployee(employee);
 		card.setLoan(loan);
 		card.setDate(LocalDate.now());
 
-		Card newCardCreated = crepo.save(card);
+		Card newCardCreated = cardRepository.save(card);
 		if(newCardCreated == null) {
 			return "Loan Application Failed";
 		}
@@ -76,7 +62,7 @@ public class EmployeeService {
 		issue.setIssueDate(newCardCreated.getDate());
 		issue.setReturnDate(returnDate);
 
-		Issue newIssueCreated = issrepo.save(issue);
+		Issue newIssueCreated = issueRepository.save(issue);
 
 		if(newIssueCreated == null) {
 			return "Error in issue generation";
@@ -86,28 +72,30 @@ public class EmployeeService {
 
 	}
 	
-	public List<Map<String, Object>> viewEmployeeItems(String id) {
-		return irepo.getItemsByEmpId(id);
+	// View Items By Employee ID
+	public List<ItemView> viewEmployeeItems(Long id) {
+		return itemRepository.getItemsByEmpId(id);
 	}
 	
-	public List<LoanView> viewEmployeeLoans(String id){
-		return lrepo.getLoansByEmpId(id);
+	// View Loans By Employee ID
+	public List<LoanView> viewEmployeeLoans(Long id){
+		return loanRepository.getLoansByEmpId(id);
 	}
 
 	public List<String> getAllLoanTypes(){
-		return lrepo.getAllTypes();
+		return loanRepository.getAllTypes();
 	}
 
 	public List<String> getItemDescriptions(String category){
-		return irepo.getItemDescriptionForCategory(category);
+		return itemRepository.getItemDescriptionForCategory(category);
 	}
 
 	public List<String> getItemMakes(String category, String description){
-		return irepo.getItemMakeForCategoryDesc(category,description);
+		return itemRepository.getItemMakeForCategoryDesc(category,description);
 	}
 
 	public int getItemValue(String category, String description, String make){
-		return irepo.getItemValue(category,description,make);
+		return itemRepository.getItemValue(category,description,make);
 	}
 	
 }

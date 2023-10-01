@@ -113,9 +113,9 @@ function CreateUpdateItem() {
         if (Iid === '_create') {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#96C291",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -124,9 +124,9 @@ function CreateUpdateItem() {
         } else {
             return <><Typography variant="h4" gutterBottom style={{
                 borderRadius: 2,
-                backgroundColor: "#96C291",
+                backgroundColor: "#000000",
                 padding: "5px 5px",
-                color: "#000000",
+                color: "#FFFFFF",
                 fontWeight: "bold",
                 fontSize: "30px"
             }}>
@@ -137,8 +137,10 @@ function CreateUpdateItem() {
 
     return (
         <>
+        <div>
+            <br></br>
             <center>
-                <Card variant='outlined' sx={{ maxWidth: 600, marginTop: '10vh', marginBottom: '10vh' }} style={{ backgroundColor: "#e0f0e3" }}>
+                <Card variant='outlined' sx={{ maxWidth: 600,marginTop:'5vh', marginBottom: '10vh' }} style={{ backgroundColor: "#E5E4E2" }}>
                     <CardContent>
                         {getTitle()}
                         <br></br>
@@ -153,13 +155,13 @@ function CreateUpdateItem() {
                             <br></br> */}
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }} > Item Description: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="description" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Description" name="description" className="form-control"
                                     value={description} onChange={changeDescriptionHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Status: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Status" name="status" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Status" name="status" className="form-control"
                                     value={status} onChange={changeStatusHandler}>
                                     <option disabled={true} value=''>--Choose an Option--</option>
                                     <option value="Y">Yes</option>
@@ -169,7 +171,7 @@ function CreateUpdateItem() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Category: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Category" name="category" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Category" name="category" className="form-control"
                                     value={category} onChange={changeCategoryHandler}>
                                     <option disabled={true} value=''>--Choose an Option--</option>
                                     <option value="Furniture">Furniture</option>
@@ -180,13 +182,13 @@ function CreateUpdateItem() {
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Value: </label>
-                                <input style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="value" className="form-control"
+                                <input style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Value" name="value" className="form-control"
                                     value={value} onChange={changeValueHandler} />
                             </div>
                             <br></br>
                             <div className="form-group">
                                 <label style={{ fontFamily: 'monospace', fontSize: '19px', fontWeight: "normal" }}> Item Make: </label>
-                                <select style={{ textAlign: "center", marginTop: "10px", border: '2px solid #2AAA8A', fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Make" name="make" className="form-control"
+                                <select style={{ textAlign: "center", marginTop: "10px", fontSize: '18px', fontFamily: 'monospace' }} placeholder="Item Make" name="make" className="form-control"
                                     value={make} onChange={changeMakeHandler}>
                                     {
                                         options
@@ -201,6 +203,7 @@ function CreateUpdateItem() {
                     </CardContent>
                 </Card>
             </center>
+            </div>
         </>
 
     );

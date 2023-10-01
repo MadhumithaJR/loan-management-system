@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import EmployeeViewServices from '../services/EmployeeViewServices';
 import { useNavigate } from 'react-router-dom';
+import ProSidebar_Admin from './ProSidebar_Admin';
 
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
@@ -89,21 +90,16 @@ const EmployeeView = () => {
 
     return (
         <>
-            <Stack direction="row" alignItems="center" spacing={1}>
-                <IconButton aria-label="delete" size="large" onClick={backToDashboard} >
-                    <ArrowBackIosIcon />
-                </IconButton>
-            </Stack>
-
+            <ProSidebar_Admin name="Admin" />
             <br></br>
-            <h1>Employee List</h1>
+            <h1 style={{marginTop:'1vh'}}>Employee List</h1>
             <br />
             <div className="row justify-content-center">
                 <Button variant="contained" style={{
                     borderRadius: 2,
-                    backgroundColor: "#DCDCDC",
+                    backgroundColor: "#000000",
                     padding: "8px 8px",
-                    color: "#000000",
+                    color: "#FFFFFF",
                     fontWeight: "bolder",
                     fontSize: "15px",
                     maxWidth: "200px"
@@ -111,12 +107,13 @@ const EmployeeView = () => {
                     Add Employee
                 </Button>
             </div>
-            <TableContainer component={Paper} style={{ alignContent: 'center', justifyContent: "center" }}>
-                <Table sx={{ minWidth: 100, maxWidth: 1300, mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
+            <div style={{ marginLeft: '14.5%' }}>
+            <TableContainer style={{ alignContent: 'center', justifyContent: "center", maxWidth: "100%" }}>
+                <Table style={{backgroundColor: "#FFFFFF" }} sx={{ minWidth: 70, maxWidth: 1100, mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell width="10%" >Employee Id</StyledTableCell>
-                            <StyledTableCell width="10%" align="center" sx={{ width: 50 }}>Employee Name</StyledTableCell>
+                            <StyledTableCell width="10%" align="center" >Employee Id</StyledTableCell>
+                            <StyledTableCell width="11%" align="center" >Employee Name</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Designation</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Department</StyledTableCell>
                             <StyledTableCell width="10%" align="center">Gender</StyledTableCell>
@@ -129,11 +126,11 @@ const EmployeeView = () => {
                     <TableBody>
                         {employees.map((row) => (
                             <StyledTableRow key={row.id}>
-                                <StyledTableCell width="10%" >
+                                <StyledTableCell width="1%" align="center" >
                                     {row.id}
                                 </StyledTableCell>
                                 <StyledTableCell width="10%" align="center">{row.name}</StyledTableCell>
-                                <StyledTableCell width="10%" align="center">{row.designation}</StyledTableCell>
+                                <StyledTableCell width="11%" align="center">{row.designation}</StyledTableCell>
                                 <StyledTableCell width="10%" align="center">{row.department}</StyledTableCell>
                                 <StyledTableCell width="10%" align="center">{row.gender}</StyledTableCell>
                                 <StyledTableCell width="10%" align="center">{row.dob}</StyledTableCell>
@@ -141,7 +138,7 @@ const EmployeeView = () => {
                                 <StyledTableCell width="10%" align="center">
                                     <Button variant="contained" style={{
                                         borderRadius: 2,
-                                        backgroundColor: "#AFE1AF",
+                                        backgroundColor: "#AFE1AF", 
                                         padding: "5px 5px",
                                         color: "#000000",
                                         fontWeight: "bold",
@@ -167,6 +164,7 @@ const EmployeeView = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            </div>
 
         </>
     )
