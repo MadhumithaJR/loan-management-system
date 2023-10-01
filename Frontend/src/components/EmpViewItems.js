@@ -72,9 +72,9 @@ const EmpViewItems = () => {
             <ProSidebar name={name} id={id.id} department={dept} designation={designation} />
             <br></br>
             <div >
-                <h1>Employee Items List</h1>
+                <h1 className='lob'>Employee Items List</h1>
                 <br />
-                <div style={{ marginLeft: '20%' }}>
+                <div style={{ marginLeft: '20%' }} >
                     <TableContainer style={{ alignContent: 'center', justifyContent: "center", maxWidth: "100%" }}>
                         <Table sx={{ minWidth: 100, maxWidth: "75%", mt: 10, ml: 15, mr: 10 }} aria-label="customized table">
                             <TableHead>

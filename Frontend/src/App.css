@@ -76,9 +76,7 @@ h1,p{
 
 .emp-heading h2{
   font-family : Lobster;
-  top: 30%;
-  left: 38%;
-  position: fixed;
+
 }
 
 .emp-sidebar {
@@ -95,4 +93,8 @@ h1,p{
   top: 30%;
   left: 10%;
   position: fixed;
+}
+
+.lob {
+  font-family: Lobster;
 }

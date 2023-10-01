@@ -1,0 +1,9 @@
+.sidebar {
+    background-color: black;
+    text-align: center;
+}
+
+.sidebar-item a:hover {
+    color: black;
+}
+

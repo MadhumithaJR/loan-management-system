@@ -77,7 +77,7 @@ const EmpViewLoans = () => {
                 <ProSidebar name={name} id={id.id} department={dept} designation={designation}/>
                 <br></br>
                 <div>
-                    <h1>Employee Loan List</h1>
+                    <h1 className='lob'>Employee Loan List</h1>
                     <br />
                     <div style={{ marginLeft: '20%' }}>
                         <TableContainer style={{ alignContent: 'center', justifyContent: "center" , maxWidth: "100%"}}>

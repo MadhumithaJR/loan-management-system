@@ -51,7 +51,7 @@ return (
   <div className="col-lg-4 p-0" emp-sidebar>
   <ProSidebar name = {empName} id = {empId} department = {empDepartment} designation = {empDesignation}/>
   </div>
-  <div className="emp-heading ">
+  <div className="emp-heading p-5">
     <h2> Welcome, {empName} </h2>  
   </div>
  
