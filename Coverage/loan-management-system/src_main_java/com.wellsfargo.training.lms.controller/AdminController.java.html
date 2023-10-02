@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AdminController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (02-Oct-2023 9:39:36 pm)</a> &gt; <a href="../../index.html" class="el_group">loan-management-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.wellsfargo.training.lms.controller</a> &gt; <span class="el_source">AdminController.java</span></div><h1>AdminController.java</h1><pre class="source lang-java linenums">package com.wellsfargo.training.lms.controller;
+
+import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
+import com.wellsfargo.training.lms.model.Admin;
+import com.wellsfargo.training.lms.model.Employee;
+import com.wellsfargo.training.lms.model.Loan;
+import com.wellsfargo.training.lms.service.AdminService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.wellsfargo.training.lms.model.Item;
+
+@CrossOrigin(origins=&quot;http://localhost:3000&quot;)
+@RestController
+@RequestMapping(&quot;/api/admin&quot;)
+<span class="fc" id="L24">public class AdminController {</span>
+
+    @Autowired
+    private AdminService adminService;
+    
+    // Admin Login
+
+    @PostMapping(&quot;/login&quot;)
+    public ResponseEntity&lt;Boolean&gt; loginAdmin(@RequestBody @Validated Admin admin) throws ResourceNotFoundException
+    {  
+        try {
+<span class="fc" id="L35">			Boolean isLoggedIn = false;</span>
+<span class="fc" id="L36">			String username = admin.getUsername();</span>
+<span class="fc" id="L37">	        String password = admin.getPassword();</span>
+
+<span class="fc" id="L39">	        Admin a = adminService.loginAdmin(username).orElseThrow(() -&gt;</span>
+<span class="fc" id="L40">	                new ResourceNotFoundException(&quot;Admin not found for this admin username :: &quot;));</span>
+
+<span class="pc bpc" id="L42" title="2 of 4 branches missed.">	        if(username.equals(a.getUsername())&amp;&amp; password.equals(a.getPassword())){</span>
+<span class="fc" id="L43">	            isLoggedIn=true;</span>
+
+	        }
+<span class="fc" id="L46">			return ResponseEntity.ok(isLoggedIn);</span>
+			
+<span class="fc" id="L48">		} catch (Exception e) {</span>
+<span class="fc" id="L49">			e.printStackTrace();</span>
+<span class="fc" id="L50">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L51">					.body(null);</span>
+		}
+    }
+
+    // Admin Registration
+    
+    @PostMapping(&quot;/register&quot;)
+    public Admin registerAdmin(@Validated @RequestBody Admin admin) {
+<span class="fc" id="L59">        Admin a = adminService.registerAdmin(admin);</span>
+<span class="fc" id="L60">        return a;</span>
+    }
+    
+    // Employee Registration
+	
+ 	@PostMapping(&quot;/employees&quot;)
+ 	public ResponseEntity&lt;Employee&gt; saveEmployee(@Validated @RequestBody Employee employee) {
+ 		try {
+<span class="fc" id="L68"> 			Employee e = adminService.registerEmployee(employee);</span>
+<span class="fc" id="L69"> 			return ResponseEntity.ok(e);</span>
+<span class="fc" id="L70"> 		} catch (Exception e) {</span>
+<span class="fc" id="L71"> 			e.printStackTrace();</span>
+<span class="fc" id="L72"> 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L73"> 					.body(null);</span>
+ 		}
+ 	}
+    
+    // View All Employees
+    
+    @GetMapping(&quot;/employees&quot;)
+	public ResponseEntity&lt;List&lt;Employee&gt;&gt; getAllEmployees(){
+		try{
+<span class="fc" id="L82">			List&lt;Employee&gt; employees = adminService.listAll();</span>
+<span class="fc" id="L83">			return ResponseEntity.ok(employees);</span>
+		}
+<span class="fc" id="L85">		catch(Exception e){</span>
+<span class="fc" id="L86">			e.printStackTrace();</span>
+<span class="fc" id="L87">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+    
+    // Get Single Employee By ID
+    
+    @GetMapping(&quot;/employees/{id}&quot;)
+	public ResponseEntity&lt;Employee&gt; getEmployeeById(@PathVariable(value=&quot;id&quot;) Long eID)
+	throws ResourceNotFoundException{
+    	try {
+<span class="fc" id="L97">    		Employee e = adminService.getSingleEmployee(eID).</span>
+<span class="fc" id="L98">    				orElseThrow(()-&gt;new ResourceNotFoundException(&quot;Employee Not found for the ID&quot;));</span>
+<span class="fc" id="L99">    		return ResponseEntity.ok().body(e);</span>
+<span class="fc" id="L100">    	} catch (Exception e) {</span>
+<span class="fc" id="L101">			e.printStackTrace();</span>
+<span class="fc" id="L102">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+    	}
+	}
+	
+	// Delete an Employee
+    
+	@DeleteMapping(&quot;/employees/{id}&quot;)
+	public ResponseEntity&lt;Map&lt;String,Boolean&gt;&gt; deleteEmployee(@PathVariable(value=&quot;id&quot;) Long eID)
+		throws ResourceNotFoundException{
+			try {
+<span class="fc" id="L112">				adminService.getSingleEmployee(eID).</span>
+<span class="fc" id="L113">					orElseThrow(()-&gt; new ResourceNotFoundException(&quot;Employee Not found for this ID:&quot;+eID));</span>
+<span class="fc" id="L114">				adminService.deleteEmployee(eID);</span>
+		
+<span class="fc" id="L116">				Map&lt;String,Boolean&gt; response =new HashMap&lt;String,Boolean&gt;();</span>
+<span class="fc" id="L117">				response.put(&quot;Deleted&quot;,Boolean.TRUE);</span>
+<span class="fc" id="L118">				return ResponseEntity.ok(response);</span>
+<span class="fc" id="L119">			} catch (Exception e) {</span>
+<span class="fc" id="L120">				e.printStackTrace();</span>
+<span class="fc" id="L121">				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+			}
+	}
+
+	// Update An Employee
+	
+	@PutMapping(&quot;/employees/{id}&quot;)
+	public ResponseEntity&lt;Employee&gt; updateEmployeeById(@PathVariable(value=&quot;id&quot;) Long eID,
+			@Validated @RequestBody Employee e) throws ResourceNotFoundException{
+			try {
+<span class="fc" id="L131">				 Employee employee = adminService.getSingleEmployee(eID).</span>
+<span class="fc" id="L132">				 orElseThrow(()-&gt;new ResourceNotFoundException(&quot;Employee Not found for the ID&quot;));</span>
+				 
+				 //Update Employee with New values
+<span class="fc" id="L135">				 employee.setName(e.getName());</span>
+<span class="fc" id="L136">				 employee.setGender(e.getGender());</span>
+<span class="fc" id="L137">				 employee.setDepartment(e.getDepartment());</span>
+<span class="fc" id="L138">				 employee.setDesignation(e.getDesignation());</span>
+<span class="fc" id="L139">				 employee.setDob(e.getDob());</span>
+<span class="fc" id="L140">				 employee.setDoj(e.getDoj());</span>
+				 
+<span class="fc" id="L142">				 final Employee updatedEmployee = adminService.registerEmployee(employee);</span>
+<span class="fc" id="L143">				 return ResponseEntity.ok().body(updatedEmployee);</span>
+<span class="fc" id="L144">			} catch (Exception exp) {</span>
+<span class="fc" id="L145">				exp.printStackTrace();</span>
+<span class="fc" id="L146">				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+			}
+	}
+	
+	// Save Loan
+
+    @PostMapping(&quot;/loan&quot;)
+    public ResponseEntity&lt;Loan&gt; saveLoan(@Validated @RequestBody Loan loan){
+        try{
+<span class="fc" id="L155">           Loan l = adminService.saveLoan(loan);</span>
+<span class="fc" id="L156">            return ResponseEntity.status(HttpStatus.CREATED).body(l);</span>
+<span class="fc" id="L157">        }catch (Exception e){</span>
+<span class="fc" id="L158">            e.printStackTrace();</span>
+<span class="fc" id="L159">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+        }
+    }
+    
+    // View All Loans
+
+    @GetMapping(&quot;/loan&quot;)
+    public ResponseEntity&lt;List&lt;Loan&gt;&gt; getAllLoan(){
+        try{
+<span class="fc" id="L168">            List&lt;Loan&gt; l = adminService.listAllLoans();</span>
+<span class="fc" id="L169">            return ResponseEntity.ok(l);</span>
+<span class="fc" id="L170">        } catch (Exception e){</span>
+<span class="fc" id="L171">            e.printStackTrace();</span>
+<span class="fc" id="L172">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+        }
+    }
+    
+    // Get Single Loan By ID
+
+    @GetMapping(&quot;/loan/{id}&quot;)
+    public ResponseEntity&lt;Loan&gt; getLoanById(@PathVariable(value=&quot;id&quot;) int id) throws ResourceNotFoundException {
+    	try {
+<span class="fc" id="L181">    		Loan l = adminService.getLoanById(id).</span>
+<span class="fc" id="L182">    				orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Loan not found with id: &quot;+id));</span>
+<span class="fc" id="L183">    		return ResponseEntity.ok(l);</span>
+<span class="fc" id="L184">    	} catch (Exception e) {</span>
+<span class="fc" id="L185">			e.printStackTrace();</span>
+<span class="fc" id="L186">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+    	}
+    }
+    
+    // Update a Loan
+
+    @PutMapping(&quot;/loan/{id}&quot;)
+    public ResponseEntity&lt;Loan&gt; updateLoan(@PathVariable(value=&quot;id&quot;) int id,@Validated @RequestBody Loan loan)
+    		throws ResourceNotFoundException {
+<span class="fc" id="L195">        Loan l = adminService.getLoanById(id)</span>
+<span class="pc" id="L196">        		.orElseThrow(()-&gt;new ResourceNotFoundException(&quot;Loan not found with id: &quot;+id));</span>
+
+        try{
+<span class="fc" id="L199">             l = adminService.saveLoan(loan);</span>
+<span class="fc" id="L200">             return ResponseEntity.status(HttpStatus.CREATED).body(l);</span>
+             
+<span class="nc" id="L202">        } catch (Exception e) {</span>
+<span class="nc" id="L203">             e.printStackTrace();</span>
+<span class="nc" id="L204">             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+        }
+
+    }
+    
+    // Delete a Loan
+    
+    @DeleteMapping(&quot;/loan/{id}&quot;)
+    public ResponseEntity&lt;Map&lt;String, Boolean&gt;&gt; deleteLoan(@PathVariable(value = &quot;id&quot;) int id)
+    		throws ResourceNotFoundException{
+        try {
+<span class="fc" id="L215">        	Loan l = adminService.getLoanById(id).orElseThrow(()-&gt;new ResourceNotFoundException(&quot;Loan not found with id: &quot;+id));</span>
+
+<span class="fc" id="L217">        	adminService.deleteLoan(id);</span>
+<span class="fc" id="L218">        	Map&lt;String,Boolean&gt; response = new HashMap&lt;String, Boolean&gt;();</span>
+<span class="fc" id="L219">        	response.put(&quot;Deleted&quot;,Boolean.TRUE);</span>
+<span class="fc" id="L220">        	return ResponseEntity.ok(response);</span>
+<span class="fc" id="L221">        } catch (Exception e) {</span>
+<span class="fc" id="L222">			e.printStackTrace();</span>
+<span class="fc" id="L223">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+        }
+    }
+
+    // Save an Item
+    
+	@PostMapping(&quot;/items&quot;)
+	public ResponseEntity&lt;Item&gt; saveItem(@Validated @RequestBody Item item) {
+		try {
+<span class="fc" id="L232">			Item i = adminService.saveItem(item);</span>
+<span class="fc" id="L233">			return ResponseEntity.status(HttpStatus.CREATED).body(i);</span>
+		}
+<span class="fc" id="L235">		catch(Exception e) {</span>
+<span class="fc" id="L236">			e.printStackTrace();</span>
+<span class="fc" id="L237">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+	
+	// View All Items
+
+	@GetMapping(&quot;/items&quot;)
+	public ResponseEntity&lt;List&lt;Item&gt;&gt; getAllItems() {
+		try {
+<span class="fc" id="L246">			List&lt;Item&gt; items = adminService.listAllItems();</span>
+<span class="fc" id="L247">			return ResponseEntity.ok(items);</span>
+		}
+<span class="fc" id="L249">		catch(Exception e) {</span>
+<span class="fc" id="L250">			e.printStackTrace();</span>
+<span class="fc" id="L251">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+	
+	// Get Single Item By ID
+
+	@GetMapping(&quot;/items/{id}&quot;)
+	public ResponseEntity&lt;Item&gt; getItemById(@PathVariable(value=&quot;id&quot;) Integer id)
+	throws ResourceNotFoundException {
+		try {
+<span class="fc" id="L261">			Item i = adminService.getItemById(id).</span>
+<span class="fc" id="L262">				orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Item Not Found For This ID: &quot;+id));</span>
+<span class="fc" id="L263">			return ResponseEntity.ok().body(i);</span>
+<span class="fc" id="L264">		} catch (Exception e) {</span>
+<span class="fc" id="L265">			e.printStackTrace();</span>
+<span class="fc" id="L266">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+	
+	// Update an Item
+
+	@PutMapping(&quot;/items/{id}&quot;)
+	public ResponseEntity&lt;Item&gt; updateItem(@PathVariable(value=&quot;id&quot;) Integer id,
+			@Validated @RequestBody Item i)
+	throws ResourceNotFoundException {
+		try {
+<span class="fc" id="L277">			Item item = adminService.getItemById(id).</span>
+<span class="fc" id="L278">					orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Item Not Found For This ID: &quot;+id));</span>
+	
+<span class="fc" id="L280">			item.setDescription(i.getDescription());</span>
+<span class="fc" id="L281">			item.setStatus(i.getStatus());</span>
+<span class="fc" id="L282">			item.setCategory(i.getCategory());</span>
+<span class="fc" id="L283">			item.setValue(i.getValue());</span>
+<span class="fc" id="L284">			item.setMake(i.getMake());</span>
+	
+<span class="fc" id="L286">			final Item updatedItem = adminService.saveItem(item);</span>
+<span class="fc" id="L287">			return ResponseEntity.ok().body(updatedItem);</span>
+			
+<span class="fc" id="L289">		} catch (Exception e) {</span>
+			
+<span class="fc" id="L291">			e.printStackTrace();</span>
+<span class="fc" id="L292">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+			
+		}
+	}
+	
+	// Delete an Item
+	
+	@DeleteMapping(&quot;/items/{id}&quot;)
+	public ResponseEntity&lt;Map&lt;String, Boolean&gt;&gt; deleteItem(@PathVariable(value=&quot;id&quot;) Integer id)
+		throws ResourceNotFoundException {
+		try {
+<span class="fc" id="L303">			adminService.getItemById(id).</span>
+<span class="fc" id="L304">			orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Item Not Found For This ID: &quot;+id));</span>
+	
+<span class="fc" id="L306">			adminService.deleteItem(id);</span>
+	
+<span class="fc" id="L308">			Map&lt;String, Boolean&gt; response = new HashMap&lt;String, Boolean&gt;();</span>
+<span class="fc" id="L309">			response.put(&quot;Deleted&quot;, Boolean.TRUE);</span>
+<span class="fc" id="L310">			return ResponseEntity.ok(response);</span>
+			
+<span class="fc" id="L312">			} catch (Exception e) {</span>
+				
+<span class="fc" id="L314">				e.printStackTrace();</span>
+<span class="fc" id="L315">				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+				
+			}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span>java (02-Oct-2023 9:39:36 pm)</div></body></html>
