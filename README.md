@@ -62,7 +62,7 @@ In browser, open [http://localhost:3000](http://localhost:3000)
 
 ## Junit Test Results
 
-![Sample App Image](./img/junittest2.png).
+![Sample App Image](./img/junittest2.PNG)
 
 Link to power point presentation:
 https://learnermanipal-my.sharepoint.com/:p:/g/personal/rishabh_agarwal_learner_manipal_edu/Eb6X2kvAr9tPqHTUUpzHRMIBcMooA6XGwVSM5FF5oRBwEg?rtime=fEETBXzD20g
