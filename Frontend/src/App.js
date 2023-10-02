@@ -21,24 +21,39 @@ import EmpViewLoans from './components/EmpViewLoans';
 import EmpViewItems from './components/EmpViewItems';
 import Logout from '@mui/icons-material/Logout';
 import ApplyLoan from './components/ApplyLoan';
+import { useNavigate } from "react-router-dom";
 
 import { Link } from 'react-router-dom';
 const App = () => {
   const [loggedIn,setLoggedIn] = useState(false);
   const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+  const history = useNavigate();
+
+  const handleLoginButton = () => {
+    setShowButton(!showButton);
+    console.log("Log In Button");
+    history('/login');
+  }
+
+  // {!loggedIn && <button class="btn btn-outline-secondary btn-light" onClick={() => <Link to="/login" />}>Login</button>}
 
   return (
     <div className="App">
       <div className='sticky'>
       <header className='color-1'>
-        <h1>Loan Management App {!loggedIn && <button class="btn btn-outline-secondary btn-light" onClick={() => <Link to="/login" />}>Login</button>}</h1>
-        
+        <h1>Loan Management App </h1>
       </header>
       </div>
+      <div style={{marginLeft:'90vw', marginTop:'2vh'}}>
+          {showButton && <button class="btn btn-outline-secondary btn-light" onClick={handleLoginButton} >
+          Login
+        </button> }
+        </div>
       
       <section>
         <div>
-          <BrowserRouter>
+        
             <Routes>
               {/* <Route exact path="/" element={loggedIn ? <Navigate to="/" /> : <EmployeeLogin fxn = {setLoggedIn} />}/> */}
               <Route exact path="/" element={<Home />} />
@@ -65,7 +80,7 @@ const App = () => {
               <Route path="/user/:id/viewLoan" element={loggedIn ? <ViewLoans /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route path="/user/:id/viewItems" element={loggedIn ? <ViewItems /> : <EmployeeLogin fxn={setLoggedIn} />} />
             </Routes>
-          </BrowserRouter>
+          
         </div>
       </section>
     </div>
