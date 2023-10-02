@@ -45,11 +45,7 @@ const App = () => {
         <h1>Loan Management App </h1>
       </header>
       </div>
-      <div style={{marginLeft:'90vw', marginTop:'2vh'}}>
-          {showButton && <button class="btn btn-outline-secondary btn-light" onClick={handleLoginButton} >
-          Login
-        </button> }
-        </div>
+      
       
       <section>
         <div>

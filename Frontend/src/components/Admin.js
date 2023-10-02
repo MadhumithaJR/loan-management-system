@@ -10,7 +10,7 @@ import ProSidebar_Admin from './ProSidebar_Admin';
 const Admin = () => {
 
     const history = useNavigate();
-
+    const [cookies, setCookies,removeCookie] = useCookies(['id']);
     const customerManagement = () => {
         history('/manage-employee');
     }
@@ -22,10 +22,20 @@ const Admin = () => {
     const itemManagement = () => {
         history('/manage-item');
     }
+    const handleLogoutButton = () => {
+        removeCookie('id', { path: '/' });
+        console.log("Log In Button");
+        history('/login');
+      }
 
     return (
 
         <>
+         <div style={{marginLeft:'90vw', marginTop:'2vh'}}>
+          {<button class="btn btn-outline-secondary btn-light" onClick={handleLogoutButton} >
+                Logout
+            </button> }
+        </div>
             <center>
                 <div style={{ display: 'flex' }}>
                     <div className="col-lg-4 p-0" emp-sidebar>

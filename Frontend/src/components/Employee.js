@@ -14,16 +14,22 @@ const Employee = () => {
 
 
   const history = useNavigate();
-  const [cookies, setCookies] = useCookies(['id', 'name', 'department', 'designation']);
+  const [cookies, setCookies,removeCookie] = useCookies(['id', 'name', 'department', 'designation']);
   const [empName, setEmpName] = useState('');
   const [empDesignation, setEmpDesignation] = useState('');
   const [empDepartment, setEmpDepartment] = useState('');
+  
 
   const empId = cookies.id;
 
   useEffect(() => {
     fetchEmpName();
   }, []);
+  const handleLogoutButton = () => {
+    removeCookie('id', { path: '/' });
+    console.log("Log In Button");
+    history('/login');
+  }
   const fetchEmpName = async () => {
     try {
       EmployeeViewServices.getEmployeeById(empId).then((response) => {
@@ -47,6 +53,11 @@ const Employee = () => {
   }
   return (
     <>
+    <div style={{marginLeft:'90vw', marginTop:'2vh'}}>
+          {<button class="btn btn-outline-secondary btn-light" onClick={handleLogoutButton} >
+                Logout
+            </button> }
+        </div>
     <center>
       <div style={{ display: 'flex' }}>
         <div className="col-lg-4 p-0" emp-sidebar>
