@@ -1,8 +1,8 @@
-# [Loanify]
+# Loanify
 
 *Modern robust Loan Management System usable by both the Admin and the Employees​*
 
-### [Live]
+### Live
 
 ### Installation
 
