@@ -138,9 +138,9 @@ function CreateUpdateEmployee() {
           else if (!/^[a-zA-Z]*$/.test(name)) {
             validationErrors.fullname = 'Enter Alphabets Only';
           }
-        if (!password) {
+        if (!password && eid === '_create') {
           validationErrors.password = 'Password is required.';
-        } else if ( password.length < 6) {
+        } else if ( password.length < 6  && eid === '_create') {
           validationErrors.password = 'Password must be at least 6 characters.';
         }
         

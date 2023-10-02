@@ -42,7 +42,7 @@ const App = () => {
     <div className="App">
       <div className='sticky'>
       <header className='color-1'>
-        <h1>Loan Management App </h1>
+        <h1>Loanify </h1>
       </header>
       </div>
       
@@ -68,7 +68,7 @@ const App = () => {
               <Route exact path="/register" element={loggedIn ? <Register /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route exact path="/admin" element={adminLoggedIn ? <Admin /> : <AdminLogin fxn={setAdminLoggedIn} />} />
               <Route exact path="/employee" element={loggedIn ? <Employee /> : <EmployeeLogin fxn={setLoggedIn} />} />
-              <Route exact path="/aboutus" element={loggedIn ? <AboutUs /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/aboutus" element={<AboutUs />} />
               <Route exact path="/applyloan" element={loggedIn ? <ApplyLoan /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route exact path="/emploanview" element={loggedIn ? <EmpViewLoans /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route exact path="/empitemsview" element={loggedIn ? <EmpViewItems /> : <EmployeeLogin fxn={setLoggedIn} />} />
