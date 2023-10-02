@@ -76,25 +76,6 @@ const Employee = () => {
       </div>
       </center>
     </>
-    //   <div>
-    // <div>
-
-    //   <div className="col-lg-4 p-0" emp-sidebar>
-    //   <ProSidebar name = {empName} id = {empId} department = {empDepartment} designation = {empDesignation}/>
-    //   </div>
-    //   </div>
-
-    //   <div className="emp-heading ">
-    //     <h2 style={{marginLeft:'-10vw', marginTop:'-4vh'}}> Hello {empName}!</h2>
-    //     <h2 style={{marginLeft:'-10vw', marginTop:'3vh'}}>Welcome Back</h2>  
-
-    //   </div>
-    //   <div>
-    //     <img src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg" style={{width:'20vw', height:'40vh', borderRadius:'50%',objectFit:'cover', marginLeft:'40vw', marginTop:'8vh'}}>
-    //     </img>
-    //   </div>
-
-    //   </div>   
   );
 }
 

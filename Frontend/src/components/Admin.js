@@ -24,15 +24,46 @@ const Admin = () => {
     }
 
     return (
-        <div>
-            <div className="col-lg-4 p-0" emp-sidebar>
-                <ProSidebar_Admin name="Admin" />
-            </div>
-            <div className="emp-heading ">
-                <h2> Welcome, Admin </h2>
-            </div>
 
-        </div>
+        <>
+            <center>
+                <div style={{ display: 'flex' }}>
+                    <div className="col-lg-4 p-0" emp-sidebar>
+                        <ProSidebar_Admin name="Admin" />
+                    </div>
+                    <div className="emp-heading ">
+                        <h2 style={{ marginLeft: '-5vw', marginTop: '5vh' }}> Hello Admin!</h2>
+                        <h2 style={{ marginLeft: '-5vw', marginTop: '11vh' }}>Welcome Back</h2>
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ marginLeft: '-1vw', marginTop: '42vh' }}>
+                                <button style={{ height: '7vh', width: '8vw', border: '2px solid black', fontWeight: 'bolder' }} class="btn btn-outline-secondary btn-light" >
+                                    Administration
+                                </button>
+                            </div>
+                            <div style={{ marginLeft: '3vw', marginTop: '42vh' }}>
+                                <button style={{ height: '7vh', width: '8vw', border: '2px solid black', fontWeight: 'bolder' }} class="btn btn-outline-secondary btn-light" >
+                                    Admin
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://communityservices.humber.ca/assets/images/home/program-cards/psi-card600x400.jpg" style={{ width: '20vw', height: '40vh', borderRadius: '50%', objectFit: 'cover', marginLeft: '7vw', marginTop: '13vh' }}></img>
+                    </div>
+
+                </div>
+            </center>
+        </>
+        // <div>
+        //     <div className="col-lg-4 p-0" emp-sidebar>
+        //         <ProSidebar_Admin name="Admin" />
+        //     </div>
+        //     <div className="emp-heading ">
+        //         <h2> Welcome, Admin </h2>
+        //     </div>
+
+        // </div>
         // <div style={{backgroundImage:'url(https://d2lwtouoc9qh9n.cloudfront.net/wp-content/uploads/2023/01/wordpress-basics-featured-image-jpg.webp)',
         // width: '180vh',height:'135vh'}}>
         // <div><h1 style={{color:"white", fontFamily:"Lobster"}}>   Admin Dashboard</h1></div>
