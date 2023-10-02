@@ -1,5 +1,6 @@
 package com.wellsfargo.training.lms.controller;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -66,8 +67,6 @@ public class AdminControllerTest {
     @MockBean
     private LoanRepository loanRepository;
 
-
-
     Employee emp;
     Admin adm;
     Loan loan;
@@ -105,16 +104,16 @@ public class AdminControllerTest {
         item.setStatus("A");
         item.setValue(1500);
         item.setItem_id(1);
-
-
+        
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        adm=null;
+    	
+        adm = null;
     	emp = null;
-        loan =null;
-        item =null;
+        loan = null;
+        item = null;
     }
     
     @Test
@@ -131,6 +130,25 @@ public class AdminControllerTest {
     	assertTrue(result.getBody());
     	
     	verify(adminService,times(2)).loginAdmin(adm.getUsername());
+    	
+    }
+    
+    @Test
+    public void testLoginAdminFailure() throws ResourceNotFoundException{
+    	
+    	try {
+    		Admin admin = adminService.loginAdmin("Admin").orElseThrow(() ->
+            new ResourceNotFoundException("Admin not found for this admin username :: "));
+    	}
+    	
+    	catch (Exception e) {
+    		Admin admin = new Admin();
+    		ResponseEntity<Boolean> result = adminController.loginAdmin(admin);
+        	assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,result.getStatusCode());
+        	assertNull(result.getBody());
+        	
+        	verify(adminService,times(1)).loginAdmin("Admin");
+    	}
     }
     
     @Test
@@ -172,6 +190,19 @@ public class AdminControllerTest {
         verify(adminService, times(2)).registerEmployee(emp);
 
     }
+    
+    @Test
+    public void testSaveEmployeeFailure() throws ResourceNotFoundException{
+
+        when(adminService.registerEmployee(emp)).thenThrow(new RuntimeException("Error"));
+
+        ResponseEntity<Employee> result = adminController.saveEmployee(emp);
+       
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        assertNull(result.getBody());
+        verify(adminService, times(1)).registerEmployee(emp);
+        
+    }
 
     @Test
     public void testUpdateEmployee() throws ResourceNotFoundException{
@@ -196,6 +227,21 @@ public class AdminControllerTest {
     }
     
     @Test
+    public void testUpdateEmployeeFailure() throws ResourceNotFoundException{
+    	
+    	try {
+			 Employee employee = adminService.getSingleEmployee(1102l).
+			 orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Employee> result = adminController.updateEmployeeById(1102l,emp);
+    		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+    		assertNull(result.getBody());
+            verify(adminService, times(2)).getSingleEmployee(1102l);
+    	}
+    }
+    
+    @Test
     public void testGetEmployeeById() throws ResourceNotFoundException{
 
 
@@ -214,6 +260,21 @@ public class AdminControllerTest {
         verify(adminService, times(2)).getSingleEmployee(1101l);
 
     }
+    
+    @Test
+    public void testGetEmployeeByIdFailure() throws ResourceNotFoundException{
+
+    	try {
+    		Employee empNew = adminService.getSingleEmployee(1102l).
+    				orElseThrow(()->new ResourceNotFoundException("Employee Not found for the ID"));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Employee> result = adminController.getEmployeeById(1102l);
+    	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+    	    assertNull(result.getBody());
+    	    verify(adminService, times(2)).getSingleEmployee(1102l);
+    	}
+    }
 
     @Test
     public void testRemoveEmployee() throws ResourceNotFoundException{
@@ -230,6 +291,21 @@ public class AdminControllerTest {
 
         verify(adminService, times(1)).deleteEmployee(1101l);
 
+    }
+    
+    @Test
+    public void testRemoveEmployeeFailure() throws ResourceNotFoundException{
+    	
+    	try {
+    		adminService.getSingleEmployee(1102l).
+			orElseThrow(()-> new ResourceNotFoundException("Employee Not found for this ID:"+1102l));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Map<String,Boolean>> result = adminController.deleteEmployee(1102l);
+    	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+    	    assertNull(result.getBody());
+    	    verify(adminService, times(0)).deleteEmployee(1102l);
+    	}
     }
 
     @Test
@@ -248,6 +324,19 @@ public class AdminControllerTest {
 
         verify(adminService, times(1)).listAll();
 
+    }
+    
+    @Test
+    public void testGetAllEmployeeFailure() throws ResourceNotFoundException{
+
+        when(adminService.listAll()).thenThrow(new RuntimeException("Error"));
+
+        ResponseEntity<List<Employee>> result = adminController.getAllEmployees();
+       
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        assertNull(result.getBody());
+        verify(adminService, times(1)).listAll();
+        
     }
 
     @Test
@@ -270,6 +359,18 @@ public class AdminControllerTest {
 
 
     }
+    
+    @Test
+    public void testAddNewLoanFailure() throws Exception{
+    	
+    	when(adminService.saveLoan(loan)).thenThrow(new RuntimeException("Error"));
+
+        ResponseEntity<Loan> result = adminController.saveLoan(loan);
+       
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        assertNull(result.getBody());
+        verify(adminService, times(1)).saveLoan(loan);
+    }
 
     @Test
     public void testGetLoanById() throws ResourceNotFoundException{
@@ -291,7 +392,21 @@ public class AdminControllerTest {
 
     }
 
-
+    @Test
+    public void testGetLoanByIdFailure() throws ResourceNotFoundException{
+    	
+    	try {
+    		Loan l = adminService.getLoanById(2).
+    				orElseThrow(() -> new ResourceNotFoundException("Loan not found with id: "+2));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Loan> result = adminController.getLoanById(2);
+    		
+    	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+    	    assertNull(result.getBody());
+    	    verify(adminService, times(2)).getLoanById(2);
+    	}
+    }
 
     @Test
     public void testRemoveLoan() throws Exception{
@@ -307,8 +422,21 @@ public class AdminControllerTest {
 
         verify(adminService, times(1)).deleteLoan(1);
 
-
-
+    }
+    
+    @Test
+    public void testRemoveLoanFailure() throws Exception {
+    	
+    	try {
+    		Loan l = adminService.getLoanById(2).orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+2));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Map<String,Boolean>> result = adminController.deleteLoan(2);
+    		
+    	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+    	    assertNull(result.getBody());
+    	    verify(adminService, times(0)).deleteLoan(2);
+    	}
     }
 
     @Test
@@ -325,6 +453,19 @@ public class AdminControllerTest {
 
         verify(adminService, times(1)).listAllLoans();
 
+    }
+    
+    @Test
+    public void testGetAllLoanFailure() throws ResourceNotFoundException{
+
+        when(adminService.listAllLoans()).thenThrow(new RuntimeException("Error"));
+
+        ResponseEntity<List<Loan>> result = adminController.getAllLoan();
+       
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        assertNull(result.getBody());
+        verify(adminService, times(1)).listAllLoans();
+        
     }
     
     @Test
@@ -347,6 +488,22 @@ public class AdminControllerTest {
         verify(adminService, times(2)).getLoanById(1);
 
     }
+    
+    /*@Test
+    public void testUpdateLoanFailure() throws ResourceNotFoundException{
+    	try {
+    		Loan l = adminService.getLoanById(2)
+            		.orElseThrow(()->new ResourceNotFoundException("Loan not found with id: "+2));
+    	}
+    	catch (Exception e) {
+    		Loan l = new Loan();
+    		ResponseEntity<Loan> result = adminController.updateLoan(l.getLoan_id(),loan);
+
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+            assertNull(result.getBody());
+            verify(adminService, times(2)).getLoanById(2);
+    	}
+    }*/
 
 
     @Test
@@ -366,6 +523,18 @@ public class AdminControllerTest {
         verify(adminService,times(2)).saveItem(item);
 
     }
+    
+    @Test
+    public void testAddItemFailure() throws Exception{
+    	
+    	when(adminService.saveItem(item)).thenThrow(new RuntimeException("Error"));
+
+    	ResponseEntity<Item> result = adminController.saveItem(item);
+       
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        assertNull(result.getBody());
+        verify(adminService, times(1)).saveItem(item);
+    }
 
     @Test
     public void testGetItemById() throws Exception{
@@ -383,6 +552,22 @@ public class AdminControllerTest {
 
         verify(adminService,times(2)).getItemById(1);
 
+    }
+    
+    @Test
+    public void testGetItemByIdFailure() throws Exception{
+    	
+    	try {
+    		Item i = adminService.getItemById(2).
+    				orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+2));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Item> result  = adminController.getItemById(2);
+
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,result.getStatusCode());
+            assertNull(result.getBody());
+            verify(adminService,times(2)).getItemById(2);
+    	}
     }
 
 
@@ -402,6 +587,21 @@ public class AdminControllerTest {
 
     }
 
+    @Test
+    public void testRemoveItemFailure() throws ResourceNotFoundException{
+    	
+    	try {
+			adminService.getItemById(2).
+			orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+2));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Map<String,Boolean>> result = adminController.deleteItem(2);
+
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,result.getStatusCode());
+            assertNull(result.getBody());
+            verify(adminService, times(0)).deleteItem(2);
+    	}
+    }
 
 
     @Test
@@ -421,8 +621,19 @@ public class AdminControllerTest {
     }
     
     @Test
-    public void testUpdateItem() throws ResourceNotFoundException{
+    public void testGetAllItemsFailure() throws ResourceNotFoundException {
+    	
+    	when(adminService.listAllItems()).thenThrow(new RuntimeException("Error"));
 
+    	ResponseEntity<List<Item>> result = adminController.getAllItems();
+       
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+        assertNull(result.getBody());
+        verify(adminService, times(1)).listAllItems();
+    }
+    
+    @Test
+    public void testUpdateItem() throws ResourceNotFoundException{
 
         when(adminService.getItemById(1)).thenReturn(Optional.of(item));
 
@@ -438,9 +649,23 @@ public class AdminControllerTest {
 
 
         verify(adminService, times(2)).getItemById(1);
-        
-        
+      
+    }
+    
+    @Test
+    public void testUpdateItemFailure() throws ResourceNotFoundException{
+    	
+    	try {
+			Item i = adminService.getItemById(2).
+					orElseThrow(() -> new ResourceNotFoundException("Item Not Found For This ID: "+2));
+    	}
+    	catch (Exception e) {
+    		ResponseEntity<Item> result = adminController.updateItem(2,item);
 
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+            assertNull(result.getBody());
+            verify(adminService, times(2)).getItemById(2);
+    	}
     }
 
 }

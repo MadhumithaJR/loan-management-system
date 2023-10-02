@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeService.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (02-Oct-2023 9:39:36 pm)</a> &gt; <a href="../../index.html" class="el_group">loan-management-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.wellsfargo.training.lms.service</a> &gt; <span class="el_source">EmployeeService.java</span></div><h1>EmployeeService.java</h1><pre class="source lang-java linenums">package com.wellsfargo.training.lms.service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import com.wellsfargo.training.lms.model.*;
+import com.wellsfargo.training.lms.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+<span class="fc" id="L17">public class EmployeeService {</span>
+	
+	@Autowired
+	private EmployeeRepository empRepository;
+
+	@Autowired
+	private LoanRepository loanRepository;
+
+	@Autowired
+	private ItemRepository itemRepository;
+
+	@Autowired
+	private CardRepository cardRepository;
+
+	@Autowired
+	private IssueRepository issueRepository;
+	
+	// Employee Login
+	public Optional&lt;Employee&gt; loginEmployee(Long id) {
+<span class="nc" id="L36">		return empRepository.findById(id);</span>
+	}
+	
+	// Apply Loan
+	public String applyLoan(ApplyLoanModel applyLoanModel){
+<span class="nc" id="L41">		Card card = new Card();</span>
+<span class="nc" id="L42">		Issue issue = new Issue();</span>
+
+<span class="nc" id="L44">		Employee employee = empRepository.findById(applyLoanModel.getEmployee_id()).get();</span>
+<span class="nc" id="L45">		Loan loan = loanRepository.findByType(applyLoanModel.getItem_category());</span>
+<span class="nc" id="L46">		Item item = itemRepository.findByMakeAndCategoryAndDescription(applyLoanModel.getItem_make(),applyLoanModel.getItem_category(),applyLoanModel.getItem_description());</span>
+
+<span class="nc" id="L48">		card.setEmployee(employee);</span>
+<span class="nc" id="L49">		card.setLoan(loan);</span>
+<span class="nc" id="L50">		card.setDate(LocalDate.now());</span>
+
+<span class="nc" id="L52">		Card newCardCreated = cardRepository.save(card);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if(newCardCreated == null) {</span>
+<span class="nc" id="L54">			return &quot;Loan Application Failed&quot;;</span>
+		}
+
+<span class="nc" id="L57">		Short duration = loan.getDuration();</span>
+<span class="nc" id="L58">		LocalDate returnDate = newCardCreated.getDate().plusYears((long) duration);</span>
+
+<span class="nc" id="L60">		issue.setEmployee(employee);</span>
+<span class="nc" id="L61">		issue.setItem(item);</span>
+<span class="nc" id="L62">		issue.setIssueDate(newCardCreated.getDate());</span>
+<span class="nc" id="L63">		issue.setReturnDate(returnDate);</span>
+
+<span class="nc" id="L65">		Issue newIssueCreated = issueRepository.save(issue);</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">		if(newIssueCreated == null) {</span>
+<span class="nc" id="L68">			return &quot;Error in issue generation&quot;;</span>
+		}
+
+<span class="nc" id="L71">		return &quot;Loan has been applied successfully!&quot;;</span>
+
+	}
+	
+	// View Items By Employee ID
+	public List&lt;ItemView&gt; viewEmployeeItems(Long id) {
+<span class="nc" id="L77">		return itemRepository.getItemsByEmpId(id);</span>
+	}
+	
+	// View Loans By Employee ID
+	public List&lt;LoanView&gt; viewEmployeeLoans(Long id){
+<span class="nc" id="L82">		return loanRepository.getLoansByEmpId(id);</span>
+	}
+
+	public List&lt;String&gt; getAllLoanTypes(){
+<span class="nc" id="L86">		return loanRepository.getAllTypes();</span>
+	}
+
+	public List&lt;String&gt; getItemDescriptions(String category){
+<span class="nc" id="L90">		return itemRepository.getItemDescriptionForCategory(category);</span>
+	}
+
+	public List&lt;String&gt; getItemMakes(String category, String description){
+<span class="nc" id="L94">		return itemRepository.getItemMakeForCategoryDesc(category,description);</span>
+	}
+
+	public int getItemValue(String category, String description, String make){
+<span class="nc" id="L98">		return itemRepository.getItemValue(category,description,make);</span>
+	}
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span>java (02-Oct-2023 9:39:36 pm)</div></body></html>

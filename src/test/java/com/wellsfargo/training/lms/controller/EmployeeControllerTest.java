@@ -1,11 +1,15 @@
 package com.wellsfargo.training.lms.controller;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.*;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -14,10 +18,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -87,6 +93,25 @@ class EmployeeControllerTest {
 	}
 	
 	@Test
+	void testLoginEmployeeFailure() throws ResourceNotFoundException {
+		//when(employeeService.loginEmployee(1101l)).thenAnswer(invocation -> {throw new ResourceNotFoundException("Employee not found for this Employee Id :: "); });
+		
+		try { 
+			Employee empNew = employeeService.loginEmployee(1102l).orElseThrow(() ->
+			new ResourceNotFoundException("Employee not found for this Employee Id :: "));
+		}
+		
+		catch (Exception e) {
+			Employee empNew = new Employee();
+			ResponseEntity<Boolean> result = employeeController.loginEmployee(empNew);
+			
+			assertNull(result.getBody());
+			assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+			verify(employeeService, times(1)).loginEmployee(1102l);
+		}
+	}
+	
+	@Test
 	void testApplyLoan() throws ResourceNotFoundException {
 		
 		ApplyLoanModel loan = new ApplyLoanModel();
@@ -110,6 +135,25 @@ class EmployeeControllerTest {
 	}
 	
 	@Test
+	void testApplyLoanFailure() throws ResourceNotFoundException {
+		
+			ApplyLoanModel loan = new ApplyLoanModel();
+			loan.setEmployee_id(1102l);
+			loan.setItem_category("Furniture");
+			loan.setItem_description("Bed");
+			loan.setItem_make("Wood");
+			loan.setItem_value(30000);
+			when(employeeService.applyLoan(loan)).thenThrow(new RuntimeException("Error"));
+		
+			ResponseEntity<String> result = employeeController.applyLoan(loan);
+			
+			assertNull(result.getBody());
+			assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
+			verify(employeeService, times(1)).applyLoan(loan);
+
+	}
+	
+	@Test
 	void testViewItems() throws ResourceNotFoundException {
 		
 		List<ItemView> mockItems = new ArrayList<ItemView>();
@@ -124,6 +168,23 @@ class EmployeeControllerTest {
 		assertEquals("Furniture", re.getBody().get(0).getCategory());
 		
 		verify(employeeService, times(1)).viewEmployeeItems(1101l);
+		
+	}
+	
+	@Test
+	void testViewItemsFailure() throws ResourceNotFoundException {
+		
+		List<ItemView> mockItems = new ArrayList<ItemView>();
+		mockItems.add(new ItemView(1, "Bed", "Wooden", "Furniture", 40000));
+		
+		when(employeeService.viewEmployeeItems(1102l)).thenThrow(new RuntimeException("Error"));
+		
+		ResponseEntity<List<ItemView>> re = employeeController.viewEmployeeItems(1102l);
+		
+		assertNull(re.getBody());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
+		verify(employeeService, times(1)).viewEmployeeItems(1102l);
+		
 	}
 	
 	@Test
@@ -141,6 +202,23 @@ class EmployeeControllerTest {
 		assertEquals("Furniture", re.getBody().get(0).getType());
 		
 		verify(employeeService, times(1)).viewEmployeeLoans(1101l);
+		
+	}
+	
+	@Test
+	void testViewLoansFailure() throws ResourceNotFoundException {
+		
+		List<LoanView> mockLoans = new ArrayList<LoanView>();
+		mockLoans.add(new LoanView(1, (short) 2, "Furniture", LocalDate.parse("2023-09-09")));
+		
+		when(employeeService.viewEmployeeLoans(1102l)).thenThrow(new RuntimeException("Error"));
+		
+		ResponseEntity<List<LoanView>> re = employeeController.viewEmployeeLoans(1102l);
+		
+		assertNull(re.getBody());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
+		verify(employeeService, times(1)).viewEmployeeLoans(1102l);
+		
 	}
 	
 	@Test
@@ -157,7 +235,24 @@ class EmployeeControllerTest {
 		assertEquals(HttpStatus.OK, re.getStatusCode());
 		assertEquals("Chair", re.getBody().get(0));
 		
-		verify(employeeService, times(1)).getItemDescriptions("Furniture");	
+		verify(employeeService, times(1)).getItemDescriptions("Furniture");
+		
+	}
+	
+	@Test
+	void testGetItemDescriptionsFailure() throws ResourceNotFoundException {
+		
+		List<String> mockDescription=new ArrayList<String>();
+		mockDescription.add("Chair");
+		
+		when(employeeService.getItemDescriptions("Furniture")).thenThrow(new RuntimeException("Error"));
+		
+		ResponseEntity<List<String>> re = employeeController.getItemDescriptionsFromCategory("Furniture");
+		
+		assertNull(re.getBody());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
+		verify(employeeService, times(1)).getItemDescriptions("Furniture");
+		
 	}
 	
 	@Test
@@ -178,6 +273,22 @@ class EmployeeControllerTest {
 	}
 	
 	@Test
+	void testGetItemMakeFailure() throws ResourceNotFoundException{
+		
+		List<String> mockMake = new ArrayList<String>();
+		mockMake.add("Wooden");
+		
+		when(employeeService.getItemMakes("Furniture","Chair")).thenThrow(new RuntimeException("Error"));
+		
+		ResponseEntity<List<String>> re= employeeController.getItemMakesFromCategoryDesc("Furniture","Chair");
+		
+		assertNull(re.getBody());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
+		verify(employeeService, times(1)).getItemMakes("Furniture","Chair");
+		
+	}
+	
+	@Test
 	void testGetItemValue() throws ResourceNotFoundException{
 		
 		int mockValue=100;
@@ -190,6 +301,20 @@ class EmployeeControllerTest {
 		assertEquals(100, re.getBody());
 		
 		verify(employeeService, times(1)).getItemValue("Furniture","Chair", "Wooden");	
+	
+	}
+	
+	@Test
+	void testGetItemValueFailure() throws ResourceNotFoundException {
+		
+		when(employeeService.getItemValue("Furniture","Chair","Wooden")).thenThrow(new RuntimeException("Error"));
+		
+		ResponseEntity<Integer> re = employeeController.getItemValueFromCategoryDescMake("Furniture","Chair","Wooden");
+		
+		assertNull(re.getBody());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
+		verify(employeeService, times(1)).getItemValue("Furniture","Chair", "Wooden");
+
 	}
 	
 	@Test
@@ -207,5 +332,22 @@ class EmployeeControllerTest {
 		assertEquals("Furniture", re.getBody().get(0));
 		
 		verify(employeeService, times(1)).getAllLoanTypes();	
+		
+	}
+	
+	@Test
+	void testGetAllLoanTypesFailure() throws ResourceNotFoundException {
+		
+		List<String> mockType = new ArrayList<String>();
+		mockType.add("Furniture");
+		
+		when(employeeService.getAllLoanTypes()).thenThrow(new RuntimeException("Error"));
+		
+		ResponseEntity<List<String>> re= employeeController.getAllLoanTypes();
+		
+		assertNull(re.getBody());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
+		verify(employeeService, times(1)).getAllLoanTypes();
+		
 	}
 }

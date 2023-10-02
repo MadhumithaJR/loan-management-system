@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeController.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (02-Oct-2023 9:39:36 pm)</a> &gt; <a href="../../index.html" class="el_group">loan-management-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.wellsfargo.training.lms.controller</a> &gt; <span class="el_source">EmployeeController.java</span></div><h1>EmployeeController.java</h1><pre class="source lang-java linenums">package com.wellsfargo.training.lms.controller;
+
+import java.util.List;
+import java.util.Map;
+
+
+import com.wellsfargo.training.lms.model.ApplyLoanModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import com.wellsfargo.training.lms.exception.ResourceNotFoundException;
+import com.wellsfargo.training.lms.model.Employee;
+import com.wellsfargo.training.lms.model.ItemView;
+import com.wellsfargo.training.lms.model.LoanView;
+import com.wellsfargo.training.lms.service.EmployeeService;
+
+@CrossOrigin(origins=&quot;http://localhost:3000&quot;)
+@RestController
+@RequestMapping(value=&quot;/api&quot;)
+<span class="fc" id="L30">public class EmployeeController {</span>
+	
+	@Autowired
+	private EmployeeService eservice;
+	
+	// Employee Login
+	
+	@PostMapping(&quot;/login&quot;)
+	public ResponseEntity&lt;Boolean&gt; loginEmployee(@Validated @RequestBody Employee emp) throws ResourceNotFoundException {
+		try {
+<span class="fc" id="L40">			Boolean isLoggedIn = false;</span>
+<span class="fc" id="L41">			Long id = emp.getId();</span>
+<span class="fc" id="L42">			String password = emp.getPassword();</span>
+		
+<span class="fc" id="L44">			Employee employee = eservice.loginEmployee(id).orElseThrow(() -&gt;</span>
+<span class="fc" id="L45">				new ResourceNotFoundException(&quot;Employee not found for this Employee Id :: &quot;));</span>
+		 
+<span class="pc bpc" id="L47" title="2 of 4 branches missed.">			if(id.equals(employee.getId())&amp;&amp; password.equals(employee.getPassword())){</span>
+<span class="fc" id="L48">				isLoggedIn=true;</span>
+				}
+<span class="fc" id="L50">			return ResponseEntity.ok(isLoggedIn);</span>
+			
+<span class="fc" id="L52">		} catch (Exception e) {</span>
+<span class="fc" id="L53">			e.printStackTrace();</span>
+<span class="fc" id="L54">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L55">					.body(null);</span>
+		}
+	}
+	
+	// Apply Loan
+
+	@PostMapping(&quot;/applyLoan&quot;)
+	public ResponseEntity&lt;String&gt; applyLoan(@RequestBody ApplyLoanModel applyLoanModel) {
+		try {
+<span class="fc" id="L64">			String result = eservice.applyLoan(applyLoanModel);</span>
+<span class="fc" id="L65">			return ResponseEntity.ok(result);</span>
+<span class="fc" id="L66">		} catch (Exception e) {</span>
+<span class="fc" id="L67">			e.printStackTrace();</span>
+<span class="fc" id="L68">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+	
+	// View Items By Employee ID
+	
+	@GetMapping(&quot;/viewItems/{id}&quot;)
+	public ResponseEntity&lt;List&lt;ItemView&gt;&gt; viewEmployeeItems(@PathVariable(value=&quot;id&quot;) Long eid){
+		try {
+<span class="fc" id="L77">			List&lt;ItemView&gt; items = eservice.viewEmployeeItems(eid);</span>
+<span class="fc" id="L78">			return ResponseEntity.ok(items);</span>
+		}
+<span class="fc" id="L80">		catch(Exception e) {</span>
+<span class="fc" id="L81">			e.printStackTrace();</span>
+<span class="fc" id="L82">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+	
+	// View Loans By Employee ID
+	
+	@GetMapping(&quot;/viewLoans/{id}&quot;)
+	public ResponseEntity&lt;List&lt;LoanView&gt;&gt; viewEmployeeLoans(@PathVariable(value=&quot;id&quot;) Long eid){
+		try {
+<span class="fc" id="L91">			List&lt;LoanView&gt; loans = eservice.viewEmployeeLoans(eid);</span>
+<span class="fc" id="L92">			return ResponseEntity.ok(loans);</span>
+		}
+<span class="fc" id="L94">		catch(Exception e) {</span>
+<span class="fc" id="L95">			e.printStackTrace();</span>
+<span class="fc" id="L96">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+	}
+
+	@GetMapping(&quot;/getDescriptions/{item_category}&quot;)
+	public ResponseEntity&lt;List&lt;String&gt;&gt; getItemDescriptionsFromCategory(@PathVariable(value=&quot;item_category&quot;) String item_category){
+		try {
+<span class="fc" id="L103">			List&lt;String&gt; descriptions = eservice.getItemDescriptions(item_category);</span>
+<span class="fc" id="L104">			return ResponseEntity.ok(descriptions);</span>
+		}
+<span class="fc" id="L106">		catch(Exception e) {</span>
+<span class="fc" id="L107">			e.printStackTrace();</span>
+<span class="fc" id="L108">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+
+	}
+
+	@GetMapping(&quot;/getMakes/{item_category}/{item_description}&quot;)
+	public ResponseEntity&lt;List&lt;String&gt;&gt; getItemMakesFromCategoryDesc(@PathVariable(value=&quot;item_category&quot;) String item_category,@PathVariable(value=&quot;item_description&quot;) String item_description){
+		try {
+<span class="fc" id="L116">			List&lt;String&gt; makes = eservice.getItemMakes(item_category,item_description);</span>
+<span class="fc" id="L117">			return ResponseEntity.ok(makes);</span>
+		}
+<span class="fc" id="L119">		catch(Exception e) {</span>
+<span class="fc" id="L120">			e.printStackTrace();</span>
+<span class="fc" id="L121">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+
+	}
+
+	@GetMapping(&quot;/getValue/{item_category}/{item_description}/{item_make}&quot;)
+	public ResponseEntity&lt;Integer&gt; getItemValueFromCategoryDescMake(@PathVariable(value=&quot;item_category&quot;) String item_category, @PathVariable(value=&quot;item_description&quot;) String item_description, @PathVariable(value=&quot;item_make&quot;) String item_make){
+		try {
+<span class="fc" id="L129">			int value = eservice.getItemValue(item_category,item_description,item_make);</span>
+<span class="fc" id="L130">			return ResponseEntity.ok(value);</span>
+		}
+<span class="fc" id="L132">		catch(Exception e) {</span>
+<span class="fc" id="L133">			e.printStackTrace();</span>
+<span class="fc" id="L134">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+
+	}
+
+	@GetMapping(&quot;/getAllLoanTypes&quot;)
+	public ResponseEntity&lt;List&lt;String&gt;&gt; getAllLoanTypes(){
+		try {
+<span class="fc" id="L142">			List&lt;String&gt; types = eservice.getAllLoanTypes();</span>
+<span class="fc" id="L143">			return ResponseEntity.ok(types);</span>
+		}
+<span class="fc" id="L145">		catch(Exception e) {</span>
+<span class="fc" id="L146">			e.printStackTrace();</span>
+<span class="fc" id="L147">			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span>java (02-Oct-2023 9:39:36 pm)</div></body></html>
