@@ -34,7 +34,7 @@ In browser, open [http://localhost:3000](http://localhost:3000)
 
 ## API Architecture
 
-![Architecture](./img/architecture.png)
+![Sample App Image](./img/architecture.png)
 
 ## Main Features
 
