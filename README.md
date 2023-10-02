@@ -2,6 +2,10 @@
 
 *Modern robust Loan Management System usable by both the Admin and the Employees​*
 
+![Sample App Image](./img/signin.jpeg)
+
+![Sample App Image](./img/landingpage.jpeg)
+
 ### Live
 
 ### Installation
