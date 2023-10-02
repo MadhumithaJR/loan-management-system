@@ -36,6 +36,7 @@ $ npm run start
 
 In browser, open [http://localhost:3000](http://localhost:3000)
 
+
 ## API Architecture
 
 ![Sample App Image](./img/architecture.png)
@@ -57,3 +58,7 @@ In browser, open [http://localhost:3000](http://localhost:3000)
 - [x] - MariaDB SQL database
 
 - [x] - User Friendly UI
+
+Link to power point presentation:
+https://learnermanipal-my.sharepoint.com/:p:/g/personal/rishabh_agarwal_learner_manipal_edu/Eb6X2kvAr9tPqHTUUpzHRMIBcMooA6XGwVSM5FF5oRBwEg?rtime=fEETBXzD20g
+
