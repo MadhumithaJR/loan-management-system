@@ -5,8 +5,18 @@ import CategoryIcon from '@mui/icons-material/Category';
 import { Icon } from "@mui/material";
 const Home = () => {
     const navigate = useNavigate();
+    const handleLoginButton = () => {
+       
+        console.log("Log In Button");
+        navigate('/login');
+      }
     return (
         <div className="home">
+         <div style={{marginLeft:'90vw', marginTop:'2vh'}}>
+          {<button class="btn btn-outline-secondary btn-light login-btn" onClick={handleLoginButton} >
+                Login
+            </button> }
+        </div>
             <div className = "container-fluid p-5 color-2">
                 <div className = "row ">
                     <div className = "col intro-head">

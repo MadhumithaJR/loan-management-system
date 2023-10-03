@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Card.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (02-Oct-2023 9:39:36 pm)</a> &gt; <a href="../../index.html" class="el_group">loan-management-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.wellsfargo.training.lms.model</a> &gt; <span class="el_source">Card.java</span></div><h1>Card.java</h1><pre class="source lang-java linenums">package com.wellsfargo.training.lms.model;
+
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name=&quot;card_details&quot;)
+<span class="fc" id="L20">public class Card {</span>
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name=&quot;card_id&quot;)
+	private int card_id;
+
+	@JsonFormat(pattern=&quot;yyyy-MM-dd&quot;)
+	@Column(name=&quot;card_issue_date&quot;)
+	private LocalDate date;
+
+	@JsonIgnore
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = &quot;loan_id&quot;)
+	private Loan loan;
+
+	@JsonIgnore
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = &quot;employee_id&quot;)
+	private Employee employee;
+	
+	public int getCard_id() {
+<span class="nc" id="L44">		return card_id;</span>
+	}
+
+	public void setCard_id(int card_id) {
+<span class="nc" id="L48">		this.card_id = card_id;</span>
+<span class="nc" id="L49">	}</span>
+
+	public LocalDate getDate() {
+<span class="nc" id="L52">		return date;</span>
+	}
+
+	public void setDate(LocalDate date) {
+<span class="nc" id="L56">		this.date = date;</span>
+<span class="nc" id="L57">	}</span>
+
+	public Loan getLoan() {
+<span class="nc" id="L60">		return loan;</span>
+	}
+
+	public void setLoan(Loan loan) {
+<span class="nc" id="L64">		this.loan = loan;</span>
+<span class="nc" id="L65">	}</span>
+
+	public Employee getEmployee() {
+<span class="nc" id="L68">		return employee;</span>
+	}
+
+	public void setEmployee(Employee employee) {
+<span class="nc" id="L72">		this.employee = employee;</span>
+<span class="nc" id="L73">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span>java (02-Oct-2023 9:39:36 pm)</div></body></html>

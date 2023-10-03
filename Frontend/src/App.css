@@ -6,6 +6,15 @@ body{
 .App {
   text-align: center;
   background-color: #fff;
+ 
+}
+
+.bg {
+  background-image: url(https://img.freepik.com/free-vector/white-background-gradient-modern-abstract-design-wave_343694-2337.jpg);
+  background-repeat: auto;
+  min-height: 100vh;
+  background-position: center;
+  background-size: cover;
 }
 
 .App-logo {
@@ -178,8 +187,9 @@ background-image: url(https://media.istockphoto.com/id/1413761479/photo/mature-c
   font-size: 20px;
 }
 
-.login-btn button{
+.login-btn {
   position: fixed;
   left : 90%;
-  top : 5%;
+  top : 7%;
+  z-index: 100;
 }

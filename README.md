@@ -2,6 +2,10 @@
 
 *Modern robust Loan Management System usable by both the Admin and the Employees​*
 
+![Sample App Image](./img/signin.jpeg)
+
+![Sample App Image](./img/landingpage.jpeg)
+
 ### Live
 
 ### Installation
@@ -32,6 +36,7 @@ $ npm run start
 
 In browser, open [http://localhost:3000](http://localhost:3000)
 
+
 ## API Architecture
 
 ![Sample App Image](./img/architecture.png)
@@ -53,3 +58,12 @@ In browser, open [http://localhost:3000](http://localhost:3000)
 - [x] - MariaDB SQL database
 
 - [x] - User Friendly UI
+
+
+## Junit Test Results
+
+![Sample App Image](./img/junittest2.PNG)
+
+Link to power point presentation:
+https://learnermanipal-my.sharepoint.com/:p:/g/personal/rishabh_agarwal_learner_manipal_edu/Eb6X2kvAr9tPqHTUUpzHRMIBcMooA6XGwVSM5FF5oRBwEg?rtime=fEETBXzD20g
+

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Employee.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">java (02-Oct-2023 9:39:36 pm)</a> &gt; <a href="../../index.html" class="el_group">loan-management-system</a> &gt; <a href="../index.html" class="el_bundle">src/main/java</a> &gt; <a href="index.source.html" class="el_package">com.wellsfargo.training.lms.model</a> &gt; <span class="el_source">Employee.java</span></div><h1>Employee.java</h1><pre class="source lang-java linenums">package com.wellsfargo.training.lms.model;
+
+import jakarta.persistence.Column;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.Base64;
+import java.util.List;
+
+import lombok.Getter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
+@Entity
+@Table(name=&quot;employee_master&quot;)
+<span class="fc" id="L29">public class Employee {</span>
+
+	@SequenceGenerator(name=&quot;emp_seq&quot;, initialValue = 1000, allocationSize = 1)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator = &quot;emp_seq&quot;)
+	@Column(name=&quot;employee_id&quot;,nullable = false)
+	private Long id;
+
+	@Column(name=&quot;employee_name&quot;, length=20,nullable = false)
+	private String name;
+
+	@Column(name=&quot;department&quot;, length=25,nullable = false)
+	private String department;
+
+	@Column(name=&quot;gender&quot;, length=6)
+	private String gender;
+
+	@Column(name=&quot;designation&quot;, length=25,nullable = false)
+	private String designation;
+
+	@JsonFormat(pattern=&quot;yyyy-MM-dd&quot;)
+	@Column(name=&quot;dob&quot;,nullable = false)
+	private LocalDate dob;
+
+	@JsonFormat(pattern=&quot;yyyy-MM-dd&quot;)
+	@Column(name=&quot;doj&quot;,nullable = false)
+	private LocalDate doj;
+
+	@Column(name=&quot;password&quot;, length=20,nullable = false)
+	private String password;
+
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy=&quot;employee&quot;, fetch= FetchType.EAGER)
+	private List&lt;Issue&gt;issue;
+
+	@OnDelete(action=OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy=&quot;employee&quot;, fetch= FetchType.EAGER)
+	private List&lt;Card&gt;card;
+
+	public void setId(Long id) {
+<span class="fc" id="L69">		this.id = id;</span>
+<span class="fc" id="L70">	}</span>
+
+	public void setName(String name) {
+<span class="fc" id="L73">		this.name = name;</span>
+<span class="fc" id="L74">	}</span>
+
+	public void setDepartment(String department) {
+<span class="fc" id="L77">		this.department = department;</span>
+<span class="fc" id="L78">	}</span>
+
+	public void setGender(String gender) {
+<span class="fc" id="L81">		this.gender = gender;</span>
+<span class="fc" id="L82">	}</span>
+
+	public void setDesignation(String designation) {
+<span class="fc" id="L85">		this.designation = designation;</span>
+<span class="fc" id="L86">	}</span>
+
+	public void setDob(LocalDate dob) {
+<span class="fc" id="L89">		this.dob = dob;</span>
+<span class="fc" id="L90">	}</span>
+
+	public void setDoj(LocalDate doj) {
+<span class="fc" id="L93">		this.doj = doj;</span>
+<span class="fc" id="L94">	}</span>
+
+	public void setPassword(String password) {
+<span class="fc" id="L97">		Base64.Encoder encoder = Base64.getEncoder();  </span>
+<span class="fc" id="L98">        String normalString = password;</span>
+<span class="fc" id="L99">        String encodedString = encoder.encodeToString(   // encrypt password in database field</span>
+<span class="fc" id="L100">        normalString.getBytes(StandardCharsets.UTF_8) );</span>
+<span class="fc" id="L101">		this.password = encodedString;</span>
+<span class="fc" id="L102">	}</span>
+
+	public void setIssue(List&lt;Issue&gt; issue) {
+<span class="nc" id="L105">		this.issue = issue;</span>
+<span class="nc" id="L106">	}</span>
+
+	public void setCard(List&lt;Card&gt; card) {
+<span class="nc" id="L109">		this.card = card;</span>
+<span class="nc" id="L110">	}</span>
+
+	public Long getId() {
+<span class="fc" id="L113">		return id;</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L117">		return name;</span>
+	}
+
+	public String getDepartment() {
+<span class="fc" id="L121">		return department;</span>
+	}
+
+	public String getGender() {
+<span class="fc" id="L125">		return gender;</span>
+	}
+
+	public String getDesignation() {
+<span class="fc" id="L129">		return designation;</span>
+	}
+
+	public LocalDate getDob() {
+<span class="fc" id="L133">		return dob;</span>
+	}
+
+	public LocalDate getDoj() {
+<span class="fc" id="L137">		return doj;</span>
+	}
+
+	public String getPassword() {
+<span class="fc" id="L141">		return password;</span>
+	}
+
+	public List&lt;Issue&gt; getIssue() {
+<span class="nc" id="L145">		return issue;</span>
+	}
+
+	public List&lt;Card&gt; getCard() {
+<span class="nc" id="L149">		return card;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span>java (02-Oct-2023 9:39:36 pm)</div></body></html>

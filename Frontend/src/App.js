@@ -39,17 +39,20 @@ const App = () => {
   // {!loggedIn && <button class="btn btn-outline-secondary btn-light" onClick={() => <Link to="/login" />}>Login</button>}
 
   return (
-    <div className="App">
+    <div className="App bg">
       <div className='sticky'>
       <header className='color-1'>
-        <h1>Loan Management App </h1>
-        <div style={{marginLeft:'90vw'}} className='login-btn'>
+        <h1>Loanify </h1>
+        {/* <div style={{marginLeft:'90vw'}} className='login-btn'>
           {!loggedIn && !adminLoggedIn && showButton && <button class="btn btn-outline-secondary btn-light" onClick={handleLoginButton} >
           Login
         </button> }
-        </div>
+        </div> */}
       </header>
       </div>
+      
+        
+
       
       
       <section>
@@ -73,7 +76,7 @@ const App = () => {
               <Route exact path="/register" element={loggedIn ? <Register /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route exact path="/admin" element={adminLoggedIn ? <Admin /> : <AdminLogin fxn={setAdminLoggedIn} />} />
               <Route exact path="/employee" element={loggedIn ? <Employee /> : <EmployeeLogin fxn={setLoggedIn} />} />
-              <Route exact path="/aboutus" element={loggedIn ? <AboutUs /> : <EmployeeLogin fxn={setLoggedIn} />} />
+              <Route exact path="/aboutus" element={<AboutUs />} />
               <Route exact path="/applyloan" element={loggedIn ? <ApplyLoan /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route exact path="/emploanview" element={loggedIn ? <EmpViewLoans /> : <EmployeeLogin fxn={setLoggedIn} />} />
               <Route exact path="/empitemsview" element={loggedIn ? <EmpViewItems /> : <EmployeeLogin fxn={setLoggedIn} />} />
