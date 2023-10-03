@@ -43,13 +43,14 @@ const App = () => {
       <div className='sticky'>
       <header className='color-1'>
         <h1>Loan Management App </h1>
-      </header>
-      </div>
-      <div style={{marginLeft:'90vw', marginTop:'2vh'}}>
-          {showButton && <button class="btn btn-outline-secondary btn-light" onClick={handleLoginButton} >
+        <div style={{marginLeft:'90vw'}} className='login-btn'>
+          {!loggedIn && !adminLoggedIn && showButton && <button class="btn btn-outline-secondary btn-light" onClick={handleLoginButton} >
           Login
         </button> }
         </div>
+      </header>
+      </div>
+      
       
       <section>
         <div>
